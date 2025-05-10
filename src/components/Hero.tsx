@@ -5,33 +5,37 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="relative h-[85vh] bg-zinc-100 overflow-hidden">
+    <section className="relative h-[85vh] bg-black text-white overflow-hidden">
+      {/* Modern, urban background with a subtle overlay */}
       <div 
-        className="absolute inset-0 z-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070')]" 
+        className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1488161628813-04466f872be2?q=80&w=2064')]" 
         style={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
       ></div>
       
+      {/* Dark overlay for better text contrast */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
+      
       <div className="container-custom relative z-20 h-full flex flex-col justify-center">
         <div className="max-w-xl animate-fade-in [animation-delay:200ms]">
-          <div className="mb-8">
+          <div className="mb-8 flex items-center">
             <img 
               src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
               alt="Snyk Logo" 
               className="h-16 md:h-20 w-auto mb-6"
             />
           </div>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-display text-black mb-4 leading-tight">
-            DEFINE YOUR <span className="text-black">STYLE</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-display text-white mb-6 leading-none">
+            DEFINE YOUR <br /><span className="text-zinc-300">IDENTITY</span>
           </h1>
-          <p className="text-lg md:text-xl text-zinc-700 mb-8 max-w-md">
-            Authentic streetwear for those who dare to express themselves. Limited drops, unlimited attitude.
+          <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-md">
+            Exclusive streetwear for the next generation. Minimal design, maximum impact.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button asChild className="bg-black hover:bg-zinc-800 text-white px-8 py-6 text-lg rounded">
-              <Link to="/products">Shop Now</Link>
+            <Button asChild className="bg-white hover:bg-zinc-200 text-black px-8 py-6 text-lg">
+              <Link to="/products">SHOP NOW</Link>
             </Button>
-            <Button asChild variant="outline" className="border-black text-black hover:bg-black/5 px-8 py-6 text-lg rounded">
-              <Link to="/collections">New Collection</Link>
+            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+              <Link to="/collections">SS25 COLLECTION</Link>
             </Button>
           </div>
         </div>
