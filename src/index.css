@@ -35,7 +35,7 @@
     --input: 0 0% 89.8%;
     --ring: 0 0% 0%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 0%;
@@ -58,7 +58,7 @@
   }
 
   h1, h2, h3, h4 {
-    @apply font-display tracking-wide;
+    @apply font-display tracking-normal;
   }
 
   h5, h6 {
@@ -76,11 +76,11 @@
   }
 
   .nav-link {
-    @apply relative font-medium text-zinc-800 hover:text-black transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all hover:after:w-full;
+    @apply relative font-medium text-zinc-800 hover:text-black transition-colors;
   }
 
   .product-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+    @apply grid grid-cols-2 md:grid-cols-4 gap-6;
   }
 
   .section-padding {

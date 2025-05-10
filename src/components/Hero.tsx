@@ -5,38 +5,46 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="relative h-[85vh] bg-black text-white overflow-hidden">
-      {/* Modern, urban background with a subtle overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1488161628813-04466f872be2?q=80&w=2064')]" 
-        style={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
-      ></div>
+    <section className="relative bg-white text-black">
+      {/* Main hero image */}
+      <div className="w-full aspect-[16/9] md:aspect-[21/9]">
+        <img 
+          src="https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=2070" 
+          alt="Hero Image" 
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
       
-      {/* Dark overlay for better text contrast */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
-      
-      <div className="container-custom relative z-20 h-full flex flex-col justify-center">
-        <div className="max-w-xl animate-fade-in [animation-delay:200ms]">
-          <div className="mb-8 flex items-center">
+      <div className="container-custom py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left product feature */}
+          <div className="aspect-[4/5]">
             <img 
-              src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
-              alt="Snyk Logo" 
-              className="h-16 md:h-20 w-auto mb-6"
+              src="https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=1974" 
+              alt="Summer Collection" 
+              className="w-full h-full object-cover"
             />
+            <div className="mt-4">
+              <h2 className="text-lg md:text-xl font-display uppercase mb-2">SUMMER 2025</h2>
+              <Button asChild variant="outline" className="border-black hover:bg-black hover:text-white uppercase text-sm px-8">
+                <Link to="/collections/summer2025">SHOP NOW</Link>
+              </Button>
+            </div>
           </div>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-display text-white mb-6 leading-none">
-            DEFINE YOUR <br /><span className="text-zinc-300">IDENTITY</span>
-          </h1>
-          <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-md">
-            Exclusive streetwear for the next generation. Minimal design, maximum impact.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Button asChild className="bg-white hover:bg-zinc-200 text-black px-8 py-6 text-lg">
-              <Link to="/products">SHOP NOW</Link>
-            </Button>
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
-              <Link to="/collections">SS25 COLLECTION</Link>
-            </Button>
+          
+          {/* Right product feature */}
+          <div className="aspect-[4/5]">
+            <img 
+              src="https://images.unsplash.com/photo-1507680434567-5739c80be1ac?q=80&w=1974" 
+              alt="Essentials Collection" 
+              className="w-full h-full object-cover"
+            />
+            <div className="mt-4">
+              <h2 className="text-lg md:text-xl font-display uppercase mb-2">ESSENTIALS</h2>
+              <Button asChild variant="outline" className="border-black hover:bg-black hover:text-white uppercase text-sm px-8">
+                <Link to="/collections/essentials">SHOP NOW</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

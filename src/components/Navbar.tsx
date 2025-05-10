@@ -13,41 +13,50 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white border-b border-zinc-100 sticky top-0 z-40">
-      <div className="container-custom flex items-center justify-between h-16 md:h-12">
+    <header className="w-full bg-white sticky top-0 z-40 border-b border-zinc-200">
+      <div className="container-custom flex items-center justify-between h-16">
         {/* Mobile menu */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-zinc-900">
+              <Button variant="ghost" size="icon" className="text-black">
                 <Menu size={24} />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] bg-white">
-              <div className="flex flex-col gap-6 mt-8">
-                <Link to="/" className="text-xl font-display font-bold">
-                  Home
-                </Link>
-                <Link to="/products" className="text-xl font-display font-bold">
-                  Shop
-                </Link>
-                <Link to="/collections" className="text-xl font-display font-bold">
-                  Collections
-                </Link>
-                <Link to="/about" className="text-xl font-display font-bold">
-                  About
-                </Link>
-                <Link to="/contact" className="text-xl font-display font-bold">
-                  Contact
-                </Link>
+            <SheetContent side="left" className="w-full bg-white p-0">
+              <div className="flex flex-col p-6">
+                <div className="flex justify-end mb-8">
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <X size={24} />
+                    </Button>
+                  </SheetTrigger>
+                </div>
+                <div className="space-y-6">
+                  <Link to="/" className="text-2xl font-display uppercase">
+                    Home
+                  </Link>
+                  <Link to="/products" className="text-2xl font-display uppercase">
+                    Shop
+                  </Link>
+                  <Link to="/collections" className="text-2xl font-display uppercase">
+                    Collections
+                  </Link>
+                  <Link to="/about" className="text-2xl font-display uppercase">
+                    About
+                  </Link>
+                  <Link to="/contact" className="text-2xl font-display uppercase">
+                    Contact
+                  </Link>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
         </div>
 
         {/* Logo */}
-        <div className="flex-1 md:flex-none flex justify-center md:justify-start">
-          <Link to="/" className="h-8 md:h-10">
+        <div className="flex-1 lg:flex-none flex justify-center lg:justify-start">
+          <Link to="/" className="h-6">
             <img 
               src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
               alt="Snyk Logo" 
@@ -57,40 +66,49 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
-          <Link to="/" className="nav-link">
+        <nav className="hidden lg:flex space-x-10">
+          <Link to="/" className="nav-link uppercase text-sm">
             Home
           </Link>
-          <Link to="/products" className="nav-link">
+          <Link to="/products" className="nav-link uppercase text-sm">
             Shop
           </Link>
-          <Link to="/collections" className="nav-link">
+          <Link to="/collections" className="nav-link uppercase text-sm">
             Collections
           </Link>
-          <Link to="/about" className="nav-link">
+          <Link to="/about" className="nav-link uppercase text-sm">
             About
           </Link>
-          <Link to="/contact" className="nav-link">
+          <Link to="/contact" className="nav-link uppercase text-sm">
             Contact
           </Link>
         </nav>
 
         {/* Search & Cart */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
           {searchOpen ? (
-            <div className="fixed inset-0 bg-black/70 flex items-start justify-center pt-20 px-4 z-50">
-              <div className="bg-white rounded-lg p-4 w-full max-w-md relative">
-                <button 
-                  onClick={() => setSearchOpen(false)}
-                  className="absolute right-4 top-4"
-                >
-                  <X size={20} />
-                </button>
-                <div className="pt-4">
+            <div className="fixed inset-0 bg-white z-50 flex flex-col">
+              <div className="container-custom py-4">
+                <div className="flex justify-between items-center mb-8">
+                  <div className="w-8"></div>
+                  <Link to="/" className="h-6">
+                    <img 
+                      src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+                      alt="Snyk Logo" 
+                      className="h-full w-auto"
+                    />
+                  </Link>
+                  <button 
+                    onClick={() => setSearchOpen(false)}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+                <div className="w-full max-w-xl mx-auto">
                   <input
                     type="text"
-                    placeholder="Search products..."
-                    className="w-full p-2 border border-zinc-300 rounded-md"
+                    placeholder="SEARCH"
+                    className="w-full p-2 border-b border-zinc-300 text-lg uppercase focus:outline-none"
                     autoFocus
                   />
                 </div>
@@ -104,7 +122,7 @@ const Navbar = () => {
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 bg-black text-white text-xs h-4 w-4 flex items-center justify-center">
                 0
               </span>
             </Button>
