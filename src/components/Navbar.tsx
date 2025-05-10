@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <header className="w-full bg-white border-b border-zinc-100 sticky top-0 z-40">
-      <div className="container-custom flex items-center justify-between h-16 md:h-10">
+      <div className="container-custom flex items-center left h-16 md:h-10">
         {/* Mobile menu */}
         <div className="md:hidden">
           <Sheet>
