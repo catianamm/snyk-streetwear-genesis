@@ -8,6 +8,13 @@ const Newsletter = () => {
     <section className="bg-white py-16 border-t border-zinc-100">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+              alt="Snyk Logo" 
+              className="h-10 w-auto"
+            />
+          </div>
           <h2 className="text-3xl md:text-4xl font-display text-black mb-4">JOIN THE COMMUNITY</h2>
           <p className="text-zinc-600 mb-8 text-lg">
             Subscribe to get exclusive updates on new drops, special offers, and community events.

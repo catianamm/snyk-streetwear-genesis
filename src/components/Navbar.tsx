@@ -47,8 +47,12 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex-1 md:flex-none flex justify-center md:justify-start">
-          <Link to="/" className="text-2xl md:text-3xl font-display tracking-wider font-bold text-snyk-darkgray">
-            SNYK
+          <Link to="/" className="h-8 md:h-10">
+            <img 
+              src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+              alt="Snyk Logo" 
+              className="h-full w-auto"
+            />
           </Link>
         </div>
 
@@ -100,7 +104,7 @@ const Navbar = () => {
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-snyk-purple text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 0
               </span>
             </Button>

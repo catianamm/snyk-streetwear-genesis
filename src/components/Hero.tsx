@@ -13,6 +13,13 @@ const Hero = () => {
       
       <div className="container-custom relative z-20 h-full flex flex-col justify-center">
         <div className="max-w-xl animate-fade-in [animation-delay:200ms]">
+          <div className="mb-8">
+            <img 
+              src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+              alt="Snyk Logo" 
+              className="h-16 md:h-20 w-auto mb-6"
+            />
+          </div>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-display text-black mb-4 leading-tight">
             DEFINE YOUR <span className="text-black">STYLE</span>
           </h1>
