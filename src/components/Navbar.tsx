@@ -56,7 +56,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex-1 lg:flex-none flex justify-center lg:justify-start">
-          <Link to="/" className="h-9">
+          <Link to="/" className="h-12">
             <img 
               src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
               alt="Snyk Logo" 
@@ -91,7 +91,7 @@ const Navbar = () => {
               <div className="container-custom py-4">
                 <div className="flex justify-between items-center mb-8">
                   <div className="w-8"></div>
-                  <Link to="/" className="h-9">
+                  <Link to="/" className="h-12">
                     <img 
                       src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                       alt="Snyk Logo" 
