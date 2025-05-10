@@ -56,7 +56,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex-1 lg:flex-none flex justify-center lg:justify-start">
-          <Link to="/" className="h-6">
+          <Link to="/" className="h-9">
             <img 
               src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
               alt="Snyk Logo" 
