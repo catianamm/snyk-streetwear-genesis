@@ -91,11 +91,11 @@ const Navbar = () => {
               <div className="container-custom py-4">
                 <div className="flex justify-between items-center mb-8">
                   <div className="w-8"></div>
-                  <Link to="/" className="h-6">
+                  <Link to="/" className="h-9">
                     <img 
                       src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                       alt="Snyk Logo" 
-                      className="h-30 w-auto"
+                      className="h-full w-auto"
                     />
                   </Link>
                   <button 
