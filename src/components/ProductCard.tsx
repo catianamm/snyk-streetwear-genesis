@@ -29,23 +29,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
         {product.isNew && (
-          <Badge className="absolute top-3 left-3 bg-snyk-purple text-white">
+          <Badge className="absolute top-3 left-3 bg-black text-white">
             New
           </Badge>
         )}
-        <div className="absolute inset-x-0 bottom-0 flex-col items-center p-4 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/80 to-transparent">
-          <Button className="w-full bg-white text-snyk-darkgray hover:bg-snyk-purple hover:text-white transition-colors">
+        <div className="absolute inset-x-0 bottom-0 flex-col items-center p-4 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/60 to-transparent">
+          <Button className="w-full bg-white text-black hover:bg-zinc-100 hover:text-black transition-colors">
             <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
           </Button>
         </div>
       </div>
       <div className="mt-4">
         <Link to={`/product/${product.id}`}>
-          <h3 className="text-sm font-medium text-gray-900 hover:text-snyk-purple transition-colors">
+          <h3 className="text-sm font-medium text-gray-900 hover:text-black transition-colors">
             {product.name}
           </h3>
         </Link>
-        <p className="mt-1 text-lg font-semibold text-snyk-darkgray">${product.price.toFixed(2)}</p>
+        <p className="mt-1 text-lg font-semibold text-black">${product.price.toFixed(2)}</p>
       </div>
     </div>
   );

@@ -63,10 +63,8 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Snyk brand colors
+				// Simplified Snyk brand colors
 				snyk: {
-					purple: '#8B5CF6',
-					orange: '#F97316',
 					darkgray: '#1A1F2C',
 					lightgray: '#F6F6F7',
 					mediumgray: '#8E9196',

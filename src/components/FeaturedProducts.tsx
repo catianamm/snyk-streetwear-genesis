@@ -43,11 +43,11 @@ const featuredProducts: ProductType[] = [
 
 const FeaturedProducts = () => {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-zinc-50">
       <div className="container-custom">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl md:text-4xl font-display">Featured Products</h2>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="border-black text-black hover:bg-black/5">
             <Link to="/products">View All</Link>
           </Button>
         </div>

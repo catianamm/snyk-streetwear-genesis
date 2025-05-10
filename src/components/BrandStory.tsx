@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const BrandStory = () => {
   return (
-    <section className="py-20 bg-zinc-100">
+    <section className="py-20 bg-white">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
@@ -21,13 +21,13 @@ const BrandStory = () => {
               craftsmanship. We're not just selling clothes – we're building a community 
               of individuals who express themselves boldly and authentically.
             </p>
-            <Button asChild className="bg-snyk-darkgray hover:bg-black text-white">
+            <Button asChild className="bg-black hover:bg-zinc-800 text-white">
               <Link to="/about">More About Us</Link>
             </Button>
           </div>
           
           <div className="relative">
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-snyk-purple rounded-full -z-10"></div>
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-zinc-100 rounded-full -z-10"></div>
             <div className="aspect-[4/5] overflow-hidden rounded-lg relative z-10">
               <img 
                 src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=1000" 
@@ -35,7 +35,7 @@ const BrandStory = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-snyk-orange rounded-full -z-10"></div>
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-zinc-200 rounded-full -z-10"></div>
           </div>
         </div>
       </div>
