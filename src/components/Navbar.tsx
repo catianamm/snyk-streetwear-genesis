@@ -95,7 +95,7 @@ const Navbar = () => {
                     <img 
                       src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                       alt="Snyk Logo" 
-                      className="h-full w-auto"
+                      className="h-30 w-auto"
                     />
                   </Link>
                   <button 
