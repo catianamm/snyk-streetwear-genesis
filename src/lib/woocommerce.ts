@@ -1,13 +1,11 @@
-
 import { ProductType } from '@/components/ProductCard';
 
 // WooCommerce REST API endpoint
 const API_URL = 'https://cms.snyk.store/wp-json/wc/v3';
 
-// These would typically be stored in environment variables or Supabase secrets
-// For development, we're using placeholders that will need to be replaced
-const consumerKey = import.meta.env.VITE_WC_CONSUMER_KEY || 'your-consumer-key';
-const consumerSecret = import.meta.env.VITE_WC_CONSUMER_SECRET || 'your-consumer-secret';
+// WooCommerce API credentials
+const consumerKey = import.meta.env.VITE_WC_CONSUMER_KEY || 'ck_55c495ad83d72567cdcda9937e1d9e3f5007f591';
+const consumerSecret = import.meta.env.VITE_WC_CONSUMER_SECRET || 'cs_22d4d9f95d58986873e1c09054cd89b0b346cac6';
 
 // Helper function to create authentication header
 const getAuthHeader = () => {
@@ -54,12 +52,6 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
   try {
     console.log('Fetching products from WooCommerce API');
     
-    // In development mode or when API keys aren't available, return mock data
-    if (consumerKey === 'your-consumer-key' || consumerSecret === 'your-consumer-secret') {
-      console.warn('Using mock data - WooCommerce API keys not configured');
-      return getMockProducts();
-    }
-
     const products = await fetchFromWooCommerce('/products?status=publish');
     return products.map(transformProduct);
   } catch (error) {
@@ -74,13 +66,6 @@ export const fetchProductById = async (productId: number): Promise<ProductType |
   try {
     console.log(`Fetching product ${productId} from WooCommerce API`);
     
-    // In development mode or when API keys aren't available, return mock data
-    if (consumerKey === 'your-consumer-key' || consumerSecret === 'your-consumer-secret') {
-      console.warn('Using mock data - WooCommerce API keys not configured');
-      const mockProducts = getMockProducts();
-      return mockProducts.find(p => p.id === productId) || null;
-    }
-
     const product = await fetchFromWooCommerce(`/products/${productId}`);
     return transformProduct(product);
   } catch (error) {
@@ -96,16 +81,6 @@ export const searchProducts = async (query: string): Promise<ProductType[]> => {
   try {
     console.log(`Searching products with query: ${query}`);
     
-    // In development mode or when API keys aren't available, return mock data
-    if (consumerKey === 'your-consumer-key' || consumerSecret === 'your-consumer-secret') {
-      console.warn('Using mock data - WooCommerce API keys not configured');
-      const mockProducts = getMockProducts();
-      return mockProducts.filter(p => 
-        p.name.toLowerCase().includes(query.toLowerCase()) || 
-        p.category.toLowerCase().includes(query.toLowerCase())
-      );
-    }
-
     const products = await fetchFromWooCommerce(`/products?search=${query}`);
     return products.map(transformProduct);
   } catch (error) {
