@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -63,43 +64,6 @@
     --input: 0 0% 20%;
     --ring: 0 0% 100%;
   }
-  
-  .horizontal-scroll-page {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>'), auto;
-    scrollbar-width: none; /* Firefox */
-  }
-  
-  .horizontal-scroll-page::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
-  
-  .horizontal-scroll-page:active {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>'), grabbing;
-  }
-  
-  /* Custom scrollbar for when horizontal scrollbar is visible */
-  .horizontal-scroll-container::-webkit-scrollbar {
-    height: 3px;
-  }
-
-  .horizontal-scroll-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  .horizontal-scroll-container::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-
-  .horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-
-  /* Enhanced text selection */
-  ::selection {
-    background: black;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(255,255,255,0.3);
-  }
 }
 
 @layer base {
@@ -158,21 +122,6 @@
   /* Glitch effects */
   .glitch {
     position: relative;
-    animation: noise-movement 2s infinite linear alternate-reverse;
-  }
-  
-  @keyframes noise-movement {
-    0% { transform: translate(0, 0) skew(0deg); }
-    10% { transform: translate(-1px, 1px) skew(0.5deg); }
-    20% { transform: translate(-2px, 0) skew(0deg); }
-    30% { transform: translate(1px, 2px) skew(-0.5deg); }
-    40% { transform: translate(0, -1px) skew(0.25deg); }
-    50% { transform: translate(-1px, 2px) skew(-0.25deg); }
-    60% { transform: translate(-2px, 1px) skew(0deg); }
-    70% { transform: translate(2px, 1px) skew(0.5deg); }
-    80% { transform: translate(-3px, -2px) skew(0.25deg); }
-    90% { transform: translate(2px, -1px) skew(-0.5deg); }
-    100% { transform: translate(0, 0) skew(0deg); }
   }
   
   .glitch::before,
@@ -332,96 +281,17 @@
   }
   
   /* Text distortion effect */
-  .text-distort {
-    display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
   .text-distort:hover {
-    animation: textDistortEnhanced 0.8s forwards;
+    animation: textDistort 0.5s forwards;
   }
   
-  @keyframes textDistortEnhanced {
-    0% { transform: skew(0deg, 0deg); filter: blur(0); }
-    20% { transform: skew(2deg, 1deg) scale(1.05); filter: blur(0.5px); }
-    40% { transform: skew(-2deg, -1deg) scale(0.95); filter: blur(0); }
-    60% { transform: skew(1deg, 2deg) scale(1.02); filter: blur(1px); }
-    80% { transform: skew(-1deg, -2deg) scale(0.98); filter: blur(0.5px); }
-    100% { transform: skew(0deg, 0deg); filter: blur(0); }
-  }
-  
-  /* Digital noise effect */
-  .digital-noise {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .digital-noise::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0;
-    mix-blend-mode: overlay;
-    animation: noise-animation 8s steps(10) infinite;
-  }
-  
-  @keyframes noise-animation {
-    0%, 100% { opacity: 0; }
-    25%, 85% { opacity: 0.05; }
-    50%, 75% { opacity: 0.02; }
-  }
-  
-  /* VHS scan line effect */
-  .scan-lines {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .scan-lines::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 0.5%,
-      transparent 1%
-    );
-    pointer-events: none;
-    z-index: 10;
-  }
-  
-  .scan-lines::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      transparent 50%,
-      rgba(0, 0, 0, 0.1) 51%,
-      transparent 52%
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
-    animation: scanlines 6s linear infinite;
-    z-index: 9;
-    opacity: 0.2;
-  }
-  
-  @keyframes scanlines {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(100%); }
+  @keyframes textDistort {
+    0% { transform: skew(0deg, 0deg); }
+    20% { transform: skew(2deg, 1deg); }
+    40% { transform: skew(-2deg, -1deg); }
+    60% { transform: skew(1deg, 2deg); }
+    80% { transform: skew(-1deg, -2deg); }
+    100% { transform: skew(0deg, 0deg); }
   }
   
   /* Brutal hover effect */

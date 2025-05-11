@@ -6,28 +6,6 @@ import { Button } from '@/components/ui/button';
 import { useProducts } from '@/hooks/useProducts';
 import { Loader2 } from 'lucide-react';
 
-// Adding disturb effect wrapper
-const DisturbEffect = ({ children, intensity = 'low' }: { children: React.ReactNode, intensity?: 'low' | 'medium' | 'high' }) => {
-  const [isGlitching, setIsGlitching] = React.useState(false);
-  
-  React.useEffect(() => {
-    const glitchInterval = setInterval(() => {
-      setIsGlitching(true);
-      setTimeout(() => setIsGlitching(false), intensity === 'low' ? 200 : intensity === 'medium' ? 400 : 600);
-    }, intensity === 'low' ? 7000 : intensity === 'medium' ? 5000 : 3000);
-    
-    return () => clearInterval(glitchInterval);
-  }, [intensity]);
-  
-  return (
-    <div className={`relative ${isGlitching ? 'before:content-[\'\'] before:absolute before:inset-0 before:bg-white before:opacity-10 before:z-10' : ''}`}>
-      <div className={isGlitching ? 'transform translate-x-[1px] translate-y-[1px] scale-[1.01]' : ''}>
-        {children}
-      </div>
-    </div>
-  );
-};
-
 const FeaturedProducts = () => {
   const { products, loading, error } = useProducts();
   
@@ -44,11 +22,9 @@ const FeaturedProducts = () => {
   console.log('Display products:', displayProducts);
 
   return (
-    <section className="py-16 bg-white" data-section="featured">
+    <section className="py-16 bg-white">
       <div className="container-custom">
-        <DisturbEffect intensity="medium">
-          <h2 className="text-xl md:text-3xl font-display uppercase text-center mb-10 glitch" data-text="FEATURED PRODUCTS">FEATURED PRODUCTS</h2>
-        </DisturbEffect>
+        <h2 className="text-xl md:text-2xl font-display uppercase text-center mb-10 glitch" data-text="FEATURED PRODUCTS">FEATURED PRODUCTS</h2>
         
         {loading && (
           <div className="text-center py-12 flex flex-col items-center justify-center space-y-4">
@@ -69,9 +45,7 @@ const FeaturedProducts = () => {
             <div className="product-grid">
               {displayProducts.length > 0 ? 
                 displayProducts.map(product => (
-                  <DisturbEffect key={product.id} intensity="low">
-                    <ProductCard product={product} />
-                  </DisturbEffect>
+                  <ProductCard key={product.id} product={product} />
                 )) : 
                 <div className="col-span-full text-center py-12">
                   <p>No products found. Please add products in your WooCommerce store.</p>
