@@ -8,6 +8,9 @@ const API_URL = 'https://cms.snyk.store/wp-json/wc/v3';
 const consumerKey = import.meta.env.VITE_WC_CONSUMER_KEY || 'ck_55c495ad83d72567cdcda9937e1d9e3f5007f591';
 const consumerSecret = import.meta.env.VITE_WC_CONSUMER_SECRET || 'cs_22d4d9f95d58986873e1c09054cd89b0b346cac6';
 
+// CORS Proxy to avoid CORS issues in development
+const CORS_PROXY = 'https://corsproxy.io/?';
+
 // Helper function to create authentication header
 const getAuthHeader = () => {
   return 'Basic ' + btoa(`${consumerKey}:${consumerSecret}`);
@@ -18,7 +21,12 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
   try {
     console.log(`Fetching from WooCommerce API: ${API_URL}${endpoint}`);
     
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const targetUrl = `${API_URL}${endpoint}`;
+    const proxyUrl = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
+    
+    console.log('Using proxy URL:', proxyUrl);
+    
+    const response = await fetch(proxyUrl, {
       headers: {
         'Authorization': getAuthHeader(),
         'Content-Type': 'application/json',

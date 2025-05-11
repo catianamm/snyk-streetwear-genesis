@@ -1,9 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ProductCard, { ProductType } from './ProductCard';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useProducts } from '@/hooks/useProducts';
+import { Loader2 } from 'lucide-react';
 
 const FeaturedProducts = () => {
   const { products, loading, error } = useProducts();
@@ -26,18 +27,20 @@ const FeaturedProducts = () => {
         <h2 className="text-xl md:text-2xl font-display uppercase text-center mb-10 glitch" data-text="FEATURED PRODUCTS">FEATURED PRODUCTS</h2>
         
         {loading && (
-          <div className="text-center py-12">
-            <p className="text-lg">Loading products...</p>
+          <div className="text-center py-12 flex flex-col items-center justify-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+            <p className="text-lg">Loading products from WooCommerce...</p>
           </div>
         )}
         
-        {error && (
-          <div className="text-center py-12 text-red-500">
-            <p className="text-lg">{error}</p>
+        {error && !loading && (
+          <div className="text-center py-12 text-zinc-800">
+            <p className="text-lg mb-2">{error}</p>
+            <p className="text-base text-zinc-600">Showing fallback products</p>
           </div>
         )}
         
-        {!loading && !error && (
+        {!loading && (
           <>
             <div className="product-grid">
               {displayProducts.length > 0 ? 
