@@ -1,3 +1,4 @@
+
 import { ProductType } from '@/components/ProductCard';
 
 // WooCommerce REST API endpoint
@@ -15,6 +16,8 @@ const getAuthHeader = () => {
 // Function to handle API requests
 const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
   try {
+    console.log(`Fetching from WooCommerce API: ${API_URL}${endpoint}`);
+    
     const response = await fetch(`${API_URL}${endpoint}`, {
       headers: {
         'Authorization': getAuthHeader(),
@@ -26,8 +29,10 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
     if (!response.ok) {
       throw new Error(`WooCommerce API Error: ${response.status}`);
     }
-
-    return await response.json();
+    
+    const data = await response.json();
+    console.log('WooCommerce API response:', data);
+    return data;
   } catch (error) {
     console.error('Error fetching from WooCommerce:', error);
     throw error;
@@ -39,11 +44,17 @@ const transformProduct = (wcProduct: any): ProductType => {
   return {
     id: wcProduct.id,
     name: wcProduct.name,
-    price: parseFloat(wcProduct.price),
-    image: wcProduct.images.length > 0 ? wcProduct.images[0].src : 'https://via.placeholder.com/300',
-    category: wcProduct.categories.length > 0 ? wcProduct.categories[0].name.toLowerCase() : 'uncategorized',
-    isNew: new Date(wcProduct.date_created).getTime() > Date.now() - (30 * 24 * 60 * 60 * 1000), // Is it newer than 30 days
-    isFeatured: wcProduct.featured,
+    price: wcProduct.price ? parseFloat(wcProduct.price) : 0,
+    image: wcProduct.images && wcProduct.images.length > 0 
+      ? wcProduct.images[0].src 
+      : 'https://via.placeholder.com/300',
+    category: wcProduct.categories && wcProduct.categories.length > 0 
+      ? wcProduct.categories[0].name.toLowerCase() 
+      : 'uncategorized',
+    isNew: wcProduct.date_created 
+      ? new Date(wcProduct.date_created).getTime() > Date.now() - (30 * 24 * 60 * 60 * 1000) 
+      : false,
+    isFeatured: Boolean(wcProduct.featured),
   };
 };
 
@@ -53,6 +64,19 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     console.log('Fetching products from WooCommerce API');
     
     const products = await fetchFromWooCommerce('/products?status=publish');
+    
+    if (!Array.isArray(products)) {
+      console.error('Invalid response format from WooCommerce API:', products);
+      return getMockProducts();
+    }
+    
+    console.log(`Found ${products.length} products from API`);
+    
+    if (products.length === 0) {
+      console.warn('No products returned from WooCommerce API, using mock data');
+      return getMockProducts();
+    }
+    
     return products.map(transformProduct);
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -82,6 +106,14 @@ export const searchProducts = async (query: string): Promise<ProductType[]> => {
     console.log(`Searching products with query: ${query}`);
     
     const products = await fetchFromWooCommerce(`/products?search=${query}`);
+    
+    if (!Array.isArray(products)) {
+      return getMockProducts().filter(p => 
+        p.name.toLowerCase().includes(query.toLowerCase()) || 
+        p.category.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    
     return products.map(transformProduct);
   } catch (error) {
     console.error('Error searching products:', error);
@@ -96,6 +128,7 @@ export const searchProducts = async (query: string): Promise<ProductType[]> => {
 
 // Mock products for development/fallback
 const getMockProducts = (): ProductType[] => {
+  console.log('Using mock product data');
   return [
     {
       id: 1,

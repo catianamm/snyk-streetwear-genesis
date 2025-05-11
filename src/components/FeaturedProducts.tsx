@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import ProductCard, { ProductType } from './ProductCard';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { fetchProducts } from '@/lib/woocommerce';
 import { useProducts } from '@/hooks/useProducts';
 
 const FeaturedProducts = () => {
@@ -11,6 +10,15 @@ const FeaturedProducts = () => {
   
   // Filter to get only featured products
   const featuredProducts = products.filter(product => product.isFeatured);
+  
+  // If no featured products, show first 4 products as featured
+  const displayProducts = featuredProducts.length > 0 
+    ? featuredProducts 
+    : products.slice(0, 4);
+  
+  console.log('Featured products:', featuredProducts);
+  console.log('All products:', products);
+  console.log('Display products:', displayProducts);
 
   return (
     <section className="py-16 bg-white">
@@ -32,12 +40,12 @@ const FeaturedProducts = () => {
         {!loading && !error && (
           <>
             <div className="product-grid">
-              {featuredProducts.length > 0 ? 
-                featuredProducts.map(product => (
+              {displayProducts.length > 0 ? 
+                displayProducts.map(product => (
                   <ProductCard key={product.id} product={product} />
                 )) : 
                 <div className="col-span-full text-center py-12">
-                  <p>No featured products found.</p>
+                  <p>No products found. Please add products in your WooCommerce store.</p>
                 </div>
               }
             </div>
