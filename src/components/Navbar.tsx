@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -99,27 +98,27 @@ const Navbar = () => {
           </Sheet>
         </div>
 
-        {/* Logo - with transcending, dislocated and rotated effect */}
+        {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
         <div className="flex-1 lg:flex-none flex justify-center lg:justify-start relative">
           <Link to="/" className="h-20 relative group -mt-6 -mb-3 transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
                 src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                 alt="Snyk Logo Glitch" 
-                className="h-full w-auto translate-x-[6px] translate-y-[4px] invert scale-110"
+                className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110"
               />
             </div>
             <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-100 transition-all duration-300">
               <img 
                 src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                 alt="Snyk Logo Hover" 
-                className={`h-full w-auto translate-x-[4px] translate-y-[2px] ${scrolled ? '' : 'invert'} scale-110`}
+                className="h-full w-auto translate-x-[4px] translate-y-[2px] scale-110"
               />
             </div>
             <img 
               src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
               alt="Snyk Logo" 
-              className={`h-full w-auto transition-transform duration-500 ${scrolled ? '' : 'invert'} ${glitchLogo ? 'skew-x-3 scale-105' : ''}`}
+              className={`h-full w-auto transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''}`}
             />
             <div className="absolute top-0 left-0 h-full w-full noise opacity-10 pointer-events-none"></div>
           </Link>
