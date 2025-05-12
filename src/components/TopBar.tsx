@@ -13,7 +13,7 @@ const TopBar = () => {
       <div className="fixed top-0 right-0 z-50 flex items-center space-x-2 p-4">
         {/* Social Media Icons */}
         <div className="hidden md:flex items-center space-x-2 mr-2">
-                    <Button variant="ghost" size="icon" className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button variant="ghost" size="icon" className="text-white hover:text-pink-400 transition-colors">
             <Instagram size={18} />
           </Button>          
         </div>
