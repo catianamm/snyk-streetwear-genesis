@@ -29,7 +29,8 @@ const Hero = () => {
         const heroHeight = heroRef.current.offsetHeight;
         
         // Calculate scroll intensity (0-1) for scroll-based effects
-        const intensity = Math.min(scrollY / (heroHeight * 0.7), 1);
+        // Modified to make effects appear earlier - multiplying by 1.5
+        const intensity = Math.min(scrollY / (heroHeight * 0.5), 1);
         setScrollIntensity(intensity);
         
         // Enhanced parallax effect with depth
@@ -54,7 +55,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative bg-black text-white overflow-hidden">
+    <section ref={heroRef} className="relative bg-black text-white overflow-hidden ml-20 md:ml-24">
       {/* Enhanced noise texture with color shift on scroll */}
       <div 
         className="absolute inset-0 noise opacity-20"
@@ -97,13 +98,13 @@ const Hero = () => {
             <span 
               className={`block text-transparent bg-clip-text transition-all duration-300`}
               style={{ 
-                backgroundImage: scrollIntensity > 0.5 
-                  ? 'linear-gradient(90deg, #9b87f5 0%, #F97316 50%, #7E69AB 100%)' 
-                  : 'linear-gradient(90deg, #fff 0%, #F97316 50%, #9b87f5 100%)',
+                backgroundImage: scrollIntensity > 0.2 // Changed from 0.5 to 0.2 to make it appear earlier
+                  ? 'linear-gradient(90deg, #9b87f5 0%, #8B5CF6 50%, #7E69AB 100%)' // More purple tones
+                  : 'linear-gradient(90deg, #fff 0%, #9b87f5 50%, #6E59A5 100%)',
                 backgroundSize: '200% auto',
                 backgroundPosition: `${scrollIntensity * 100}% center`,
                 WebkitBackgroundClip: 'text',
-                textShadow: scrollIntensity > 0.7 ? '0 0 5px rgba(155, 135, 245, 0.5)' : 'none'
+                textShadow: scrollIntensity > 0.3 ? '0 0 5px rgba(155, 135, 245, 0.7)' : 'none' // Text shadow appears earlier
               }}
             >AUTHENTIC</span>
           </h1>
@@ -124,10 +125,10 @@ const Hero = () => {
               onMouseEnter={() => setHoverGlitch(true)}
               onMouseLeave={() => setHoverGlitch(false)}
               style={{ 
-                background: scrollIntensity > 0.5 
-                  ? 'linear-gradient(to right, #9b87f5, #F97316, #6E59A5)' 
+                background: scrollIntensity > 0.2 // Changed from 0.5 to 0.2
+                  ? 'linear-gradient(to right, #9b87f5, #8B5CF6, #6E59A5)' // More purple tones
                   : 'white',
-                color: scrollIntensity > 0.5 ? 'white' : 'black'
+                color: scrollIntensity > 0.2 ? 'white' : 'black' // Changed from 0.5 to 0.2
               }}
             >
               <Link to="/products">
@@ -145,8 +146,8 @@ const Hero = () => {
               className="border-white text-white hover:bg-white hover:text-black uppercase 
                 tracking-wider relative overflow-hidden group"
               style={{ 
-                borderColor: scrollIntensity > 0.5 ? '#9b87f5' : 'white',
-                color: scrollIntensity > 0.5 ? '#9b87f5' : 'white'
+                borderColor: scrollIntensity > 0.2 ? '#9b87f5' : 'white', // Changed from 0.5 to 0.2
+                color: scrollIntensity > 0.2 ? '#9b87f5' : 'white' // Changed from 0.5 to 0.2
               }}
             >
               <Link to="/about">
@@ -213,7 +214,7 @@ const Hero = () => {
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#ffffff" stopOpacity={0.7 - scrollIntensity * 0.2}></stop>
-                  <stop offset="100%" stopColor={scrollIntensity > 0.5 ? "#8B5CF6" : "#cccccc"} stopOpacity={0.3 + scrollIntensity * 0.4}></stop>
+                  <stop offset="100%" stopColor={scrollIntensity > 0.2 ? "#8B5CF6" : "#cccccc"} stopOpacity={0.3 + scrollIntensity * 0.4}></stop>
                 </linearGradient>
               </defs>
             </svg>
@@ -225,7 +226,7 @@ const Hero = () => {
               transform rotate-6 shadow-lg hidden md:block"
             style={{ 
               transform: `rotate(${6 + scrollIntensity * 6}deg) translateY(${-scrollIntensity * 30}px)`,
-              borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
+              borderColor: scrollIntensity > 0.2 ? '#8B5CF6' : 'white', // Changed from 0.5 to 0.2
               boxShadow: `0 10px 25px rgba(139, 92, 246, ${0.2 + scrollIntensity * 0.4})`
             }}
           >
@@ -251,12 +252,12 @@ const Hero = () => {
       >
         <span 
           className="text-xs uppercase tracking-widest mb-2 opacity-70"
-          style={{ color: scrollIntensity > 0.3 ? '#8B5CF6' : 'white' }}
+          style={{ color: scrollIntensity > 0.2 ? '#8B5CF6' : 'white' }} // Changed from 0.3 to 0.2
         >Scroll</span>
         <div 
           className="w-px h-6 bg-white opacity-50 animate-bounce"
           style={{ 
-            background: `linear-gradient(to bottom, white, ${scrollIntensity > 0.5 ? '#8B5CF6' : 'white'})`,
+            background: `linear-gradient(to bottom, white, ${scrollIntensity > 0.2 ? '#8B5CF6' : 'white'})`, // Changed from 0.5 to 0.2
             height: `${6 - scrollIntensity * 3}px` 
           }}
         ></div>

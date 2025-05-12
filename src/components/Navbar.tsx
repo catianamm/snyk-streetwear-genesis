@@ -8,6 +8,12 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Search, ShoppingCart, Menu, X } from 'lucide-react';
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from '@/components/ui/navigation-menu';
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -68,62 +74,19 @@ const Navbar = () => {
     : "text-white";
 
   return (
-    <header className={`w-full transition-all duration-500 sticky top-0 z-40 ${
+    <header className={`fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 ${
       scrolled 
-        ? 'bg-black text-white border-b border-zinc-800 h-16 shadow-lg shadow-purple-900/20' 
-        : `${dynamicBackground} text-white border-b border-zinc-200 h-20`
+        ? 'bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20' 
+        : `${dynamicBackground} text-white border-r border-zinc-200`
     }`}>
       <div 
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
-        style={{ width: `${scrollProgress * 100}%`, opacity: scrolled ? 1 : 0 }}
+        className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
+        style={{ opacity: scrolled ? 1 : 0 }}
       ></div>
-      <div className="container-custom h-full flex items-center justify-between">
-        {/* Mobile menu with enhanced glitch effect */}
-        <div className="lg:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className={`${scrolled ? "text-white" : "text-white"} relative overflow-hidden group`}>
-                <Menu size={24} className="group-hover:animate-button-glitch" />
-                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-full bg-black text-white p-0">
-              <div className="flex flex-col p-6 relative">
-                <div className="absolute inset-0 noise opacity-5"></div>
-                <div className="absolute inset-0 scanlines"></div>
-                
-                <div className="flex justify-end mb-8 relative z-10">
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
-                      <X size={24} className="hover:animate-button-glitch" />
-                    </Button>
-                  </SheetTrigger>
-                </div>
-                <div className="space-y-6 relative z-10">
-                  <Link to="/" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-purple-400`} data-text="HOME">HOME</span>
-                  </Link>
-                  <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
-                  </Link>
-                  <Link to="/collections" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-orange-400">COLLECTIONS</span>
-                  </Link>
-                  <Link to="/about" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-blue-400">ABOUT</span>
-                  </Link>
-                  <Link to="/contact" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-green-400">CONTACT</span>
-                  </Link>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-
+      <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
-        <div className="flex-1 lg:flex-none flex justify-center lg:justify-start relative">
-          <Link to="/" className="h-20 relative group -mt-6 -mb-3 transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
+        <div className="flex justify-center relative">
+          <Link to="/" className="h-16 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
                 src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
@@ -147,33 +110,45 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation - with enhanced hover effects */}
-        <nav className="hidden lg:flex space-x-10">
-          <Link to="/" className={`nav-link uppercase text-sm relative ${glitchText ? 'line-through' : ''} group`}>
-            <span className="relative z-10 transition-all duration-300 group-hover:text-purple-400">Home</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
-          </Link>
-          <Link to="/products" className="nav-link uppercase text-sm relative overflow-hidden group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-pink-400">Shop</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300`}></span>
-            <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">SHOP</span>
-          </Link>
-          <Link to="/collections" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-orange-400">Collections</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 group-hover:w-full transition-all duration-300`}></span>
-          </Link>
-          <Link to="/about" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-blue-400">About</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300`}></span>
-          </Link>
-          <Link to="/contact" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-green-400">Contact</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-300`}></span>
-          </Link>
-        </nav>
+        {/* Vertical Navigation Links */}
+        <NavigationMenu orientation="vertical" className="flex flex-col space-y-10">
+          <NavigationMenuList className="flex flex-col space-y-10">
+            <NavigationMenuItem>
+              <Link to="/" className={`nav-link uppercase text-sm relative ${glitchText ? 'line-through' : ''} group flex flex-col items-center`}>
+                <span className="relative z-10 transition-all duration-300 group-hover:text-purple-400">Home</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/products" className="nav-link uppercase text-sm relative overflow-hidden group flex flex-col items-center">
+                <span className="relative z-10 transition-all duration-300 group-hover:text-pink-400">Shop</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300`}></span>
+                <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">SHOP</span>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/collections" className="nav-link uppercase text-sm relative group flex flex-col items-center">
+                <span className="relative z-10 transition-all duration-300 group-hover:text-orange-400">Collections</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/about" className="nav-link uppercase text-sm relative group flex flex-col items-center">
+                <span className="relative z-10 transition-all duration-300 group-hover:text-blue-400">About</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/contact" className="nav-link uppercase text-sm relative group flex flex-col items-center">
+                <span className="relative z-10 transition-all duration-300 group-hover:text-green-400">Contact</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         {/* Search & Cart with more dramatic effects */}
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-col items-center space-y-4">
           {searchOpen ? (
             <div className="fixed inset-0 bg-black z-50 flex flex-col">
               <div className="absolute inset-0 noise opacity-5"></div>
@@ -232,6 +207,49 @@ const Navbar = () => {
               <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Button>
           </Link>
+        </div>
+
+        {/* Mobile menu button at bottom on vertical navbar */}
+        <div className="lg:hidden block">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className={`${scrolled ? "text-white" : "text-white"} relative overflow-hidden group`}>
+                <Menu size={24} className="group-hover:animate-button-glitch" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-full bg-black text-white p-0">
+              <div className="flex flex-col p-6 relative">
+                <div className="absolute inset-0 noise opacity-5"></div>
+                <div className="absolute inset-0 scanlines"></div>
+                
+                <div className="flex justify-end mb-8 relative z-10">
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
+                      <X size={24} className="hover:animate-button-glitch" />
+                    </Button>
+                  </SheetTrigger>
+                </div>
+                <div className="space-y-6 relative z-10">
+                  <Link to="/" className="text-3xl font-display uppercase relative overflow-hidden group">
+                    <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-purple-400`} data-text="HOME">HOME</span>
+                  </Link>
+                  <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
+                    <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
+                  </Link>
+                  <Link to="/collections" className="text-3xl font-display uppercase group">
+                    <span className="group-hover:text-orange-400">COLLECTIONS</span>
+                  </Link>
+                  <Link to="/about" className="text-3xl font-display uppercase group">
+                    <span className="group-hover:text-blue-400">ABOUT</span>
+                  </Link>
+                  <Link to="/contact" className="text-3xl font-display uppercase group">
+                    <span className="group-hover:text-green-400">CONTACT</span>
+                  </Link>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
