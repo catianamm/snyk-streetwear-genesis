@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -63,25 +62,14 @@ const Navbar = () => {
     };
   }, []);
 
-  // Dynamic color based on scroll position
-  const dynamicBackground = scrolled 
-    ? `bg-black` 
-    : 'bg-gradient-to-r from-black to-transparent';
-
-  // Dynamic text color based on scroll
-  const dynamicTextColor = scrolled 
-    ? "text-white" 
-    : "text-white";
-
   return (
-    <header className={`fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 ${
-      scrolled 
-        ? 'bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20' 
-        : `${dynamicBackground} text-white border-r border-zinc-200`
-    }`}>
+    <header className="fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
       <div 
         className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
-        style={{ opacity: scrolled ? 1 : 0 }}
+        style={{ 
+          opacity: 1,
+          height: scrolled ? `${100 * scrollProgress}%` : '30%' 
+        }}
       ></div>
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
@@ -186,7 +174,7 @@ const Navbar = () => {
               variant="ghost" 
               size="icon" 
               onClick={() => setSearchOpen(true)}
-              className={`${scrolled ? "text-white" : "text-white"} relative group overflow-hidden`}
+              className="text-white relative group overflow-hidden"
             >
               <Search className="h-5 w-5 group-hover:animate-button-glitch relative z-10" />
               <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -196,12 +184,10 @@ const Navbar = () => {
             <Button 
               variant="ghost" 
               size="icon" 
-              className={`relative ${scrolled ? "text-white" : "text-white"} group-hover:scale-105 transition-transform`}
+              className="relative text-white group-hover:scale-105 transition-transform"
             >
               <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
-              <span className={`absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] ${
-                scrolled ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-gradient-to-r from-pink-500 to-orange-500 text-white'
-              } transition-colors`}>
+              <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] bg-gradient-to-r from-purple-500 to-pink-500 text-white">
                 0
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -213,7 +199,7 @@ const Navbar = () => {
         <div className="lg:hidden block">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className={`${scrolled ? "text-white" : "text-white"} relative overflow-hidden group`}>
+              <Button variant="ghost" size="icon" className="text-white relative overflow-hidden group">
                 <Menu size={24} className="group-hover:animate-button-glitch" />
                 <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </Button>
