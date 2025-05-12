@@ -104,32 +104,32 @@ const Navbar = () => {
           <NavigationMenuList className="flex flex-col space-y-10">
             <NavigationMenuItem>
               <Link to="/" className={`nav-link relative ${glitchText ? 'line-through' : ''} group flex flex-col items-center`}>
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform -rotate-90 origin-center whitespace-nowrap py-10">Home</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Home</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/products" className="nav-link relative overflow-hidden group flex flex-col items-center">
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform -rotate-90 origin-center whitespace-nowrap py-10">Shop</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Shop</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300`}></span>
                 <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center vertical-text transform -rotate-90">SHOP</span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/collections" className="nav-link relative group flex flex-col items-center">
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-orange-400 transform -rotate-90 origin-center whitespace-nowrap py-10">Collections</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-orange-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Collections</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/about" className="nav-link relative group flex flex-col items-center">
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform -rotate-90 origin-center whitespace-nowrap py-10">About</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform -rotate-90 origin-center whitespace-nowrap py-6">About</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/contact" className="nav-link relative group flex flex-col items-center">
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform -rotate-90 origin-center whitespace-nowrap py-10">Contact</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Contact</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
