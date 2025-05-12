@@ -60,7 +60,7 @@ const Navbar = () => {
   // Dynamic color based on scroll position
   const dynamicBackground = scrolled 
     ? `bg-black` 
-    : 'bg-gradient-to-r from-black to-purple-900';
+    : 'bg-gradient-to-r from-black to-gray-800';
 
   // Dynamic text color based on scroll
   const dynamicTextColor = scrolled 
