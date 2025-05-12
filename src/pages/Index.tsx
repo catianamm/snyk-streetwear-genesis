@@ -10,14 +10,14 @@ import { Button } from '@/components/ui/button';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-white text-black">
+    <div className="min-h-screen flex flex-col bg-black text-white">
       <Navbar />
-      <main className="flex-grow ml-20 md:ml-24">
+      <main className="flex-grow">
         <Hero />
         <FeaturedProducts />
         
         {/* Deconstructed Latest Releases section with social commentary */}
-        <section className="py-16 bg-white border-t border-zinc-200 overflow-hidden">
+        <section className="py-16 bg-gradient-to-b from-black via-zinc-900 to-black overflow-hidden border-t border-zinc-800">
           <div className="container-custom">
             <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
               <h2 className="text-xl md:text-2xl font-display uppercase">LATEST RELEASES</h2>
@@ -69,9 +69,9 @@ const Index = () => {
             </div>
             
             <div className="flex justify-center">
-              <Button variant="outline" className="border-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group">
-                <span className="relative z-10 group-hover:text-white transition-colors">VIEW ALL</span>
-                <span className="absolute inset-0 bg-black transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
+              <Button variant="outline" className="border-white hover:bg-white hover:text-black uppercase text-sm px-10 relative overflow-hidden group">
+                <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL</span>
+                <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
               </Button>
             </div>
           </div>
