@@ -35,8 +35,8 @@
       }, true);
     </script>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <!-- Using defer to ensure it loads but doesn't block rendering -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" defer onerror="console.warn('External script failed to load')"></script>
+    <!-- Using async instead of defer to help with loading issues -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" async onerror="console.warn('External script failed to load')"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
