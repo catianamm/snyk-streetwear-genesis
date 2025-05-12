@@ -352,7 +352,7 @@ const Hero = () => {
           <div className="relative group overflow-hidden">
             <div className="aspect-[4/5] overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1507680434567-5739c80be1ac?q=80&w=1974" 
+                src="http://cms.snyk.store/wp-content/uploads/2025/05/image1.png" 
                 alt="Essentials Collection" 
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:contrast-125 parallax-img"
                 data-speed="0.05"
