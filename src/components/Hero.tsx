@@ -91,7 +91,7 @@ const Hero = () => {
                 tracking-wider relative overflow-hidden group"
             >
               <Link to="/about">
-                <Flame className="w-4 h-4 mr-2 group-hover:text-gray-700" />
+                <Flame className="w-4 h-4 mr-2 text-black group-hover:text-gray-700" />
                 <span>Our Story</span>
               </Link>
             </Button>
