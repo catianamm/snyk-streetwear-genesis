@@ -20,12 +20,12 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="group">
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-hidden relative">
         <Link to={`/product/${product.id}`}>
           <img
             src={product.image}
             alt={product.name}
-            className="h-full w-full object-cover object-center group-hover:scale-10 transition-transform duration-500"
+            className="h-full w-full object-cover object-center transition-all duration-500 group-hover:filter group-hover:saturate-150 group-hover:contrast-125"
           />
           {product.isNew && (
             <Badge className="absolute top-2 left-2 bg-black text-white uppercase text-xs font-normal px-2">
