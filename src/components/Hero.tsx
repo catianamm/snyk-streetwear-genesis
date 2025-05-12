@@ -94,7 +94,7 @@ const Hero = () => {
             style={{ transform: `translateX(${scrollIntensity * -20}px)` }}
           >
             <span className="block">DARE TO BE</span>
-            <span className="block text-white shine-text transform -rotate-1"
+            <span className="block text-white shine-text transform-rotate-1"
               style={{ 
                 background: `linear-gradient(90deg, #fff ${scrollIntensity * 10}%, #F97316 ${50 + scrollIntensity * 20}%, #9b87f5 ${100 - scrollIntensity * 10}%)`,
                 backgroundSize: '200% auto',
