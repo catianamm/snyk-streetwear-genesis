@@ -21,8 +21,16 @@
 
   <body>
     <div id="root"></div>
+    <!-- Fallback if CDN is unavailable -->
+    <script>
+      window.addEventListener('error', function(e) {
+        if (e.target && e.target.src && e.target.src.includes('gptengineer.js')) {
+          console.warn('External script failed to load. Continuing with application.');
+        }
+      }, true);
+    </script>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" onerror="console.warn('External script failed to load')"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
