@@ -18,10 +18,7 @@ const TopBar = () => {
           </Button>
           <Button variant="ghost" size="icon" className="text-white hover:text-pink-400 transition-colors">
             <Instagram size={18} />
-          </Button>
-          <Button variant="ghost" size="icon" className="text-white hover:text-blue-400 transition-colors">
-            <Twitter size={18} />
-          </Button>
+          </Button>          
         </div>
         
         {/* Search Button */}
