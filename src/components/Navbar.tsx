@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Search, ShoppingCart, Menu, X } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, Facebook, Instagram, Twitter } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -21,8 +20,9 @@ const Navbar = () => {
   const [glitchText, setGlitchText] = useState(false);
   const [glitchLogo, setGlitchLogo] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
   
-  // Enhanced scroll effect with progress tracking
+  // Enhanced scroll effect with progress tracking and section detection
   useEffect(() => {
     const handleScroll = () => {
       // Track scroll position for progress effects
@@ -36,6 +36,19 @@ const Navbar = () => {
         setScrolled(true);
       } else {
         setScrolled(false);
+      }
+      
+      // Detect active section
+      const sections = ['home', 'products', 'story', 'newsletter'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
       }
     };
     
@@ -65,13 +78,15 @@ const Navbar = () => {
 
   return (
     <header className="fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
+      {/* Dynamic progress indicator */}
       <div 
         className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
         style={{ 
           opacity: 1,
-          height: scrolled ? `${100 * scrollProgress}%` : '30%' 
+          height: `${100 * scrollProgress}%` 
         }}
       ></div>
+      
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
         <div className="flex justify-center relative">
@@ -103,28 +118,44 @@ const Navbar = () => {
         <NavigationMenu orientation="vertical" className="flex flex-col space-y-10">
           <NavigationMenuList className="flex flex-col space-y-10">
             <NavigationMenuItem>
-              <Link to="/" className={`nav-link relative ${glitchText ? 'line-through' : ''} group flex flex-col items-center`}>
+              <Link 
+                to="/" 
+                onClick={() => document.getElementById('home')?.scrollIntoView({behavior: 'smooth'})}
+                className={`nav-link relative ${activeSection === 'home' ? 'text-purple-400' : ''} ${glitchText ? 'line-through' : ''} group flex flex-col items-center`}
+              >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Home</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 ${activeSection === 'home' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/products" className="nav-link relative overflow-hidden group flex flex-col items-center">
+              <Link 
+                to="/products" 
+                onClick={() => document.getElementById('products')?.scrollIntoView({behavior: 'smooth'})}
+                className={`nav-link relative overflow-hidden group flex flex-col items-center ${activeSection === 'products' ? 'text-pink-400' : ''}`}
+              >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Shop</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 ${activeSection === 'products' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
                 <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center vertical-text transform -rotate-90">SHOP</span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/collections" className="nav-link relative group flex flex-col items-center">
+              <Link 
+                to="/collections"
+                onClick={() => document.getElementById('story')?.scrollIntoView({behavior: 'smooth'})}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'story' ? 'text-orange-400' : ''}`}
+              >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-orange-400 transform -rotate-90 origin-center whitespace-nowrap py-6">Collections</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 ${activeSection === 'story' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/about" className="nav-link relative group flex flex-col items-center">
+              <Link 
+                to="/about" 
+                onClick={() => document.getElementById('newsletter')?.scrollIntoView({behavior: 'smooth'})}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'newsletter' ? 'text-blue-400' : ''}`}
+              >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform -rotate-90 origin-center whitespace-nowrap py-6">About</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 ${activeSection === 'newsletter' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -135,66 +166,6 @@ const Navbar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* Search & Cart with more dramatic effects */}
-        <div className="flex flex-col items-center space-y-4">
-          {searchOpen ? (
-            <div className="fixed inset-0 bg-black z-50 flex flex-col">
-              <div className="absolute inset-0 noise opacity-5"></div>
-              <div className="absolute inset-0 scanlines"></div>
-              
-              <div className="container-custom py-4 relative z-10">
-                <div className="flex justify-between items-center mb-8">
-                  <div className="w-8"></div>
-                  <Link to="/" className="h-12">
-                    <img 
-                      src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
-                      alt="Snyk Logo" 
-                      className="h-full w-auto"
-                    />
-                  </Link>
-                  <button 
-                    onClick={() => setSearchOpen(false)}
-                    className="text-white hover:text-gray-300 transition-colors"
-                  >
-                    <X size={20} className="hover:animate-button-glitch" />
-                  </button>
-                </div>
-                <div className="w-full max-w-xl mx-auto">
-                  <input
-                    type="text"
-                    placeholder="SEARCH"
-                    className="w-full p-2 border-b border-zinc-700 text-lg uppercase focus:outline-none bg-transparent text-white"
-                    autoFocus
-                  />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setSearchOpen(true)}
-              className="text-white relative group overflow-hidden"
-            >
-              <Search className="h-5 w-5 group-hover:animate-button-glitch relative z-10" />
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            </Button>
-          )}
-          <Link to="/cart" className="relative group overflow-hidden">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative text-white group-hover:scale-105 transition-transform"
-            >
-              <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                0
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            </Button>
-          </Link>
-        </div>
 
         {/* Mobile menu button at bottom on vertical navbar */}
         <div className="lg:hidden block">

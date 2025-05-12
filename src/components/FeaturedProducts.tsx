@@ -43,9 +43,9 @@ const FeaturedProducts = () => {
   console.log('Display products:', displayProducts);
 
   return (
-    <section className="py-16 bg-white relative overflow-hidden">
-      {/* Glitchy scanlines effect */}
-      <div className="scanlines absolute inset-0 pointer-events-none"></div>
+    <section id="products" className="py-16 bg-white relative overflow-hidden">
+      {/* Lighter scanlines effect */}
+      <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
       
       {/* Random noise pattern */}
       <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>

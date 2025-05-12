@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Navbar from '@/components/Navbar';
+import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import BrandStory from '@/components/BrandStory';
@@ -12,8 +13,11 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       <Navbar />
+      <TopBar />
       <main className="flex-grow">
-        <Hero />
+        <section id="home">
+          <Hero />
+        </section>
         <FeaturedProducts />
         
         {/* Deconstructed Latest Releases section with social commentary */}
@@ -77,8 +81,13 @@ const Index = () => {
           </div>
         </section>
         
-        <BrandStory />
-        <Newsletter />
+        <section id="story">
+          <BrandStory />
+        </section>
+        
+        <section id="newsletter">
+          <Newsletter />
+        </section>
       </main>
       <Footer className="ml-20 md:ml-24" />
     </div>

@@ -200,12 +200,12 @@
     z-index: 5;
   }
   
-  /* Scanlines effect */
+  /* Scanlines effect - made lighter */
   .scanlines {
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0) 50%,
-      rgba(0, 0, 0, 0.1) 50%
+      rgba(0, 0, 0, 0.05) 50%
     );
     background-size: 100% 4px;
     z-index: 2;
@@ -220,6 +220,13 @@
     100% {
       transform: translateY(20px);
     }
+  }
+  
+  /* Vertical text for navbar */
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
   }
   
   /* Digital noise pattern */
@@ -607,6 +614,7 @@
     0%, 100% { opacity: 0.1; }
     50% { opacity: 0.2; }
   }
+  
   /* Enhanced RGB shift and glitch effects */
   .rgb-shift {
     position: absolute;
