@@ -56,9 +56,9 @@ const Hero = () => {
           
           <h1 className={`text-5xl md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none 
             mega-glitch ${glitchActive ? 'glitching' : ''}`}
-            data-text="BREAK THE RULES">
-            <span className="block">BREAK</span>
-            <span className="block text-white shine-text transform -rotate-1">THE RULES</span>
+            data-text="BE YOURSELF">
+            <span className="block">BE</span>
+            <span className="block text-white shine-text transform -rotate-1">YOURSELF</span>
           </h1>
           
           <p className="text-lg md:text-xl max-w-md mb-8 text-zinc-300">
