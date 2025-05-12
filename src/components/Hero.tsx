@@ -70,7 +70,7 @@ const Hero = () => {
         style={{ opacity: 0.3 + (scrollIntensity * 0.2) }}
       ></div>
       
-      {/* Scroll-reactive color overlay */}
+      {/* Scroll-reactive color overlay with purple */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-pink-900/10 pointer-events-none z-10"
         style={{ opacity: scrollIntensity * 0.5 }}
@@ -98,8 +98,8 @@ const Hero = () => {
               className={`block text-transparent bg-clip-text transition-all duration-300`}
               style={{ 
                 backgroundImage: scrollIntensity > 0.5 
-                  ? 'linear-gradient(90deg, #9b87f5 10%, #F97316 50%, #ffffff 90%)' 
-                  : 'linear-gradient(90deg, #fff 10%, #F97316 50%, #9b87f5 90%)',
+                  ? 'linear-gradient(90deg, #9b87f5 0%, #F97316 50%, #7E69AB 100%)' 
+                  : 'linear-gradient(90deg, #fff 0%, #F97316 50%, #9b87f5 100%)',
                 backgroundSize: '200% auto',
                 backgroundPosition: `${scrollIntensity * 100}% center`,
                 WebkitBackgroundClip: 'text',
@@ -124,7 +124,9 @@ const Hero = () => {
               onMouseEnter={() => setHoverGlitch(true)}
               onMouseLeave={() => setHoverGlitch(false)}
               style={{ 
-                background: scrollIntensity > 0.5 ? 'linear-gradient(to right, #9b87f5, #F97316)' : 'white',
+                background: scrollIntensity > 0.5 
+                  ? 'linear-gradient(to right, #9b87f5, #F97316, #6E59A5)' 
+                  : 'white',
                 color: scrollIntensity > 0.5 ? 'white' : 'black'
               }}
             >
@@ -196,7 +198,7 @@ const Hero = () => {
               style={{ opacity: 0.1 + (scrollIntensity * 0.4) }}
             ></div>
             
-            {/* Abstract geometric overlay with scroll-based animation */}
+            {/* Abstract geometric overlay with scroll-based animation and purple */}
             <svg 
               className="absolute inset-0 w-full h-full z-10 opacity-30" 
               viewBox="0 0 100 100" 
@@ -211,20 +213,20 @@ const Hero = () => {
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#ffffff" stopOpacity={0.7 - scrollIntensity * 0.2}></stop>
-                  <stop offset="100%" stopColor={scrollIntensity > 0.5 ? "#9b87f5" : "#cccccc"} stopOpacity={0.3 + scrollIntensity * 0.4}></stop>
+                  <stop offset="100%" stopColor={scrollIntensity > 0.5 ? "#8B5CF6" : "#cccccc"} stopOpacity={0.3 + scrollIntensity * 0.4}></stop>
                 </linearGradient>
               </defs>
             </svg>
           </div>
           
-          {/* Secondary floating image with enhanced scroll effects */}
+          {/* Secondary floating image with enhanced scroll effects and purple tones */}
           <div 
             className="absolute bottom-10 right-10 w-40 h-56 overflow-hidden border-2 border-white z-20
               transform rotate-6 shadow-lg hidden md:block"
             style={{ 
               transform: `rotate(${6 + scrollIntensity * 6}deg) translateY(${-scrollIntensity * 30}px)`,
-              borderColor: scrollIntensity > 0.5 ? '#9b87f5' : 'white',
-              boxShadow: `0 10px 25px rgba(155, 135, 245, ${0.2 + scrollIntensity * 0.4})`
+              borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
+              boxShadow: `0 10px 25px rgba(139, 92, 246, ${0.2 + scrollIntensity * 0.4})`
             }}
           >
             <img 
@@ -236,7 +238,7 @@ const Hero = () => {
             />
             <div 
               className="absolute inset-0 bg-gradient-to-t from-zinc-500/30 to-transparent"
-              style={{ background: `linear-gradient(to top, rgba(155, 135, 245, ${0.3 + scrollIntensity * 0.3}) 0%, transparent 100%)` }}
+              style={{ background: `linear-gradient(to top, rgba(139, 92, 246, ${0.3 + scrollIntensity * 0.3}) 0%, transparent 100%)` }}
             ></div>
           </div>
         </div>
@@ -249,12 +251,12 @@ const Hero = () => {
       >
         <span 
           className="text-xs uppercase tracking-widest mb-2 opacity-70"
-          style={{ color: scrollIntensity > 0.3 ? '#9b87f5' : 'white' }}
+          style={{ color: scrollIntensity > 0.3 ? '#8B5CF6' : 'white' }}
         >Scroll</span>
         <div 
           className="w-px h-6 bg-white opacity-50 animate-bounce"
           style={{ 
-            background: `linear-gradient(to bottom, white, ${scrollIntensity > 0.5 ? '#9b87f5' : 'white'})`,
+            background: `linear-gradient(to bottom, white, ${scrollIntensity > 0.5 ? '#8B5CF6' : 'white'})`,
             height: `${6 - scrollIntensity * 3}px` 
           }}
         ></div>
@@ -280,7 +282,7 @@ const Hero = () => {
                 style={{ 
                   background: `linear-gradient(to top right, 
                     rgba(0,0,0,${scrollIntensity * 0.3}), 
-                    rgba(155,135,245,${scrollIntensity * 0.2}))`
+                    rgba(139,92,246,${scrollIntensity * 0.2}))`
                 }}
               ></div>
               
@@ -289,7 +291,7 @@ const Hero = () => {
                 <div 
                   className="w-full h-full opacity-50"
                   style={{ 
-                    background: scrollIntensity > 0.5 ? 'linear-gradient(45deg, #9b87f5, #F97316)' : 'white',
+                    background: scrollIntensity > 0.5 ? 'linear-gradient(45deg, #8B5CF6, #F97316)' : 'white',
                     opacity: 0.5 + (scrollIntensity * 0.3)
                   }}
                 ></div>
@@ -300,14 +302,14 @@ const Hero = () => {
                 className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm px-4 py-2 z-10 
                   transform rotate-3 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{ 
-                  borderColor: scrollIntensity > 0.5 ? '#9b87f5' : 'white',
+                  borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
                   transform: `rotate(${3 + scrollIntensity * 2}deg) translateY(${-scrollIntensity * 10}px)`,
                   background: `rgba(0,0,0,${0.8 - scrollIntensity * 0.3})`
                 }}
               >
                 <span 
                   className="text-xs uppercase tracking-widest"
-                  style={{ color: scrollIntensity > 0.5 ? '#9b87f5' : 'white' }}
+                  style={{ color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white' }}
                 >Experimental</span>
               </div>
             </div>
@@ -315,15 +317,15 @@ const Hero = () => {
               <div>
                 <h2 
                   className="text-lg md:text-xl font-display uppercase mb-2 group-hover:text-white transition-colors"
-                  style={{ color: scrollIntensity > 0.5 ? '#9b87f5' : 'white' }}
+                  style={{ color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white' }}
                 >
                   SUMMER 2025
                 </h2>
                 <Button asChild variant="outline" 
                   className="border-white text-white hover:bg-white hover:text-black uppercase text-sm px-8 relative overflow-hidden group"
                   style={{ 
-                    borderColor: scrollIntensity > 0.5 ? '#9b87f5' : 'white',
-                    color: scrollIntensity > 0.5 ? '#9b87f5' : 'white'
+                    borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
+                    color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white'
                   }}
                 >
                   <Link to="/collections/summer2025">
@@ -336,7 +338,7 @@ const Hero = () => {
               <div 
                 className="text-xs uppercase opacity-50 rotate-90 origin-bottom-right pb-6"
                 style={{ 
-                  color: scrollIntensity > 0.5 ? '#F97316' : 'white',
+                  color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
                   opacity: 0.5 + (scrollIntensity * 0.3)
                 }}
               >
@@ -365,7 +367,7 @@ const Hero = () => {
                 style={{ 
                   background: `linear-gradient(to bottom, 
                     transparent,
-                    rgba(155,135,245,${scrollIntensity * 0.1}), 
+                    rgba(139,92,246,${scrollIntensity * 0.1}), 
                     rgba(0,0,0,${0.4 + scrollIntensity * 0.2}))`,
                   opacity: scrollIntensity * 0.5
                 }}
@@ -376,7 +378,7 @@ const Hero = () => {
                 className={`absolute inset-0 border-2 scale-95 opacity-0 
                   group-hover:opacity-60 transition-all duration-700 group-hover:scale-90 group-hover:rotate-3`}
                 style={{ 
-                  borderColor: scrollIntensity > 0.5 ? '#F97316' : 'white',
+                  borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
                   opacity: scrollIntensity * 0.6,
                   transform: `scale(${0.95 - scrollIntensity * 0.05}) rotate(${scrollIntensity * 3}deg)`
                 }}
@@ -388,15 +390,15 @@ const Hero = () => {
             >
               <h2 
                 className="text-lg md:text-xl font-display uppercase mb-2 group-hover:text-white transition-colors"
-                style={{ color: scrollIntensity > 0.5 ? '#F97316' : 'white' }}
+                style={{ color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white' }}
               >
                 ESSENTIALS
               </h2>
               <Button asChild variant="outline" 
                 className="border-white text-white hover:bg-white hover:border-white hover:text-black uppercase text-sm px-8 relative overflow-hidden group"
                 style={{ 
-                  borderColor: scrollIntensity > 0.5 ? '#F97316' : 'white',
-                  color: scrollIntensity > 0.5 ? '#F97316' : 'white'
+                  borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
+                  color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white'
                 }}
               >
                 <Link to="/collections/essentials">
