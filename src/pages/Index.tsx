@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-black text-white">
       <Navbar />
       <TopBar />
-      <main className="flex-grow">
+      <main className="flex-grow ml-20 md:ml-24">
         <section id="home">
           <Hero />
         </section>

@@ -52,7 +52,7 @@ const FeaturedProducts = () => {
       
       <div className="container-custom relative z-10">
         <h2 
-          className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
+          className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
           data-text="FEATURED PRODUCTS"
         >
           <span className="relative">
@@ -67,7 +67,7 @@ const FeaturedProducts = () => {
         {loading && (
           <div className="text-center py-12 flex flex-col items-center justify-center space-y-4">
             <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
-            <p className="text-lg glitch-text">Loading products from WooCommerce...</p>
+            <p className="text-lg glitch-text text-black">Loading products from WooCommerce...</p>
           </div>
         )}
         
@@ -91,7 +91,7 @@ const FeaturedProducts = () => {
                     <ProductCard product={product} />
                   </div>
                 )) : 
-                <div className="col-span-full text-center py-12">
+                <div className="col-span-full text-center py-12 text-black">
                   <p>No products found. Please add products in your WooCommerce store.</p>
                 </div>
               }
@@ -100,7 +100,7 @@ const FeaturedProducts = () => {
             <div className="flex justify-center mt-12">
               <Button asChild variant="outline" className="border-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group brutal-button">
                 <Link to="/products">
-                  <span className="relative z-10 group-hover:text-white transition-colors">VIEW ALL</span>
+                  <span className="relative z-10 group-hover:text-white transition-colors text-black">VIEW ALL</span>
                   <span className="absolute inset-0 bg-black transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                   <span className="glitch-hover-effect"></span>
                 </Link>
