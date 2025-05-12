@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -82,16 +81,16 @@ const Navbar = () => {
                     <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-gray-300`} data-text="HOME">HOME</span>
                   </Link>
                   <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'translate-x-[3px] text-[#F97316]' : ''} transition-all group-hover:text-[#D946EF]`} data-text="SHOP">SHOP</span>
+                    <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-gray-300`} data-text="SHOP">SHOP</span>
                   </Link>
                   <Link to="/collections" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-[#0EA5E9]">COLLECTIONS</span>
+                    <span className="group-hover:text-gray-300">COLLECTIONS</span>
                   </Link>
                   <Link to="/about" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-[#9b87f5]">ABOUT</span>
+                    <span className="group-hover:text-gray-300">ABOUT</span>
                   </Link>
                   <Link to="/contact" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-[#F97316]">CONTACT</span>
+                    <span className="group-hover:text-gray-300">CONTACT</span>
                   </Link>
                 </div>
               </div>
@@ -128,24 +127,24 @@ const Navbar = () => {
         {/* Desktop Navigation - with enhanced hover effects */}
         <nav className="hidden lg:flex space-x-10">
           <Link to="/" className={`nav-link uppercase text-sm relative ${glitchText ? 'line-through' : ''} group`}>
-            <span className="relative z-10 transition-all duration-300 group-hover:text-[#9b87f5]">Home</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Home</span>
             <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
           </Link>
           <Link to="/products" className="nav-link uppercase text-sm relative overflow-hidden group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-[#F97316]">Shop</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Shop</span>
             <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
             <span className="absolute top-0 left-0 w-full h-full bg-black text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">SHOP</span>
           </Link>
           <Link to="/collections" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-[#D946EF]">Collections</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Collections</span>
             <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
           </Link>
           <Link to="/about" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-[#0EA5E9]">About</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">About</span>
             <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
           </Link>
           <Link to="/contact" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-[#8B5CF6]">Contact</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Contact</span>
             <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
           </Link>
         </nav>
@@ -164,12 +163,12 @@ const Navbar = () => {
                     <img 
                       src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                       alt="Snyk Logo" 
-                      className="h-full w-auto"
+                      className="h-full w-auto invert"
                     />
                   </Link>
                   <button 
                     onClick={() => setSearchOpen(false)}
-                    className="text-white hover:text-[#F97316] transition-colors"
+                    className="text-white hover:text-gray-300 transition-colors"
                   >
                     <X size={20} className="hover:animate-button-glitch" />
                   </button>
@@ -178,7 +177,7 @@ const Navbar = () => {
                   <input
                     type="text"
                     placeholder="SEARCH"
-                    className="w-full p-2 border-b border-zinc-700 text-lg uppercase focus:outline-none bg-transparent text-white focus:border-[#9b87f5]"
+                    className="w-full p-2 border-b border-zinc-700 text-lg uppercase focus:outline-none bg-transparent text-white"
                     autoFocus
                   />
                 </div>
@@ -191,7 +190,7 @@ const Navbar = () => {
               onClick={() => setSearchOpen(true)}
               className={`${scrolled ? "text-white" : "text-black"} relative group overflow-hidden`}
             >
-              <Search className="h-5 w-5 group-hover:animate-button-glitch group-hover:text-[#0EA5E9] relative z-10" />
+              <Search className="h-5 w-5 group-hover:animate-button-glitch relative z-10" />
               <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Button>
           )}
@@ -201,9 +200,9 @@ const Navbar = () => {
               size="icon" 
               className={`relative ${scrolled ? "text-white" : "text-black"} group-hover:scale-105 transition-transform`}
             >
-              <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch group-hover:text-[#D946EF]" />
+              <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
               <span className={`absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] ${
-                scrolled ? 'bg-[#F97316] text-white' : 'bg-black text-white'
+                scrolled ? 'bg-white text-black' : 'bg-black text-white'
               } transition-colors`}>
                 0
               </span>
