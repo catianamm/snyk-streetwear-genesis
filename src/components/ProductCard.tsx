@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             src={product.image}
             alt={product.name}
-            className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            className="h-full w-full object-cover object-center group-hover:scale-10 transition-transform duration-500"
           />
           {product.isNew && (
             <Badge className="absolute top-2 left-2 bg-black text-white uppercase text-xs font-normal px-2">
