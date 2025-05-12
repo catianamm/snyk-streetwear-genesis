@@ -126,20 +126,20 @@ const Navbar = () => {
           <Link to="/" className="h-20 relative group -mt-6 -mb-3 transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
-                src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Glitch" 
                 className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110"
               />
             </div>
             <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-100 transition-all duration-300">
               <img 
-                src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Hover" 
                 className="h-full w-auto translate-x-[4px] translate-y-[2px] scale-110"
               />
             </div>
             <img 
-              src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+              src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
               alt="Snyk Logo" 
               className={`h-full w-auto transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''}`}
             />
