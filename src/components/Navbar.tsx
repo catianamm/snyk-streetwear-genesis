@@ -104,7 +104,7 @@ const Navbar = () => {
           <NavigationMenuList className="flex flex-col space-y-10">
             <NavigationMenuItem>
               <Link to="/" className={`nav-link relative ${glitchText ? 'line-through' : ''} group flex flex-col items-center`}>
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform -rotate-90 origin-center whitespace-nowrap">Home</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform -rotate-90 origin-center whitespace-nowrap p-2">Home</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
