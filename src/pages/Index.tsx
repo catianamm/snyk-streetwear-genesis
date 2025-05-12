@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white text-black">
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow ml-20 md:ml-24">
         <Hero />
         <FeaturedProducts />
         
@@ -80,7 +80,7 @@ const Index = () => {
         <BrandStory />
         <Newsletter />
       </main>
-      <Footer />
+      <Footer className="ml-20 md:ml-24" />
     </div>
   );
 };
