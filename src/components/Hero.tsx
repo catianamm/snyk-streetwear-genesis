@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -93,11 +94,16 @@ const Hero = () => {
             style={{ transform: `translateX(${scrollIntensity * -20}px)` }}
           >
             <span className="block">DARE TO BE</span>
-            <span className="block text-transparent bg-clip-text"
+            <span 
+              className={`block text-transparent bg-clip-text transition-all duration-300`}
               style={{ 
-                backgroundImage: `linear-gradient(90deg, #fff ${scrollIntensity * 10}%, #F97316 ${50 + scrollIntensity * 20}%, #9b87f5 ${100 - scrollIntensity * 10}%)`,
+                backgroundImage: scrollIntensity > 0.5 
+                  ? 'linear-gradient(90deg, #9b87f5 10%, #F97316 50%, #ffffff 90%)' 
+                  : 'linear-gradient(90deg, #fff 10%, #F97316 50%, #9b87f5 90%)',
                 backgroundSize: '200% auto',
-                WebkitBackgroundClip: 'text'
+                backgroundPosition: `${scrollIntensity * 100}% center`,
+                WebkitBackgroundClip: 'text',
+                textShadow: scrollIntensity > 0.7 ? '0 0 5px rgba(155, 135, 245, 0.5)' : 'none'
               }}
             >AUTHENTIC</span>
           </h1>
