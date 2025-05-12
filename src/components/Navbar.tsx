@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,11 +14,19 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [glitchText, setGlitchText] = useState(false);
   const [glitchLogo, setGlitchLogo] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   
-  // Add scroll effect with more extreme transformation
+  // Enhanced scroll effect with progress tracking
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      // Track scroll position for progress effects
+      const scrollPos = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const progress = Math.min(scrollPos / maxScroll, 1);
+      setScrollProgress(progress);
+      
+      // Scrolled state
+      if (scrollPos > 20) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -48,20 +57,34 @@ const Navbar = () => {
     };
   }, []);
 
+  // Dynamic color based on scroll position
+  const dynamicBackground = scrolled 
+    ? `bg-black` 
+    : 'bg-gradient-to-r from-black to-purple-900';
+
+  // Dynamic text color based on scroll
+  const dynamicTextColor = scrolled 
+    ? "text-white" 
+    : "text-white";
+
   return (
-    <header className={`w-full transition-all duration-300 sticky top-0 z-40 ${
+    <header className={`w-full transition-all duration-500 sticky top-0 z-40 ${
       scrolled 
-        ? 'bg-black text-white border-b border-zinc-800 h-16' 
-        : 'bg-white text-black border-b border-zinc-200 h-20'
+        ? 'bg-black text-white border-b border-zinc-800 h-16 shadow-lg shadow-purple-900/20' 
+        : `${dynamicBackground} text-white border-b border-zinc-200 h-20`
     }`}>
+      <div 
+        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
+        style={{ width: `${scrollProgress * 100}%`, opacity: scrolled ? 1 : 0 }}
+      ></div>
       <div className="container-custom h-full flex items-center justify-between">
         {/* Mobile menu with enhanced glitch effect */}
         <div className="lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className={`${scrolled ? "text-white" : "text-black"} relative overflow-hidden group`}>
+              <Button variant="ghost" size="icon" className={`${scrolled ? "text-white" : "text-white"} relative overflow-hidden group`}>
                 <Menu size={24} className="group-hover:animate-button-glitch" />
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-full bg-black text-white p-0">
@@ -78,19 +101,19 @@ const Navbar = () => {
                 </div>
                 <div className="space-y-6 relative z-10">
                   <Link to="/" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-gray-300`} data-text="HOME">HOME</span>
+                    <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-purple-400`} data-text="HOME">HOME</span>
                   </Link>
                   <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-gray-300`} data-text="SHOP">SHOP</span>
+                    <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
                   </Link>
                   <Link to="/collections" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-gray-300">COLLECTIONS</span>
+                    <span className="group-hover:text-orange-400">COLLECTIONS</span>
                   </Link>
                   <Link to="/about" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-gray-300">ABOUT</span>
+                    <span className="group-hover:text-blue-400">ABOUT</span>
                   </Link>
                   <Link to="/contact" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-gray-300">CONTACT</span>
+                    <span className="group-hover:text-green-400">CONTACT</span>
                   </Link>
                 </div>
               </div>
@@ -127,25 +150,25 @@ const Navbar = () => {
         {/* Desktop Navigation - with enhanced hover effects */}
         <nav className="hidden lg:flex space-x-10">
           <Link to="/" className={`nav-link uppercase text-sm relative ${glitchText ? 'line-through' : ''} group`}>
-            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Home</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-purple-400">Home</span>
+            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300`}></span>
           </Link>
           <Link to="/products" className="nav-link uppercase text-sm relative overflow-hidden group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Shop</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
-            <span className="absolute top-0 left-0 w-full h-full bg-black text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">SHOP</span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-pink-400">Shop</span>
+            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300`}></span>
+            <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">SHOP</span>
           </Link>
           <Link to="/collections" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Collections</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-orange-400">Collections</span>
+            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 group-hover:w-full transition-all duration-300`}></span>
           </Link>
           <Link to="/about" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">About</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-blue-400">About</span>
+            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300`}></span>
           </Link>
           <Link to="/contact" className="nav-link uppercase text-sm relative group">
-            <span className="relative z-10 transition-all duration-300 group-hover:text-distort">Contact</span>
-            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-current group-hover:w-full transition-all duration-300 ${scrolled ? 'bg-white' : 'bg-black'}`}></span>
+            <span className="relative z-10 transition-all duration-300 group-hover:text-green-400">Contact</span>
+            <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-300`}></span>
           </Link>
         </nav>
 
@@ -163,7 +186,7 @@ const Navbar = () => {
                     <img 
                       src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                       alt="Snyk Logo" 
-                      className="h-full w-auto invert"
+                      className="h-full w-auto"
                     />
                   </Link>
                   <button 
@@ -188,25 +211,25 @@ const Navbar = () => {
               variant="ghost" 
               size="icon" 
               onClick={() => setSearchOpen(true)}
-              className={`${scrolled ? "text-white" : "text-black"} relative group overflow-hidden`}
+              className={`${scrolled ? "text-white" : "text-white"} relative group overflow-hidden`}
             >
               <Search className="h-5 w-5 group-hover:animate-button-glitch relative z-10" />
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Button>
           )}
           <Link to="/cart" className="relative group overflow-hidden">
             <Button 
               variant="ghost" 
               size="icon" 
-              className={`relative ${scrolled ? "text-white" : "text-black"} group-hover:scale-105 transition-transform`}
+              className={`relative ${scrolled ? "text-white" : "text-white"} group-hover:scale-105 transition-transform`}
             >
               <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
               <span className={`absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] ${
-                scrolled ? 'bg-white text-black' : 'bg-black text-white'
+                scrolled ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' : 'bg-gradient-to-r from-pink-500 to-orange-500 text-white'
               } transition-colors`}>
                 0
               </span>
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </Button>
           </Link>
         </div>
