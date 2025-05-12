@@ -22,9 +22,13 @@
   <body>
     <div id="root"></div>
     <script>
-      // Create a polyfill for import.meta if needed
-      if (typeof window !== 'undefined' && !window.import) {
-        window.import = { meta: { url: document.baseURI } };
+      // Create a more comprehensive polyfill for import.meta
+      if (typeof window !== 'undefined') {
+        window.importMeta = { url: document.baseURI };
+        // Create global import object with meta property if it doesn't exist
+        if (!window.import) {
+          window.import = { meta: window.importMeta };
+        }
       }
       
       // Handle script loading errors gracefully
@@ -35,8 +39,8 @@
       }, true);
     </script>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <!-- Using async instead of defer to help with loading issues -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" async onerror="console.warn('External script failed to load')"></script>
+    <!-- Removed type="module" to avoid MIME type issues -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" onerror="console.warn('External script failed to load')"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
