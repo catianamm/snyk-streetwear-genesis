@@ -22,6 +22,11 @@
   <body>
     <div id="root"></div>
     <script>
+      // Create a polyfill for import.meta if needed
+      if (typeof window !== 'undefined' && !window.import) {
+        window.import = { meta: { url: document.baseURI } };
+      }
+      
       // Handle script loading errors gracefully
       window.addEventListener('error', function(e) {
         if (e.target && e.target.src && e.target.src.includes('gptengineer.js')) {
@@ -30,8 +35,8 @@
       }, true);
     </script>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <!-- Changed from module to regular script to avoid MIME type issues -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" onerror="console.warn('External script failed to load')"></script>
+    <!-- Using defer to ensure it loads but doesn't block rendering -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" defer onerror="console.warn('External script failed to load')"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
