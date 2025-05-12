@@ -38,7 +38,7 @@ const TopBar = () => {
             className="relative text-white group-hover:scale-105 transition-transform"
           >
             <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
-            <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px]  text-white">
               0
             </span>
             <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
