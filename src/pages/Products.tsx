@@ -5,11 +5,29 @@ import ProductCard from '@/components/ProductCard';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Filter, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Products = () => {
   const { products, loading, error } = useProducts();
   const [glitchActive, setGlitchActive] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  
+  // Extract unique categories from products
+  const categories = ["all", ...Array.from(new Set(products.map(product => product.category)))];
+  
+  // Filter products based on selected category
+  const filteredProducts = selectedCategory === "all" 
+    ? products 
+    : products.filter(product => product.category === selectedCategory);
   
   useEffect(() => {
     // Random glitch effects for the section title
@@ -22,7 +40,7 @@ const Products = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
+    <div className="min-h-screen flex flex-col bg-white text-black">
       <Navbar />
       <TopBar />
       
@@ -32,12 +50,66 @@ const Products = () => {
           <div className="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
           <div className="absolute inset-0 noise opacity-10 pointer-events-none"></div>
           
-          <h1 
-            className={`text-3xl md:text-4xl font-display uppercase mb-8 mega-glitch ${glitchActive ? 'glitching' : ''}`}
-            data-text="ALL PRODUCTS"
-          >
-            ALL PRODUCTS
-          </h1>
+          {/* Category filters - desktop view */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <h1 
+              className={`text-3xl md:text-4xl font-display uppercase mb-4 md:mb-0 mega-glitch ${glitchActive ? 'glitching' : ''}`}
+              data-text="ALL PRODUCTS"
+            >
+              ALL PRODUCTS
+            </h1>
+            
+            <div className="flex items-center space-x-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white group">
+                    <Filter size={16} className="mr-2 group-hover:text-white" />
+                    Filter by Category
+                    <ChevronDown size={16} className="ml-2 opacity-70 group-hover:text-white" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuRadioGroup value={selectedCategory} onValueChange={setSelectedCategory}>
+                    {categories.map((category) => (
+                      <DropdownMenuRadioItem key={category} value={category} className="capitalize">
+                        {category === "all" ? "All Products" : category}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          
+          {/* Mobile category filters */}
+          <div className="md:hidden mb-6">
+            <Button 
+              variant="outline" 
+              className="w-full justify-between border-black text-black" 
+              onClick={() => setShowCategoryMenu(!showCategoryMenu)}
+            >
+              {selectedCategory === "all" ? "All Products" : selectedCategory} 
+              <ChevronDown size={16} className={`ml-2 transition-transform ${showCategoryMenu ? 'rotate-180' : ''}`} />
+            </Button>
+            
+            {showCategoryMenu && (
+              <div className="mt-2 border border-gray-200 rounded-md overflow-hidden">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setShowCategoryMenu(false);
+                    }}
+                    className={`w-full px-4 py-2 text-left hover:bg-gray-100 capitalize
+                      ${category === selectedCategory ? 'bg-gray-100' : ''}`}
+                  >
+                    {category === "all" ? "All Products" : category}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           
           <div className="h-px w-full bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 mb-12"></div>
           
@@ -56,22 +128,30 @@ const Products = () => {
           )}
           
           {!loading && !error && (
-            <div className="product-grid">
-              {products.length > 0 ? 
-                products.map((product, index) => (
-                  <div 
-                    key={product.id} 
-                    className={`product-card-wrapper ${index % 2 === 0 ? 'even-product' : 'odd-product'}`}
-                    style={{ animationDelay: `${index * 0.15}s` }}
-                  >
-                    <ProductCard product={product} />
+            <>
+              {/* Category results count */}
+              <div className="mb-6 text-sm">
+                Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+                {selectedCategory !== "all" && <> in <span className="font-semibold capitalize">{selectedCategory}</span></>}
+              </div>
+              
+              <div className="product-grid">
+                {filteredProducts.length > 0 ? 
+                  filteredProducts.map((product, index) => (
+                    <div 
+                      key={product.id} 
+                      className={`product-card-wrapper ${index % 2 === 0 ? 'even-product' : 'odd-product'}`}
+                      style={{ animationDelay: `${index * 0.15}s` }}
+                    >
+                      <ProductCard product={product} />
+                    </div>
+                  )) : 
+                  <div className="col-span-full text-center py-12">
+                    <p>No products found in this category.</p>
                   </div>
-                )) : 
-                <div className="col-span-full text-center py-12">
-                  <p>No products found. Please add products in your WooCommerce store.</p>
-                </div>
-              }
-            </div>
+                }
+              </div>
+            </>
           )}
         </div>
       </main>

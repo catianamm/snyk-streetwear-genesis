@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -39,7 +40,7 @@ const Navbar = () => {
       }
       
       // Detect active section
-      const sections = ['home', 'products', 'story', 'newsletter'];
+      const sections = ['home', 'collections', 'featured', 'latest', 'newsletter'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -121,38 +122,53 @@ const Navbar = () => {
             <NavigationMenuItem>
               <Link 
                 to="/products" 
-                onClick={() => document.getElementById('products')?.scrollIntoView({behavior: 'smooth'})}
-                className={`nav-link relative overflow-hidden group flex flex-col items-center ${activeSection === 'products' ? 'text-pink-400' : ''}`}
+                className={`nav-link relative overflow-hidden group flex flex-col items-center ${activeSection === 'shop' ? 'text-pink-400' : ''}`}
               >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Shop</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 ${activeSection === 'products' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 ${activeSection === 'shop' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
                 <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center vertical-text transform -rotate-90">SHOP</span>
               </Link>
             </NavigationMenuItem>
+            
             <NavigationMenuItem>
               <Link 
-                to="/collections"
-                onClick={() => document.getElementById('story')?.scrollIntoView({behavior: 'smooth'})}
-                className={`nav-link relative group flex flex-col items-center ${activeSection === 'story' ? 'text-orange-400' : ''}`}
+                to="/#collections"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('collections')?.scrollIntoView({behavior: 'smooth'});
+                }}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'collections' ? 'text-orange-400' : ''}`}
               >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-orange-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Collections</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 ${activeSection === 'story' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 ${activeSection === 'collections' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
+            
             <NavigationMenuItem>
               <Link 
-                to="/about" 
-                onClick={() => document.getElementById('newsletter')?.scrollIntoView({behavior: 'smooth'})}
-                className={`nav-link relative group flex flex-col items-center ${activeSection === 'newsletter' ? 'text-blue-400' : ''}`}
+                to="/#featured"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('featured')?.scrollIntoView({behavior: 'smooth'});
+                }}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'featured' ? 'text-purple-400' : ''}`}
               >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform-rotate-90 origin-center whitespace-nowrap py-6">About</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 ${activeSection === 'newsletter' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Featured</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 ${activeSection === 'featured' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
+            
             <NavigationMenuItem>
-              <Link to="/contact" className="nav-link relative group flex flex-col items-center">
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Contact</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-300`}></span>
+              <Link 
+                to="/#latest"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('latest')?.scrollIntoView({behavior: 'smooth'});
+                }}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'latest' ? 'text-blue-400' : ''}`}
+              >
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Latest</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 ${activeSection === 'latest' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -186,14 +202,35 @@ const Navbar = () => {
                   <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
                     <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
                   </Link>
-                  <Link to="/collections" className="text-3xl font-display uppercase group">
+                  <Link 
+                    to="/#collections" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('collections')?.scrollIntoView({behavior: 'smooth'});
+                    }}
+                    className="text-3xl font-display uppercase group"
+                  >
                     <span className="group-hover:text-orange-400">COLLECTIONS</span>
                   </Link>
-                  <Link to="/about" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-blue-400">ABOUT</span>
+                  <Link 
+                    to="/#featured" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('featured')?.scrollIntoView({behavior: 'smooth'});
+                    }}
+                    className="text-3xl font-display uppercase group"
+                  >
+                    <span className="group-hover:text-purple-400">FEATURED</span>
                   </Link>
-                  <Link to="/contact" className="text-3xl font-display uppercase group">
-                    <span className="group-hover:text-green-400">CONTACT</span>
+                  <Link 
+                    to="/#latest" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('latest')?.scrollIntoView({behavior: 'smooth'});
+                    }}
+                    className="text-3xl font-display uppercase group"
+                  >
+                    <span className="group-hover:text-blue-400">LATEST</span>
                   </Link>
                 </div>
               </div>
