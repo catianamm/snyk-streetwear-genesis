@@ -90,10 +90,10 @@ const Hero = () => {
           
           <h1 className={`text-5xl md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none 
             mega-glitch ${glitchActive ? 'glitching' : ''}`}
-            data-text="BE YOURSELF"
+            data-text="DARE TO BE AUTHENTIC"
             style={{ transform: `translateX(${scrollIntensity * -20}px)` }}
           >
-            <span className="block">BE</span>
+            <span className="block">DARE TO BE</span>
             <span className="block text-white shine-text transform -rotate-1"
               style={{ 
                 background: `linear-gradient(90deg, #fff ${scrollIntensity * 10}%, #F97316 ${50 + scrollIntensity * 20}%, #9b87f5 ${100 - scrollIntensity * 10}%)`,
@@ -103,7 +103,7 @@ const Hero = () => {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
-            >YOURSELF</span>
+            >AUTHENTIC</span>
           </h1>
           
           <p className="text-lg md:text-xl max-w-md mb-8 text-zinc-300"
