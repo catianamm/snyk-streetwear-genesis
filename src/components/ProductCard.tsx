@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
       <div className="mt-4">
         <Link to={`/product/${product.id}`}>
-          <h3 className="text-sm uppercase hover:underline">
+          <h3 className="text-sm uppercase text-black hover:underline">
             {product.name}
           </h3>
         </Link>
