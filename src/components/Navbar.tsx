@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,6 +13,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
+import { Progress } from '@/components/ui/progress';
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -22,6 +22,45 @@ const Navbar = () => {
   const [glitchLogo, setGlitchLogo] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
+  const [sectionProgress, setSectionProgress] = useState(0);
+  
+  // Keep track of section positions for progress calculation
+  const sectionRefs = useRef({
+    shop: { start: 0, end: 0, element: null },
+    featured: { start: 0, end: 0, element: null },
+    collections: { start: 0, end: 0, element: null },
+    new: { start: 0, end: 0, element: null }
+  });
+  
+  // Update section positions on load and resize
+  useEffect(() => {
+    const updateSectionPositions = () => {
+      const sections = ['featured', 'collections', 'new', 'shop'];
+      const viewportHeight = window.innerHeight;
+      
+      sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const offsetTop = element.offsetTop;
+          const sectionHeight = element.offsetHeight;
+          
+          sectionRefs.current[section] = {
+            start: offsetTop,
+            end: offsetTop + sectionHeight,
+            element
+          };
+        }
+      });
+    };
+    
+    // Initial update
+    updateSectionPositions();
+    
+    // Update on resize
+    window.addEventListener('resize', updateSectionPositions);
+    return () => window.removeEventListener('resize', updateSectionPositions);
+  }, []);
   
   // Enhanced scroll effect with progress tracking and section detection
   useEffect(() => {
@@ -47,6 +86,17 @@ const Navbar = () => {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
             setActiveSection(section);
+            
+            // Calculate progress within the current section
+            const sectionTop = element.offsetTop;
+            const sectionHeight = element.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            
+            // How far have we scrolled into the section (as a percentage)
+            const sectionScroll = Math.max(0, scrollPos - sectionTop);
+            const sectionProgress = Math.min(100, (sectionScroll / (sectionHeight - viewportHeight * 0.5)) * 100);
+            setSectionProgress(sectionProgress);
+            
             break;
           }
         }
@@ -77,16 +127,30 @@ const Navbar = () => {
     };
   }, []);
 
+  // Function to get gradient color based on active section
+  const getActiveGradient = () => {
+    switch(activeSection) {
+      case 'featured':
+        return 'bg-gradient-to-r from-purple-500 to-pink-500';
+      case 'collections':
+        return 'bg-gradient-to-r from-orange-500 to-yellow-500';
+      case 'new':
+        return 'bg-gradient-to-r from-blue-500 to-cyan-500';
+      case 'shop':
+        return 'bg-gradient-to-r from-pink-500 to-red-500';
+      default:
+        return 'bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500';
+    }
+  };
+
   return (
     <header className="fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
-      {/* Dynamic progress indicator */}
-      <div 
-        className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
-        style={{ 
-          opacity: 1,
-          height: `${100 * scrollProgress}%` 
-        }}
-      ></div>
+      {/* Dynamic progress indicator - now showing section progress */}
+      <Progress 
+        className="absolute right-0 top-0 w-[2px] h-full bg-transparent" 
+        value={sectionProgress}
+        indicatorClassName={getActiveGradient()}
+      />
       
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
@@ -129,7 +193,7 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
 
- <NavigationMenuItem>
+            <NavigationMenuItem>
               <Link 
                 to="/#featured"
                 onClick={(e) => {
@@ -156,8 +220,6 @@ const Navbar = () => {
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 ${activeSection === 'collections' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
-            
-           
             
             <NavigationMenuItem>
               <Link 
