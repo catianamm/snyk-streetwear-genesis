@@ -129,6 +129,20 @@ const Navbar = () => {
                 <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center vertical-text transform -rotate-90">SHOP</span>
               </Link>
             </NavigationMenuItem>
+
+ <NavigationMenuItem>
+              <Link 
+                to="/#featured"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('featured')?.scrollIntoView({behavior: 'smooth'});
+                }}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'featured' ? 'text-purple-400' : ''}`}
+              >
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Featured</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 ${activeSection === 'featured' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
             
             <NavigationMenuItem>
               <Link 
@@ -144,19 +158,7 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
             
-            <NavigationMenuItem>
-              <Link 
-                to="/#featured"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('featured')?.scrollIntoView({behavior: 'smooth'});
-                }}
-                className={`nav-link relative group flex flex-col items-center ${activeSection === 'featured' ? 'text-purple-400' : ''}`}
-              >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Featured</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 ${activeSection === 'featured' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
-              </Link>
-            </NavigationMenuItem>
+           
             
             <NavigationMenuItem>
               <Link 
