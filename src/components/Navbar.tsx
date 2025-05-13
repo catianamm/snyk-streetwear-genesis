@@ -29,7 +29,7 @@ const Navbar = () => {
       // Track scroll position for progress effects
       const scrollPos = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollPos / maxScroll, 2);
+      const progress = Math.min(scrollPos / maxScroll, 3);
       setScrollProgress(progress);
       
       // Scrolled state
