@@ -126,7 +126,6 @@ const Navbar = () => {
               >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Shop</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 ${activeSection === 'shop' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
-                <span className="absolute top-0 left-0 w-full h-full bg-black text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center vertical-text transform -rotate-90">SHOP</span>
               </Link>
             </NavigationMenuItem>
 
