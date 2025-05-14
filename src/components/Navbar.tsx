@@ -78,7 +78,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="fixed left-0 top-0 h-full w-20 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
+    <header className="fixed left-0 top-0 h-full w-16 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
       {/* Dynamic progress indicator */}
       <div 
         className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
