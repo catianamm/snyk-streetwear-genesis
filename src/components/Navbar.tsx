@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
+import { Progress } from '@/components/ui/progress';
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -26,14 +26,15 @@ const Navbar = () => {
   // Enhanced scroll effect with progress tracking and section detection
   useEffect(() => {
     const handleScroll = () => {
-      // Track scroll position for progress effects
+      // Track scroll position for progress effects - changed to respond to fewer scrolls
       const scrollPos = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollPos / maxScroll, 1);
+      // Amplify the scroll progress to make it respond more quickly
+      const progress = Math.min((scrollPos / maxScroll) * 1.5, 1);
       setScrollProgress(progress);
       
-      // Scrolled state
-      if (scrollPos > 20) {
+      // Scrolled state - reduced threshold from 20 to 10
+      if (scrollPos > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -79,14 +80,22 @@ const Navbar = () => {
 
   return (
     <header className="fixed left-0 top-0 h-full max-w-16 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
-      {/* Dynamic progress indicator */}
-      <div 
-        className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
-        style={{ 
-          opacity: 1,
-          height: `${100 * scrollProgress}%` 
-        }}
-      ></div>
+      {/* Enhanced multi-color gradient indicator */}
+      <div className="absolute right-0 top-0 w-[2px] h-full overflow-hidden">
+        <div 
+          className="absolute right-0 top-0 w-full h-full transition-all duration-300"
+          style={{ 
+            background: `linear-gradient(to bottom, 
+              #8B5CF6 0%, 
+              #D946EF 25%, 
+              #F97316 50%, 
+              #0EA5E9 75%, 
+              #6E59A5 100%)`,
+            height: `${Math.max(5, 100 * scrollProgress)}%`,
+            opacity: 1
+          }}
+        ></div>
+      </div>
       
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
