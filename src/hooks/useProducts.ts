@@ -26,13 +26,8 @@ export const useProducts = () => {
             description: "Using mock data instead",
             variant: "destructive"
           });
-        } else {
-          toast({
-            title: "Products loaded",
-            description: `Successfully loaded ${productData.length} products`,
-            variant: "default"
-          });
         }
+        // Removed the success toast notification
         
         setLoading(false);
         setError(null);
