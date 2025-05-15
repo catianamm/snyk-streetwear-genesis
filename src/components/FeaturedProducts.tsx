@@ -50,7 +50,7 @@ const FeaturedProducts = () => {
       {/* Random noise pattern */}
       <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>
       
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 min-h-screen">
         <h2 
           className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
           data-text="FEATURED PRODUCTS"
