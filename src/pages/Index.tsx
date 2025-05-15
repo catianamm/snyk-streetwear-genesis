@@ -26,7 +26,7 @@ const Index = () => {
           </section>
           
           {/* Collections section with full height */}
-          <section id="collections" className="min-h-screen py-16 bg-gradient-to-b from-black via-zinc-900 to-black overflow-hidden border-t border-zinc-800">
+          <section id="collections" className="min-h-screen py-16 bg-white overflow-hidden border-t border-zinc-800">
             <div className="container-custom h-full flex flex-col">
               <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
                 <h2 className="text-xl md:text-2xl font-display uppercase">COLLECTIONS</h2>
