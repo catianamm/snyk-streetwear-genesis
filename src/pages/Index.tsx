@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
@@ -12,6 +11,28 @@ import { Link } from 'react-router-dom';
 import { Package } from 'lucide-react';
 
 const Index = () => {
+  // Add the missing variables
+  const [glitchActive, setGlitchActive] = useState(false);
+  const [textGlitch, setTextGlitch] = useState(false);
+  
+  // Create random glitch effects at intervals
+  useEffect(() => {
+    const glitchInterval = setInterval(() => {
+      setGlitchActive(true);
+      setTimeout(() => setGlitchActive(false), 200);
+    }, 3000);
+    
+    const textGlitchInterval = setInterval(() => {
+      setTextGlitch(true);
+      setTimeout(() => setTextGlitch(false), 300);
+    }, 5000);
+    
+    return () => {
+      clearInterval(glitchInterval);
+      clearInterval(textGlitchInterval);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       <Navbar />
@@ -181,8 +202,6 @@ const Index = () => {
               </div>
             </div>
           </section>
-          
-      
           
           <section id="newsletter" className="">
             <Newsletter />
