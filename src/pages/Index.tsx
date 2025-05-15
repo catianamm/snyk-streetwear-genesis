@@ -192,10 +192,10 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="flex justify-center mt-auto pb-12">
+              <div className="flex justify-center mt-auto pb-40">
                 <Button asChild variant="outline" className="border-black text-black hover:bg-white hover:text-black uppercase text-sm px-10 relative overflow-hidden group">
                   <Link to="/products">
-                    <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL LATEST</span>
+                    <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL NEW ARRIVALS</span>
                     <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                   </Link>
                 </Button>
