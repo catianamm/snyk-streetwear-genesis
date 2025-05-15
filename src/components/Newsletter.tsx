@@ -13,7 +13,7 @@ const Newsletter = () => {
       {/* Subtle scanlines */}
       <div className="absolute inset-0 scanlines opacity-5"></div>
       
-      <div className="container-custom relative z-10">
+      <div className="container-custom  z-10">
         <div className="max-w-lg mx-auto">
           <h2 className="text-xl md:text-2xl font-display uppercase mb-6 text-center text-zinc-100">Newsletter</h2>
           <p className="text-center mb-8 text-sm text-zinc-400">
