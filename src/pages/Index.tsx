@@ -20,7 +20,7 @@ const Index = () => {
         <section id="home" className="min-h-screen">
           <Hero />
         </section>
-        <div className="ml-20 md:ml-24">
+        <div className="ml-8 md:ml-10">
           <section id="featured" className="min-h-screen">
             <FeaturedProducts />
           </section>
