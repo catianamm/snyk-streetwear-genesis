@@ -197,9 +197,7 @@ const Navbar = () => {
                   </SheetTrigger>
                 </div>
                 <div className="space-y-6 relative z-10">
-                  <Link to="/" className="text-3xl font-display uppercase relative overflow-hidden group">
-                    <span className={`inline-block ${glitchText ? 'mega-glitch glitching' : ''} group-hover:text-purple-400`} data-text="HOME">HOME</span>
-                  </Link>
+                 
                   <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
                     <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
                   </Link>
