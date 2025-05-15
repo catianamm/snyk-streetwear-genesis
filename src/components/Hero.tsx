@@ -11,7 +11,7 @@ const Hero = () => {
   const { scrollIntensity, glitchActive, heroRef } = useScrollEffects();
 
   return (
-    <section ref={heroRef} className="relative bg-black text-white overflow-hidden ml-20 md:ml-24">
+    <section ref={heroRef} className="relative bg-black text-white overflow-hidden ml-14 md:ml-16">
       <HeroBackgroundEffects scrollIntensity={scrollIntensity} />
       
       {/* Main hero area with split design */}
