@@ -35,22 +35,7 @@ const HeroButtons: React.FC<HeroButtonsProps> = ({ scrollIntensity }) => {
         </Link>
       </Button>
       
-      <Button
-        asChild
-        size="lg"
-        variant="outline"
-        className="border-white text-white hover:bg-white hover:text-black uppercase 
-          tracking-wider relative overflow-hidden group"
-        style={{ 
-          borderColor: scrollIntensity > 0.1 ? '#9b87f5' : 'white',
-          color: scrollIntensity > 0.1 ? '#9b87f5' : 'white'
-        }}
-      >
-        <Link to="/about">
-          <Flame className="w-4 h-4 mr-2 text-white group-hover:text-black" />
-          <span>Our Story</span>
-        </Link>
-      </Button>
+     
     </div>
   );
 };
