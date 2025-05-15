@@ -9,17 +9,17 @@ export const useProducts = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState<number>(0);
-  const maxRetries = 3; // Increased max retries
+  const maxRetries = 3;
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        console.log('Fetching products in useProducts hook');
+        console.log(`[useProducts] Fetching products, attempt ${retryCount + 1}`);
         setLoading(true);
         
         // Fetch products from WooCommerce API
         const productData = await fetchProducts();
-        console.log('Products fetched in hook:', productData);
+        console.log('[useProducts] Products fetched:', productData);
         setProducts(productData);
         
         if (productData.length === 0) {
@@ -39,10 +39,10 @@ export const useProducts = () => {
         setLoading(false);
         setError(null);
       } catch (err) {
-        console.error('Failed to fetch products:', err);
+        console.error('[useProducts] Failed to fetch products:', err);
         
         if (retryCount < maxRetries) {
-          console.log(`Retrying... Attempt ${retryCount + 1} of ${maxRetries}`);
+          console.log(`[useProducts] Retrying... Attempt ${retryCount + 1} of ${maxRetries}`);
           setRetryCount(prev => prev + 1);
           // Don't set error or loading state yet, as we're retrying
         } else {

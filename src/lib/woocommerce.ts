@@ -1,5 +1,6 @@
 
 import { ProductType } from '@/components/ProductCard';
+import { toast } from "@/components/ui/use-toast";
 
 // WooCommerce REST API endpoint
 const API_URL = 'https://cms.snyk.store/wp-json/wc/v3';
@@ -9,7 +10,8 @@ const consumerKey = import.meta.env.VITE_WC_CONSUMER_KEY || 'ck_55c495ad83d72567
 const consumerSecret = import.meta.env.VITE_WC_CONSUMER_SECRET || 'cs_22d4d9f95d58986873e1c09054cd89b0b346cac6';
 
 // CORS Proxy to avoid CORS issues in development
-const CORS_PROXY = 'https://corsproxy.io/?';
+// Using different CORS proxy as an alternative
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
 // Helper function to create authentication header
 const getAuthHeader = () => {
@@ -22,8 +24,29 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
     console.log(`Fetching from WooCommerce API: ${API_URL}${endpoint}`);
     
     const targetUrl = `${API_URL}${endpoint}`;
-    const proxyUrl = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
+    // Try direct API access first, then fallback to proxy
+    try {
+      console.log('Trying direct API access to:', targetUrl);
+      const directResponse = await fetch(targetUrl, {
+        headers: {
+          'Authorization': getAuthHeader(),
+          'Content-Type': 'application/json',
+        },
+        ...options,
+      });
+      
+      if (directResponse.ok) {
+        const data = await directResponse.json();
+        console.log('Direct API access successful:', data);
+        return data;
+      }
+      console.log('Direct API access failed, trying with proxy...');
+    } catch (directError) {
+      console.log('Direct API access error, trying with proxy:', directError);
+    }
     
+    // Fallback to proxy
+    const proxyUrl = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
     console.log('Using proxy URL:', proxyUrl);
     
     const response = await fetch(proxyUrl, {
@@ -36,12 +59,12 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Response not OK:', response.status, errorText);
+      console.error('Proxy response not OK:', response.status, errorText);
       throw new Error(`WooCommerce API Error: ${response.status} - ${errorText}`);
     }
     
     const data = await response.json();
-    console.log('WooCommerce API response:', data);
+    console.log('WooCommerce API response via proxy:', data);
     return data;
   } catch (error) {
     console.error('Error fetching from WooCommerce:', error);
@@ -51,6 +74,7 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
 
 // Transform WooCommerce product to our ProductType
 const transformProduct = (wcProduct: any): ProductType => {
+  console.log('Transforming product:', wcProduct.id, wcProduct.name);
   return {
     id: wcProduct.id,
     name: wcProduct.name,
@@ -72,12 +96,21 @@ const transformProduct = (wcProduct: any): ProductType => {
 export const fetchProducts = async (): Promise<ProductType[]> => {
   try {
     console.log('Fetching products from WooCommerce API');
+    toast({
+      title: "Connecting to Store",
+      description: "Fetching products from cms.snyk.store..."
+    });
     
     // Added per_page parameter to get more products and status to ensure we get published products
-    const products = await fetchFromWooCommerce('/products?per_page=20&status=publish');
+    const products = await fetchFromWooCommerce('/products?per_page=50&status=publish');
     
     if (!Array.isArray(products)) {
       console.error('Invalid response format from WooCommerce API:', products);
+      toast({
+        title: "API Error",
+        description: "Received invalid data format from store",
+        variant: "destructive"
+      });
       return getMockProducts();
     }
     
@@ -85,12 +118,24 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     
     if (products.length === 0) {
       console.warn('No products returned from WooCommerce API, using mock data');
+      toast({
+        title: "No products found",
+        description: "No products found in your store. Using fallback data.",
+        variant: "destructive"
+      });
       return getMockProducts();
     }
     
-    return products.map(transformProduct);
+    const transformedProducts = products.map(transformProduct);
+    console.log('Transformed products:', transformedProducts);
+    return transformedProducts;
   } catch (error) {
     console.error('Error fetching products:', error);
+    toast({
+      title: "Connection error",
+      description: "Could not connect to your WooCommerce store",
+      variant: "destructive"
+    });
     // Fallback to mock data if API request fails
     return getMockProducts();
   }
