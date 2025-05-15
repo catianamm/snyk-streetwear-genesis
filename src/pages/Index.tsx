@@ -55,9 +55,9 @@ const Index = () => {
           data-text="FEATURED PRODUCTS"
         >
           <span className="relative">
-            F<span className={`inline-block ${glitchActive ? 'translate-x-[2px] translate-y-[1px]' : ''}`}>E</span>ATURED{' '}
+           
             <span className="relative overflow-hidden">
-              P<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>ROD</span>UCTS
+              C<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>OLLE</span>CTIONS
               {glitchActive && <span className="absolute top-0 left-0 w-full h-full bg-white mix-blend-difference"></span>}
             </span>
           </span>
