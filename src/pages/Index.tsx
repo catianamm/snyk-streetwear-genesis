@@ -181,9 +181,7 @@ const Index = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     
-                    <div className="absolute bottom-4 left-4 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="bg-black/70 px-4 py-2 text-sm uppercase">New Drop</span>
-                    </div>
+                    
                   </div>
                   <div className="mt-4">
                     <h3 className="text-sm uppercase text-white group-hover:text-purple-400 transition-colors">Stock Cap</h3>
@@ -192,8 +190,8 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="flex justify-center mt-auto pb-40">
-                <Button asChild variant="outline" className="border-black text-black hover:bg-white hover:text-black uppercase text-sm px-10 relative overflow-hidden group">
+              <div className="flex justify-center mt-40 pb-12">
+                <Button asChild variant="outline" className="border-black text-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group">
                   <Link to="/products">
                     <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL NEW ARRIVALS</span>
                     <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
