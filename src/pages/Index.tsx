@@ -92,7 +92,7 @@ const Index = () => {
               <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
                 <h2 className="text-xl md:text-2xl font-display uppercase flex items-center">
                   <Package className="mr-2 h-5 w-5" />
-                  LATEST ARRIVALS
+                  NEW ARRIVALS
                 </h2>
                 <span className="text-xs uppercase opacity-60">Fresh Drops</span>
               </div>
@@ -170,9 +170,7 @@ const Index = () => {
             </div>
           </section>
           
-          <section id="story" className="">
-            <BrandStory />
-          </section>
+      
           
           <section id="newsletter" className="">
             <Newsletter />
