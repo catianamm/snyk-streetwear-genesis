@@ -35,7 +35,9 @@ const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
     });
 
     if (!response.ok) {
-      throw new Error(`WooCommerce API Error: ${response.status}`);
+      const errorText = await response.text();
+      console.error('Response not OK:', response.status, errorText);
+      throw new Error(`WooCommerce API Error: ${response.status} - ${errorText}`);
     }
     
     const data = await response.json();
@@ -71,7 +73,8 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
   try {
     console.log('Fetching products from WooCommerce API');
     
-    const products = await fetchFromWooCommerce('/products?status=publish');
+    // Added per_page parameter to get more products and status to ensure we get published products
+    const products = await fetchFromWooCommerce('/products?per_page=20&status=publish');
     
     if (!Array.isArray(products)) {
       console.error('Invalid response format from WooCommerce API:', products);

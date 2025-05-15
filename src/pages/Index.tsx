@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
@@ -11,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { Package } from 'lucide-react';
 
 const Index = () => {
-  // Add the missing variables
+  // Add state variables for glitch effects
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
   
@@ -51,17 +52,16 @@ const Index = () => {
             <div className="container-custom h-full flex flex-col">
               <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
                  <h2 
-          className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
-          data-text="FEATURED PRODUCTS"
-        >
-          <span className="relative">
-           
-            <span className="relative overflow-hidden">
-              C<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>OLLE</span>CTIONS
-              {glitchActive && <span className="absolute top-0 left-0 w-full h-full bg-white mix-blend-difference"></span>}
-            </span>
-          </span>
-        </h2>
+                    className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
+                    data-text="COLLECTIONS"
+                 >
+                    <span className="relative">
+                      <span className="relative overflow-hidden">
+                        C<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>OLLE</span>CTIONS
+                        {glitchActive && <span className="absolute top-0 left-0 w-full h-full bg-white mix-blend-difference"></span>}
+                      </span>
+                    </span>
+                  </h2>
                
                 <span className="text-xs uppercase text-black opacity-60">Question Everything</span>
               </div>
