@@ -29,6 +29,18 @@ const Index = () => {
           <section id="collections" className="min-h-screen py-16 bg-white overflow-hidden border-t border-zinc-800">
             <div className="container-custom h-full flex flex-col">
               <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
+                 <h2 
+          className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
+          data-text="FEATURED PRODUCTS"
+        >
+          <span className="relative">
+            F<span className={`inline-block ${glitchActive ? 'translate-x-[2px] translate-y-[1px]' : ''}`}>E</span>ATURED{' '}
+            <span className="relative overflow-hidden">
+              P<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>ROD</span>UCTS
+              {glitchActive && <span className="absolute top-0 left-0 w-full h-full bg-white mix-blend-difference"></span>}
+            </span>
+          </span>
+        </h2>
                 <h2 className="text-xl md:text-2xl font-display text-black uppercase">COLLECTIONS</h2>
                 <span className="text-xs uppercase opacity-60">Question Everything</span>
               </div>
