@@ -9,7 +9,8 @@ export const consumerKey = import.meta.env.VITE_WC_CONSUMER_KEY || 'ck_55c495ad8
 export const consumerSecret = import.meta.env.VITE_WC_CONSUMER_SECRET || 'cs_22d4d9f95d58986873e1c09054cd89b0b346cac6';
 
 // CORS Proxy to avoid CORS issues in development
-export const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+// Using a different proxy as the current one might be failing
+export const CORS_PROXY = 'https://corsproxy.io/?';
 
 // Helper function to create authentication header
 export const getAuthHeader = () => {

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useProducts } from '@/hooks/useProducts';
 import { Loader2 } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
 
 const FeaturedProducts = () => {
   const { products, loading, error } = useProducts();
@@ -16,10 +15,8 @@ const FeaturedProducts = () => {
   useEffect(() => {
     if (products.length > 0) {
       console.log('Products loaded in FeaturedProducts component:', products);
-      toast({
-        title: "Products loaded",
-        description: `Loaded ${products.length} products successfully`
-      });
+    } else {
+      console.log('No products loaded in FeaturedProducts component');
     }
   }, [products]);
   

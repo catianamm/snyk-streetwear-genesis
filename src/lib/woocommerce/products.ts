@@ -45,11 +45,13 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     console.error('Error fetching products:', error);
     toast({
       title: "Connection error",
-      description: "Could not connect to your WooCommerce store",
+      description: "Could not connect to your WooCommerce store. Using mock data.",
       variant: "destructive"
     });
     // Fallback to mock data if API request fails
-    return getMockProducts();
+    const mockProducts = getMockProducts();
+    console.log('Using mock products:', mockProducts);
+    return mockProducts;
   }
 };
 
