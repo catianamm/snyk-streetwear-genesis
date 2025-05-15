@@ -43,21 +43,7 @@ const ProductFeatures: React.FC<ProductFeaturesProps> = ({ scrollIntensity }) =>
               ></div>
             </div>
             
-            {/* Futuristic element with scroll reactivity */}
-            <div 
-              className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm px-4 py-2 z-10 
-                transform rotate-3 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ 
-                borderColor: scrollIntensity > 0.5 ? '#8B5CF6' : 'white',
-                transform: `rotate(${3 + scrollIntensity * 2}deg) translateY(${-scrollIntensity * 10}px)`,
-                background: `rgba(0,0,0,${0.8 - scrollIntensity * 0.3})`
-              }}
-            >
-              <span 
-                className="text-xs uppercase tracking-widest"
-                style={{ color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white' }}
-              >Experimental</span>
-            </div>
+            
           </div>
           <div className="mt-4 flex justify-between items-end">
             <div>
