@@ -62,8 +62,8 @@ const Index = () => {
             </span>
           </span>
         </h2>
-                <h2 className="text-xl md:text-2xl font-display text-black uppercase">COLLECTIONS</h2>
-                <span className="text-xs uppercase opacity-60">Question Everything</span>
+               
+                <span className="text-xs uppercase text-black opacity-60">Question Everything</span>
               </div>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 flex-grow">
