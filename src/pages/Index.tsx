@@ -170,11 +170,11 @@ const Index = () => {
             </div>
           </section>
           
-          <section id="story" className="min-h-screen">
+          <section id="story" className="">
             <BrandStory />
           </section>
           
-          <section id="newsletter" className="min-h-screen">
+          <section id="newsletter" className="">
             <Newsletter />
           </section>
         </div>
