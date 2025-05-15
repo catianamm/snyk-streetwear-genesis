@@ -29,7 +29,7 @@ const Index = () => {
           <section id="collections" className="min-h-screen py-16 bg-white overflow-hidden border-t border-zinc-800">
             <div className="container-custom h-full flex flex-col">
               <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
-                <h2 className="text-xl md:text-2xl font-display uppercase">COLLECTIONS</h2>
+                <h2 className="text-xl md:text-2xl font-display text-black uppercase">COLLECTIONS</h2>
                 <span className="text-xs uppercase opacity-60">Question Everything</span>
               </div>
               
