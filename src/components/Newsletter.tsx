@@ -7,7 +7,7 @@ const Newsletter = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-black to-zinc-900 relative overflow-hidden border-t border-zinc-800">
       {/* Abstract elements */}
-      <div className="absolute -right-20 top-10 w-40 h-40 border border-zinc-700 opacity-20 rotate-45"></div>
+      <div className="absolute -right-20 top-10 w-40 h-20 border border-zinc-700 opacity-20 rotate-45"></div>
       <div className="absolute -left-10 bottom-10 w-24 h-24 border border-zinc-700 opacity-10 -rotate-12"></div>
       
       {/* Subtle scanlines */}
