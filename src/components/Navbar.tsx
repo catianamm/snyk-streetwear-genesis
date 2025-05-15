@@ -161,7 +161,7 @@ const Navbar = () => {
             
             <NavigationMenuItem>
               <Link 
-                to="/#featured"
+                to="/#latest"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('new')?.scrollIntoView({behavior: 'smooth'});
