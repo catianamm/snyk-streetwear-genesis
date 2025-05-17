@@ -61,6 +61,9 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             <Link to="/terms" className="text-xs hover:text-purple-400 transition-colors">Terms of Service</Link>
           </div>
         </div>
+         {/* Bottom left squares */}
+      <div className="absolute bottom-12 left-32 w-20 h-20 border border-pink-500/20 rotate-45"></div>
+      <div className="absolute bottom-36 left-12 w-6 h-6 bg-purple-500/5"></div>
       </div>
     </footer>
   );
