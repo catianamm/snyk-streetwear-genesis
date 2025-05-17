@@ -47,7 +47,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ selectedCategory, setSe
   };
 
   return (
-    <div className="sticky top-0 z-30 w-full bg-black text-white py-2 border-b border-zinc-800">
+    <div className="sticky top-0 z-30 w-full bg-white text-black py-2 border-b border-zinc-800">
       <div className="container-custom flex justify-center items-center">
         <Menubar className="bg-transparent border-0 flex overflow-x-auto hide-scrollbar">
           {/* All Products Menu Item */}
