@@ -14,7 +14,7 @@ const HeroContentLeft: React.FC<HeroContentLeftProps> = ({ scrollIntensity, glit
     <div className="w-full md:w-1/2 flex flex-col justify-center items-start p-8 md:p-16 z-20 relative">
       <div className={`mb-4 inline-flex items-center text-sm uppercase tracking-widest font-bold 
         ${glitchActive ? 'text-distort' : ''} text-green-400`}
-        style={{ color: `rgb(${200 + scrollIntensity * 55}, ${140 + scrollIntensity * 40}, ${220 + scrollIntensity * 35})` }}
+        style={{ color: `rgb(${200 + scrollIntensity * 60}, ${140 + scrollIntensity * 40}, ${220 + scrollIntensity * 35})` }}
       >
         <Sparkles className="w-4 h-4 mr-2" />
         <span>New Collection 2025</span>
