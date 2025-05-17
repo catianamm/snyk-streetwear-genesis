@@ -20,7 +20,7 @@ const HeroContentLeft: React.FC<HeroContentLeftProps> = ({ scrollIntensity, glit
         <span>New Collection 2025</span>
       </div>
       
-      <h1 className={`text-5xl md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none 
+      <h1 className={`text-5xl md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none text-green-400
         mega-glitch ${glitchActive ? 'glitching' : ''}`}
         data-text="DARE TO BE AUTHENTIC"
         style={{ transform: `translateX(${scrollIntensity * -20}px)` }}
