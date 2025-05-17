@@ -91,7 +91,7 @@ const Navbar = () => {
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - improved for visibility with dark background */}
         <div className="flex flex-start relative">
-          <Link to="/" className="h-24 w-28 ml-36 relative group transform -rotate-3 hover:h-14 hover:w-18 hover:ml-4 hover:-rotate-6 transition-transform duration-500">
+          <Link to="/" className="h-24 w-28 ml-36 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
             <div className={`absolute inset-0 rounded-lg bg-black/80 ${scrolled ? 'opacity-80' : 'opacity-0'} transition-opacity duration-500`}></div>
             
@@ -112,7 +112,7 @@ const Navbar = () => {
             <img 
               src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
               alt="Snyk Logo" 
-              className={`h-full w-auto transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
+              className={`h-14 w-18 ml-4 transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
             />
             <div className="absolute top-0 left-0 h-full w-full noise opacity-10 pointer-events-none"></div>
           </Link>
