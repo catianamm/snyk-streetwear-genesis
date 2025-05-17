@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useProducts } from '@/hooks/useProducts';
 import ProductCard from '@/components/ProductCard';
 import Navbar from '@/components/Navbar';
@@ -7,7 +8,17 @@ import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
 import CategoriesMenu from '@/components/CategoriesMenu';
 import ProductFilter from '@/components/ProductFilter';
-import { Loader2 } from 'lucide-react';
+import { Filter, Loader2 } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Products = () => {
   const { products, loading, error } = useProducts();
@@ -15,6 +26,7 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
   
   // Extract unique categories from products
   const categories = ["all", ...Array.from(new Set(products.map(product => product.category)))];
@@ -60,14 +72,49 @@ const Products = () => {
           <div className="absolute inset-0 pointer-events-none"></div>
           <div className="absolute inset-0 noise pointer-events-none"></div>
           
-          {/* Page header with glitch effect */}
+          {/* Breadcrumbs navigation replacing page header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-            <h1 
-              className={`text-3xl md:text-4xl font-display uppercase mb-4 md:mb-0 mega-glitch ${glitchActive ? 'glitching' : ''}`}
-              data-text="ALL PRODUCTS"
-            >
-              ALL PRODUCTS
-            </h1>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  {selectedCategory !== "all" ? (
+                    <>
+                      <BreadcrumbLink as={Link} to="/products">Products</BreadcrumbLink>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbPage className="capitalize">{selectedCategory}</BreadcrumbPage>
+                    </>
+                  ) : (
+                    <BreadcrumbPage>Products</BreadcrumbPage>
+                  )}
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
+            {/* Filter Button for Sheet Trigger */}
+            <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm" className="mt-4 md:mt-0">
+                  <Filter className="mr-2 h-4 w-4" />
+                  Filters
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0">
+                <ProductFilter 
+                  categories={categories} 
+                  selectedCategory={selectedCategory} 
+                  setSelectedCategory={(category) => {
+                    setSelectedCategory(category);
+                    setSheetOpen(false);
+                  }}
+                  isMobileOpen={true}
+                  setIsMobileOpen={() => setSheetOpen(false)}
+                />
+              </SheetContent>
+            </Sheet>
           </div>
           
           <div className="h-px w-full bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 mb-12"></div>
@@ -87,18 +134,9 @@ const Products = () => {
           )}
           
           {!loading && !error && (
-            <div className="flex flex-col md:flex-row gap-6">
-              {/* Filter sidebar */}
-              <ProductFilter 
-                categories={categories} 
-                selectedCategory={selectedCategory} 
-                setSelectedCategory={setSelectedCategory}
-                isMobileOpen={isMobileFilterOpen}
-                setIsMobileOpen={setIsMobileFilterOpen}
-              />
-              
-              {/* Products grid */}
-              <div className="flex-1">
+            <div className="flex flex-col gap-6">
+              {/* Products grid without the left sidebar filter */}
+              <div className="w-full">
                 {/* Category results count */}
                 <div className="mb-6 text-sm">
                   Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
