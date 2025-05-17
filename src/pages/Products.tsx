@@ -5,6 +5,7 @@ import ProductCard from '@/components/ProductCard';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
+import CategoriesMenu from '@/components/CategoriesMenu';
 import { Loader2, Filter, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -45,6 +46,9 @@ const Products = () => {
       <TopBar />
       
       <main className="flex-grow pt-12 pb-20 ml-20 md:ml-24">
+        {/* Category navigation bar - fixed at top */}
+        <CategoriesMenu selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        
         {/* Page header with glitch effect */}
         <div className="container-custom py-12 relative">
           <div className="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
