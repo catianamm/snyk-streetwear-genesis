@@ -7,6 +7,7 @@ import FeaturedProducts from '@/components/FeaturedProducts';
 import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
+import SquareElements from '@/components/SquareElements';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Package } from 'lucide-react';
@@ -38,6 +39,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-black text-white">
       <Navbar />
       <TopBar />
+      <SquareElements />
       <main className="flex-grow">
         <section id="home" className="min-h-screen">
           <Hero />

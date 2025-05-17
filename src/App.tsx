@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
@@ -13,6 +13,7 @@ import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
 import CollectionDetail from "./pages/CollectionDetail";
+import SquareElements from "./components/SquareElements";
 
 // Create a new QueryClient with better error handling
 const queryClient = new QueryClient({
@@ -25,6 +26,21 @@ const queryClient = new QueryClient({
   },
 });
 
+// Layout component to add square elements to all pages
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  
+  // Don't show squares on index page as they're already added there
+  const showSquares = location.pathname !== '/';
+  
+  return (
+    <>
+      {showSquares && <SquareElements />}
+      {children}
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -33,15 +49,47 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/collections" element={<Collections />} />
-          <Route path="/collections/:slug" element={<CollectionDetail />} />
+          <Route path="/products" element={
+            <PageLayout>
+              <Products />
+            </PageLayout>
+          } />
+          <Route path="/product/:id" element={
+            <PageLayout>
+              <ProductDetail />
+            </PageLayout>
+          } />
+          <Route path="/about" element={
+            <PageLayout>
+              <About />
+            </PageLayout>
+          } />
+          <Route path="/cart" element={
+            <PageLayout>
+              <Cart />
+            </PageLayout>
+          } />
+          <Route path="/checkout" element={
+            <PageLayout>
+              <Checkout />
+            </PageLayout>
+          } />
+          <Route path="/collections" element={
+            <PageLayout>
+              <Collections />
+            </PageLayout>
+          } />
+          <Route path="/collections/:slug" element={
+            <PageLayout>
+              <CollectionDetail />
+            </PageLayout>
+          } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={
+            <PageLayout>
+              <NotFound />
+            </PageLayout>
+          } />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
