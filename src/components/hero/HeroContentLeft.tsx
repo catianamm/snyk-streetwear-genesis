@@ -25,7 +25,7 @@ const HeroContentLeft: React.FC<HeroContentLeftProps> = ({ scrollIntensity, glit
         data-text="DARE TO BE AUTHENTIC"
         style={{ transform: `translateX(${scrollIntensity * -20}px)` }}
       >
-        <span className="block text-green-400">DARE TO BE</span>
+        <span className="block">DARE TO BE</span>
         <HeroGradientText scrollIntensity={scrollIntensity} />
       </h1>
       
@@ -47,7 +47,7 @@ const HeroContentLeft: React.FC<HeroContentLeftProps> = ({ scrollIntensity, glit
         }}
       ></div>
       <div 
-        className="absolute bottom-10 left-10 w-16 h-16 border border-zinc-400 opacity-30 -rotate-12 rotate-on-scroll" 
+        className="absolute bottom-10 left-10 w-16 h-16 border text-green-400 border-zinc-400 opacity-30 -rotate-12 rotate-on-scroll" 
         data-direction="-1"
         style={{ 
           borderColor: `rgba(${249 - scrollIntensity * 50}, ${115 + scrollIntensity * 100}, ${22 + scrollIntensity * 50}, ${0.3 + scrollIntensity * 0.3})` 
