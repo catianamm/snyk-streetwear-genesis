@@ -8,8 +8,7 @@ interface SquareElementsProps {
 const SquareElements: React.FC<SquareElementsProps> = ({ className = "" }) => {
   return (
     <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden ${className}`}>
-      {/* Top left square */}
-      <div className="absolute top-4 left-24 w-12 h-12 border border-purple-500/30 rotate-12"></div>
+     
       
       {/* Top right squares */}
       <div className="absolute top-8 right-8 w-16 h-16 border-2 border-dashed border-zinc-700/20"></div>
