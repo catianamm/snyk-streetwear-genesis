@@ -52,7 +52,7 @@ const Products = () => {
         {/* Page header with glitch effect */}
         <div className="container-custom py-12 relative">
           <div className="absolute inset-0 pointer-events-none"></div>
-          <div className="absolute inset-0 noise opacity-10 pointer-events-none"></div>
+          <div className="absolute inset-0 noise pointer-events-none"></div>
           
           {/* Category filters - desktop view */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
