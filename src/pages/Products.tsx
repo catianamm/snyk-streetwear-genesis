@@ -165,7 +165,7 @@ const Products = () => {
         </div>
       </main>
       
-      <Footer className="ml-20 md:ml-24" />
+      <Footer className="ml-14 md:ml-16" />
     </div>
   );
 };
