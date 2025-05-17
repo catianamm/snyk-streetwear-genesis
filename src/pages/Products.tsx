@@ -45,7 +45,7 @@ const Products = () => {
       <Navbar />
       <TopBar />
       
-      <main className="flex-grow pt-12 pb-20 ml-20 md:ml-24">
+      <main className="flex-grow pt-12 bg-white pb-20 ml-20 md:ml-24">
         {/* Category navigation bar - fixed at top */}
         <CategoriesMenu selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         
