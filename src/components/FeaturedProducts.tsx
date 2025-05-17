@@ -26,7 +26,7 @@ const FeaturedProducts = () => {
   // If no featured products, show first 4 products as featured
   const displayProducts = featuredProducts.length > 0 
     ? featuredProducts 
-    : products.slice(0, 4);
+    : products.slice(0, 6);
 
   useEffect(() => {
     // Random glitch effects for the section title
