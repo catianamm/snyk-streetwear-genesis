@@ -16,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
               <img 
                 src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
                 alt="Snyk Logo" 
-                className="h-6 w-auto invert"
+                className="h-12 w-auto invert"
               />
             </Link>
             <p className="text-sm mt-4 text-zinc-400">
