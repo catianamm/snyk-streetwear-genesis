@@ -51,7 +51,7 @@ const Products = () => {
         
         {/* Page header with glitch effect */}
         <div className="container-custom py-12 relative">
-          <div className="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
+          <div className="absolute inset-0 pointer-events-none"></div>
           <div className="absolute inset-0 noise opacity-10 pointer-events-none"></div>
           
           {/* Category filters - desktop view */}
