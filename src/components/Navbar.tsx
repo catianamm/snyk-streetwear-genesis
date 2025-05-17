@@ -91,7 +91,7 @@ const Navbar = () => {
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - improved for visibility with dark background */}
         <div className="flex flex-start relative">
-          <Link to="/" className="h-24 w-28 ml-20 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
+          <Link to="/" className="h-24 w-28 ml-30 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
             <div className={`absolute inset-0 rounded-lg bg-black/80 ${scrolled ? 'opacity-80' : 'opacity-0'} transition-opacity duration-500`}></div>
             
