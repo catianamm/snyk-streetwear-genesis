@@ -91,7 +91,7 @@ const Navbar = () => {
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - original color preserved */}
         <div className="flex flex-start relative">
-          <Link to="/" className="h-24 w-24 ml-2 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
+          <Link to="/" className="h-24 w-24 ml-20 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
                 src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
