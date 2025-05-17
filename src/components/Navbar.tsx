@@ -222,7 +222,7 @@ const Navbar = () => {
                     }}
                     className="text-3xl font-display uppercase group"
                   >
-                    <span className="group-hover:text-blue-400">NEW</span>
+                    <span className="group-hover:text-green-400">NEW</span>
                   </Link>
                 </div>
               </div>
