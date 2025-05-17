@@ -165,7 +165,7 @@ const Navbar = () => {
                 }}
                 className={`nav-link relative group flex flex-col items-center ${activeSection === 'new' ? 'text-blue-400' : ''}`}
               >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-blue-400 transform-rotate-90 origin-center whitespace-nowrap py-6">New</span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform-rotate-90 origin-center whitespace-nowrap py-6">New</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 ${activeSection === 'new' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
