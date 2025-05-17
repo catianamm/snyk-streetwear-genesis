@@ -12,10 +12,10 @@ const TopBar = () => {
       {/* Fixed top bar for search, cart and social icons */}
       <div className="fixed top-0 right-0 z-50 flex items-center space-x-2 p-4">
         {/* Social Media Icons */}
-        <div className="hidden md:flex items-center  space-x-2 mr-2">
-                    <Button variant="ghost" size="icon" className="text-white relative group overflow-hidden">
+        <div className="hidden md:flex items-center space-x-2 mr-2">
+          <Button variant="ghost" size="icon" className="text-white relative group overflow-hidden">
             <Instagram size={18} />
-                      <span className="absolute inset-0 bg-gradient-to-r group-hover:animate-button-glitch from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+            <span className="absolute inset-0 bg-gradient-to-r group-hover:animate-button-glitch from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
           </Button>          
         </div>
         
@@ -38,7 +38,7 @@ const TopBar = () => {
             className="relative text-white group-hover:scale-105 transition-transform"
           >
             <ShoppingCart className="h-5 w-5 group-hover:animate-button-glitch" />
-            <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px]  text-white">
+            <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center text-[10px] text-white">
               0
             </span>
             <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -57,9 +57,9 @@ const TopBar = () => {
               <div className="w-8"></div>
               <Link to="/" className="h-12">
                 <img 
-                  src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
+                  src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                   alt="Snyk Logo" 
-                  className="h-full w-auto"
+                  className="h-full w-auto drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
                 />
               </Link>
               <button 
