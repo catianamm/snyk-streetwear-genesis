@@ -64,7 +64,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
          {/* Bottom left squares */}
     <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden ${className}`}>
         <div className="absolute bottom-12 left-32 w-20 h-20 border border-pink-500/20 rotate-45"></div>
-      <div className="absolute bottom-36 left-12 w-6 h-6 bg-purple-500/5"></div>
+      
       </div>
         </div>
     </footer>
