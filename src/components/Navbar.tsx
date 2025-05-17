@@ -102,7 +102,7 @@ const Navbar = () => {
                 className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
-            <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-0 transition-all duration-300">
               <img 
                 src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Hover" 
