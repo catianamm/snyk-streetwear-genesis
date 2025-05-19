@@ -77,13 +77,17 @@ const Products = () => {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   {selectedCategory !== "all" ? (
                     <>
-                      <BreadcrumbLink as={Link} to="/products">Products</BreadcrumbLink>
+                      <BreadcrumbLink>
+                        <Link to="/products">Products</Link>
+                      </BreadcrumbLink>
                       <BreadcrumbSeparator />
                       <BreadcrumbPage className="capitalize">{selectedCategory}</BreadcrumbPage>
                     </>
