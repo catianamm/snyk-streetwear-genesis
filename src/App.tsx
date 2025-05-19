@@ -13,6 +13,7 @@ import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
 import CollectionDetail from "./pages/CollectionDetail";
+import ComingSoon from "./pages/ComingSoon";
 import SquareElements from "./components/SquareElements";
 
 // Create a new QueryClient with better error handling
@@ -30,8 +31,8 @@ const queryClient = new QueryClient({
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   
-  // Don't show squares on index page as they're already added there
-  const showSquares = location.pathname !== '/';
+  // Don't show squares on index page or coming soon page as they're already added there
+  const showSquares = location.pathname !== '/' && location.pathname !== '/coming-soon';
   
   return (
     <>
@@ -48,7 +49,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          {/* Temporarily use ComingSoon as the main page */}
+          <Route path="/" element={<ComingSoon />} />
+          <Route path="/home" element={<Index />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/products" element={
             <PageLayout>
               <Products />
