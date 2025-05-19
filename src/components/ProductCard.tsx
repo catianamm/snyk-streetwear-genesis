@@ -36,6 +36,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="h-full w-full object-cover object-center transition-all duration-500 hover:brightness-110 hover:saturate-150 group-hover:contrast-125"
             onError={handleImageError}
           />
+          
+          {/* Category tag displays on the image */}
+          <Badge 
+            variant="outline" 
+            className="absolute bottom-2 right-2 text-xs capitalize flex items-center gap-1 bg-black/60 text-white border-none"
+          >
+            <Tag size={12} />
+            {product.category}
+          </Badge>
+          
+          {/* New badge remains at top left */}
           {product.isNew && (
             <Badge className="absolute top-2 left-2 bg-black text-white uppercase text-xs font-normal px-2">
               New
@@ -51,10 +62,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Link>
         <div className="flex justify-between items-center mt-1">
           <p className="text-sm">${product.price.toFixed(2)}</p>
-          <Badge variant="outline" className="text-xs capitalize flex items-center gap-1 text-gray-600">
-            <Tag size={12} />
-            {product.category}
-          </Badge>
         </div>
       </div>
     </div>
