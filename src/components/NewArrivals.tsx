@@ -6,23 +6,15 @@ import { Button } from '@/components/ui/button';
 import { useProducts } from '@/hooks/useProducts';
 import { Loader2 } from 'lucide-react';
 
-const FeaturedProducts = () => {
+const NewArrivals = () => {
   const { products, loading, error } = useProducts();
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
   
-  useEffect(() => {
-    if (products.length > 0) {
-      console.log('Products loaded in FeaturedProducts component:', products);
-    } else {
-      console.log('No products loaded in FeaturedProducts component');
-    }
-  }, [products]);
+  // Filter to get only new products
+  const newProducts = products.filter(product => product.isNew === true);
   
-  // Filter to get only featured products
-  const featuredProducts = products.filter(product => product.isFeatured === true);
-  
-  console.log('Filtered featured products:', featuredProducts);
+  console.log('Filtered new products:', newProducts);
 
   useEffect(() => {
     // Random glitch effects for the section title
@@ -44,7 +36,7 @@ const FeaturedProducts = () => {
   }, []);
 
   return (
-    <section id="products" className="py-16 bg-white relative overflow-hidden">
+    <section id="new" className="py-16 bg-white relative overflow-hidden">
       {/* Lighter scanlines effect */}
       <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
       
@@ -54,12 +46,12 @@ const FeaturedProducts = () => {
       <div className="container-custom relative z-10 min-h-screen">
         <h2 
           className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 
-          data-text="FEATURED PRODUCTS"
+          data-text="NEW ARRIVALS"
         >
           <span className="relative">
-            F<span className={`inline-block ${glitchActive ? 'translate-x-[2px] translate-y-[1px]' : ''}`}>E</span>ATURED{' '}
+            N<span className={`inline-block ${glitchActive ? 'translate-x-[2px] translate-y-[1px]' : ''}`}>E</span>W{' '}
             <span className="relative overflow-hidden">
-              P<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>ROD</span>UCTS
+              A<span className={`inline-block ${glitchActive ? '-translate-x-[1px]' : ''}`}>RRIV</span>ALS
               {glitchActive && <span className="absolute top-0 left-0 w-full h-full bg-white mix-blend-difference"></span>}
             </span>
           </span>
@@ -82,8 +74,8 @@ const FeaturedProducts = () => {
         {!loading && (
           <>
             <div className="product-grid">
-              {featuredProducts.length > 0 ? 
-                featuredProducts.map((product, index) => (
+              {newProducts.length > 0 ? 
+                newProducts.map((product, index) => (
                   <div 
                     key={product.id} 
                     className={`product-card-wrapper ${index % 2 === 0 ? 'even-product' : 'odd-product'}`}
@@ -93,7 +85,7 @@ const FeaturedProducts = () => {
                   </div>
                 )) : 
                 <div className="col-span-full text-center py-12 text-black">
-                  <p>No featured products found. Add products with featured tag in your WooCommerce store.</p>
+                  <p>No new arrivals found. Add products with the 'new' tag in your WooCommerce store.</p>
                 </div>
               }
             </div>
@@ -101,7 +93,7 @@ const FeaturedProducts = () => {
             <div className="flex justify-center mt-12">
               <Button asChild variant="outline" className="border-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group brutal-button">
                 <Link to="/products">
-                  <span className="relative z-10 group-hover:text-white transition-colors text-black">VIEW ALL</span>
+                  <span className="relative z-10 group-hover:text-white transition-colors text-black">VIEW ALL NEW ARRIVALS</span>
                   <span className="absolute inset-0 bg-black transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                   <span className="glitch-hover-effect"></span>
                 </Link>
@@ -114,4 +106,4 @@ const FeaturedProducts = () => {
   );
 };
 
-export default FeaturedProducts;
+export default NewArrivals;

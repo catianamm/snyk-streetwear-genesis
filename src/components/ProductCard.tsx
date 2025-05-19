@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { Tag } from 'lucide-react';
 
 export type ProductType = {
   id: number;
@@ -48,7 +49,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.name}
           </h3>
         </Link>
-        <p className="mt-1 text-sm">${product.price.toFixed(2)}</p>
+        <div className="flex justify-between items-center mt-1">
+          <p className="text-sm">${product.price.toFixed(2)}</p>
+          <Badge variant="outline" className="text-xs capitalize flex items-center gap-1 text-gray-600">
+            <Tag size={12} />
+            {product.category}
+          </Badge>
+        </div>
       </div>
     </div>
   );

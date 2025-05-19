@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
 import FeaturedProducts from '@/components/FeaturedProducts';
+import NewArrivals from '@/components/NewArrivals';
 import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
@@ -121,86 +122,9 @@ const Index = () => {
             </div>
           </section>
           
-          {/* Latest arrivals section with full height */}
-          <section id="latest" className="min-h-screen py-16 bg-white text-black border-t border-zinc-800">
-            <div className="container-custom h-full flex flex-col">
-              <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
-                <h2 className="text-xl md:text-2xl font-display uppercase flex items-center">
-                  <Package className="mr-2 h-5 w-5" />
-                  NEW ARRIVALS
-                </h2>
-                <span className="text-xs uppercase opacity-60">Fresh Drops</span>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-grow">
-                {/* Latest arrival item 1 */}
-                <div className="group relative overflow-hidden">
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000" 
-                      alt="Statement Tee" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div className="absolute bottom-4 left-4 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="bg-black/70 px-4 py-2 text-sm uppercase">New Drop</span>
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="text-sm uppercase text-white group-hover:text-purple-400 transition-colors">Statement Tee</h3>
-                    <p className="text-sm mt-1">$42.99</p>
-                  </div>
-                </div>
-                
-                {/* Latest arrival item 2 */}
-                <div className="group relative overflow-hidden">
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000" 
-                      alt="Classic Hoodie" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-0 transition-opacity duration-300"></div>
-                    
-                    <div className="absolute bottom-4 left-4 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="bg-black/70 px-4 py-2 text-sm uppercase">New Drop</span>
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="text-sm uppercase text-white group-hover:text-purple-400 transition-colors">Classic Hoodie</h3>
-                    <p className="text-sm mt-1">$120.00</p>
-                  </div>
-                </div>
-                
-                {/* Latest arrival item 3 */}
-                <div className="group relative overflow-hidden">
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1000" 
-                      alt="Stock Cap" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="text-sm uppercase text-white group-hover:text-purple-400 transition-colors">Stock Cap</h3>
-                    <p className="text-sm mt-1">$40.00</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex justify-center mt-40 pb-12">
-                <Button asChild variant="outline" className="border-black text-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group">
-                  <Link to="/products">
-                    <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL NEW ARRIVALS</span>
-                    <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
+          {/* New Arrivals section */}
+          <section id="latest" className="min-h-screen">
+            <NewArrivals />
           </section>
           
           <section id="newsletter" className="">
