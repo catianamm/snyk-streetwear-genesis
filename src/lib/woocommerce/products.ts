@@ -2,27 +2,17 @@
 import { ProductType } from '@/components/ProductCard';
 import { fetchFromWooCommerce } from './api';
 import { transformProduct, getMockProducts } from './models';
-import { toast } from "@/components/ui/use-toast";
 
 // Fetch products from WooCommerce
 export const fetchProducts = async (): Promise<ProductType[]> => {
   try {
     console.log('Fetching products from WooCommerce API');
-    toast({
-      title: "Connecting to Store",
-      description: "Fetching products from cms.snyk.store..."
-    });
     
     // Added per_page parameter to get more products and status to ensure we get published products
     const products = await fetchFromWooCommerce('/products?per_page=50&status=publish');
     
     if (!Array.isArray(products)) {
       console.error('Invalid response format from WooCommerce API:', products);
-      toast({
-        title: "API Error",
-        description: "Received invalid data format from store",
-        variant: "destructive"
-      });
       return getMockProducts();
     }
     
@@ -30,11 +20,6 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     
     if (products.length === 0) {
       console.warn('No products returned from WooCommerce API, using mock data');
-      toast({
-        title: "No products found",
-        description: "No products found in your store. Using fallback data.",
-        variant: "destructive"
-      });
       return getMockProducts();
     }
     
@@ -43,11 +28,6 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     return transformedProducts;
   } catch (error) {
     console.error('Error fetching products:', error);
-    toast({
-      title: "Connection error",
-      description: "Could not connect to your WooCommerce store. Using mock data.",
-      variant: "destructive"
-    });
     // Fallback to mock data if API request fails
     const mockProducts = getMockProducts();
     console.log('Using mock products:', mockProducts);

@@ -126,7 +126,7 @@ const Products = () => {
           {loading && (
             <div className="text-center py-12 flex flex-col items-center justify-center space-y-4">
               <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
-              <p className="text-lg glitch-text">Loading products from WooCommerce...</p>
+              <p className="text-lg glitch-text">Loading products...</p>
             </div>
           )}
           

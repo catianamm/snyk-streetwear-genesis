@@ -11,14 +11,6 @@ const FeaturedProducts = () => {
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
   
-  useEffect(() => {
-    if (products.length > 0) {
-      console.log('Products loaded in FeaturedProducts component:', products);
-    } else {
-      console.log('No products loaded in FeaturedProducts component');
-    }
-  }, [products]);
-  
   // Filter to get only featured products
   const featuredProducts = products.filter(product => product.isFeatured === true);
   
@@ -68,7 +60,7 @@ const FeaturedProducts = () => {
         {loading && (
           <div className="text-center py-12 flex flex-col items-center justify-center space-y-4">
             <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
-            <p className="text-lg glitch-text text-black">Loading products from WooCommerce...</p>
+            <p className="text-lg glitch-text text-black">Loading products...</p>
           </div>
         )}
         

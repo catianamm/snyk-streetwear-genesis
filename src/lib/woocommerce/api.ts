@@ -16,6 +16,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
           'Content-Type': 'application/json',
         },
         ...options,
+        cache: 'no-store', // Add cache: 'no-store' to prevent caching issues
       });
       
       if (directResponse.ok) {
@@ -31,7 +32,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
       console.log('Direct API access error:', directError);
     }
     
-    // Fallback to proxy
+    // Fallback to proxy with improved reliability
     console.log('Falling back to CORS proxy');
     const proxyUrl = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
     console.log('Using proxy URL:', proxyUrl);
@@ -41,6 +42,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
         'Authorization': getAuthHeader(),
         'Content-Type': 'application/json',
       },
+      cache: 'no-store', // Add cache: 'no-store' to prevent caching issues
       ...options,
     });
 

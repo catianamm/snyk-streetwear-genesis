@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { fetchProducts } from '@/lib/woocommerce';
 import { ProductType } from '@/components/ProductCard';
-import { toast } from "@/components/ui/use-toast";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -22,20 +21,6 @@ export const useProducts = () => {
         console.log('[useProducts] Products fetched:', productData);
         setProducts(productData);
         
-        if (productData.length === 0) {
-          toast({
-            title: "No products found",
-            description: "Using mock data instead",
-            variant: "destructive"
-          });
-        } else {
-          // Add success toast when products are found
-          toast({
-            title: "Products loaded",
-            description: `Loaded ${productData.length} products from store`,
-          });
-        }
-        
         setLoading(false);
         setError(null);
       } catch (err) {
@@ -48,12 +33,6 @@ export const useProducts = () => {
         } else {
           setError('Failed to load products from WooCommerce');
           setLoading(false);
-          
-          toast({
-            title: "Error loading products",
-            description: "Using mock data instead",
-            variant: "destructive"
-          });
         }
       }
     };
