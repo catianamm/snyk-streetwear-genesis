@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
-import Collections from '@/components/Collections';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import NewArrivals from '@/components/NewArrivals';
 import BrandStory from '@/components/BrandStory';
@@ -42,11 +41,6 @@ const Index = () => {
       <main className="flex-grow">
         <section id="home" className="min-h-screen">
           <Hero />
-        </section>
-        
-        {/* Make Collections its own section outside of the ml-14 container */}
-        <section id="collections" className="min-h-screen">
-          <Collections />
         </section>
         
         <div className="ml-14 md:ml-16">

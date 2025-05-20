@@ -5,6 +5,7 @@ export const useScrollEffects = () => {
   const [scrollIntensity, setScrollIntensity] = useState(0);
   const [glitchActive, setGlitchActive] = useState(false);
   const [hoverGlitch, setHoverGlitch] = useState(false);
+  const [textGlitch, setTextGlitch] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -14,7 +15,15 @@ export const useScrollEffects = () => {
       setTimeout(() => setGlitchActive(false), 200);
     }, 3000);
     
-    return () => clearInterval(interval);
+    const textGlitchInterval = setInterval(() => {
+      setTextGlitch(true);
+      setTimeout(() => setTextGlitch(false), 300);
+    }, 5000);
+    
+    return () => {
+      clearInterval(interval);
+      clearInterval(textGlitchInterval);
+    };
   }, []);
   
   // Enhanced parallax effect on scroll with color transitions
@@ -55,6 +64,7 @@ export const useScrollEffects = () => {
     glitchActive,
     hoverGlitch, 
     setHoverGlitch,
-    heroRef
+    heroRef,
+    textGlitch
   };
 };
