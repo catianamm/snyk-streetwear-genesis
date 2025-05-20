@@ -88,9 +88,9 @@ const Navbar = () => {
         }}
       ></div>
       
-      <div className="h-full flex flex-col items-center justify-between py-6">
+      <div className="h-full flex flex-col bg-transparent items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - improved for visibility with dark background */}
-        <div className="flex flex-start relative">
+        <div className="flex flex-start bg-transparent relative">
           <Link to="/" className="h-24 w-28 ml-40 relative group bg-transparent transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
             <div className={`absolute inset-0 rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
