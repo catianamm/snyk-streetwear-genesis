@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
@@ -10,6 +9,7 @@ import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import SquareElements from '@/components/SquareElements';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   // Add state variables for glitch effects
@@ -113,8 +113,8 @@ const Index = () => {
               
               <div className="flex justify-center mt-40 pb-12">
                 <Button variant="outline" className="border-black bg-white text-black hover:bg-black hover:text-white uppercase text-sm px-10 relative overflow-hidden group">
-                  <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL</span>
-                  <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
+                  <span className="relative z-10 group-hover:text-white transition-colors">VIEW ALL</span>
+                  <span className="absolute inset-0 bg-black transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                 </Button>
               </div>
             </div>
