@@ -93,7 +93,7 @@ const Navbar = () => {
         <div className="flex flex-start bg-transparent relative">
           <Link to="/" className="h-24 w-28 ml-40 relative group bg-transparent transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
-            <div className={`absolute inset-0 rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
+            <div className={`absolute inset-0 bg-transparent rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
             
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
