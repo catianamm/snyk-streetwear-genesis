@@ -5,13 +5,11 @@ import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import NewArrivals from '@/components/NewArrivals';
+import MostWanted from '@/components/MostWanted';
 import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import SquareElements from '@/components/SquareElements';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { Package } from 'lucide-react';
 
 const Index = () => {
   // Add state variables for glitch effects
@@ -120,6 +118,11 @@ const Index = () => {
                 </Button>
               </div>
             </div>
+          </section>
+          
+          {/* Most Wanted section */}
+          <section id="most-wanted" className="min-h-screen">
+            <MostWanted />
           </section>
           
           {/* New Arrivals section */}
