@@ -21,14 +21,14 @@ const Collections = () => {
   }, []);
 
   return (
-    <section id="collections" className="min-h-screen py-16 bg-white overflow-hidden border-t border-zinc-800">
+    <section id="collections-section" className="min-h-screen py-16 bg-white overflow-hidden border-t border-zinc-800">
       {/* Lighter scanlines effect */}
       <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
       
       {/* Random noise pattern */}
       <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>
       
-      <div className="container-custom h-full flex flex-col">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 h-full flex flex-col">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
           <h2 
             className={`text-xl md:text-2xl font-display uppercase text-center mb-10 mega-glitch text-black ${glitchActive ? 'glitching' : ''} ${textGlitch ? 'text-distort' : ''}`} 

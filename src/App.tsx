@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -49,8 +48,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* Temporarily use ComingSoon as the main page */}
-          <Route path="/" element={<ComingSoon />} />
+          {/* Use Index as the main page */}
+          <Route path="/" element={<Index />} />
           <Route path="/home" element={<Index />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/products" element={
