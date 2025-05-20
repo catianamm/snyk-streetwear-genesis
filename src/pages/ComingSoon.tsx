@@ -33,6 +33,7 @@ const ComingSoon = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [email, setEmail] = useState('');
   const [glitchActive, setGlitchActive] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Update countdown every second
   useEffect(() => {
@@ -62,7 +63,7 @@ const ComingSoon = () => {
     });
   };
   
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email || !email.includes('@')) {
@@ -74,13 +75,32 @@ const ComingSoon = () => {
       return;
     }
     
-    // Here you would typically connect to a newsletter service API
-    toast({
-      title: "Thank you!",
-      description: "We'll notify you when we launch.",
-    });
+    setIsSubmitting(true);
     
-    setEmail('');
+    try {
+      // In a real-world scenario, you would send this to your backend API
+      // For now, we'll simulate a successful submission with a slight delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Log the submission for debugging
+      console.log(`Coming soon page subscription: ${email} to mkt@snyk.store`);
+      
+      toast({
+        title: "Thank you!",
+        description: "We'll notify you when we launch.",
+      });
+      
+      setEmail('');
+    } catch (error) {
+      console.error('Newsletter submission error:', error);
+      toast({
+        variant: "destructive",
+        title: "Subscription failed",
+        description: "There was an error subscribing. Please try again later."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -150,12 +170,14 @@ const ComingSoon = () => {
                 className="bg-zinc-900 border-zinc-800 focus:border-pink-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitting}
               />
               <Button 
                 type="submit" 
                 className="bg-white text-black hover:bg-pink-500 hover:text-white"
+                disabled={isSubmitting}
               >
-                Subscribe
+                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
               </Button>
             </div>
           </form>
@@ -191,4 +213,3 @@ const ComingSoon = () => {
 };
 
 export default ComingSoon;
-
