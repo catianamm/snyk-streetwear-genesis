@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Hero from '@/components/Hero';
+import Collections from '@/components/Collections';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import NewArrivals from '@/components/NewArrivals';
 import BrandStory from '@/components/BrandStory';
@@ -42,11 +43,13 @@ const Index = () => {
         <section id="home" className="min-h-screen">
           <Hero />
         </section>
-        
         <div className="ml-14 md:ml-16">
           <section id="featured" className="min-h-screen">
             <FeaturedProducts />
           </section>
+          
+          {/* Collections section */}
+          <Collections />
           
           {/* New Arrivals section */}
           <section id="latest" className="min-h-screen">
