@@ -1,7 +1,7 @@
 
 import { ProductType } from '@/components/ProductCard';
 import { fetchFromWooCommerce } from './api';
-import { transformProduct, getMockProducts } from './models';
+import { transformProduct } from './models';
 
 // Fetch products from WooCommerce
 export const fetchProducts = async (): Promise<ProductType[]> => {
@@ -13,14 +13,14 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     
     if (!Array.isArray(products)) {
       console.error('Invalid response format from WooCommerce API:', products);
-      return getMockProducts();
+      throw new Error('Invalid response format from WooCommerce API');
     }
     
     console.log(`Found ${products.length} products from API`);
     
     if (products.length === 0) {
-      console.warn('No products returned from WooCommerce API, using mock data');
-      return getMockProducts();
+      console.warn('No products returned from WooCommerce API');
+      return [];
     }
     
     const transformedProducts = products.map(transformProduct);
@@ -28,10 +28,7 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
     return transformedProducts;
   } catch (error) {
     console.error('Error fetching products:', error);
-    // Fallback to mock data if API request fails
-    const mockProducts = getMockProducts();
-    console.log('Using mock products:', mockProducts);
-    return mockProducts;
+    throw error;
   }
 };
 
@@ -44,9 +41,7 @@ export const fetchProductById = async (productId: number): Promise<ProductType |
     return transformProduct(product);
   } catch (error) {
     console.error('Error fetching product:', error);
-    // Fallback to mock data if API request fails
-    const mockProducts = getMockProducts();
-    return mockProducts.find(p => p.id === productId) || null;
+    throw error;
   }
 };
 
@@ -58,20 +53,12 @@ export const searchProducts = async (query: string): Promise<ProductType[]> => {
     const products = await fetchFromWooCommerce(`/products?search=${query}`);
     
     if (!Array.isArray(products)) {
-      return getMockProducts().filter(p => 
-        p.name.toLowerCase().includes(query.toLowerCase()) || 
-        p.category.toLowerCase().includes(query.toLowerCase())
-      );
+      throw new Error('Invalid response format from WooCommerce API');
     }
     
     return products.map(transformProduct);
   } catch (error) {
     console.error('Error searching products:', error);
-    // Fallback to mock data if API request fails
-    const mockProducts = getMockProducts();
-    return mockProducts.filter(p => 
-      p.name.toLowerCase().includes(query.toLowerCase()) || 
-      p.category.toLowerCase().includes(query.toLowerCase())
-    );
+    throw error;
   }
 };

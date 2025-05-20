@@ -31,7 +31,8 @@ export const useProducts = () => {
           setRetryCount(prev => prev + 1);
           // Don't set error or loading state yet, as we're retrying
         } else {
-          setError('Failed to load products from WooCommerce');
+          setError('Failed to load products from WooCommerce. Please check your connection and try again.');
+          setProducts([]);
           setLoading(false);
         }
       }

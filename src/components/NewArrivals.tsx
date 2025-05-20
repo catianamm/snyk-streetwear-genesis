@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import ProductCard, { ProductType } from './ProductCard';
+import ProductCard from './ProductCard';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useProducts } from '@/hooks/useProducts';
@@ -67,11 +67,11 @@ const NewArrivals = () => {
         {error && !loading && (
           <div className="text-center py-12 text-zinc-800">
             <p className="text-lg mb-2 error-text">{error}</p>
-            <p className="text-base text-zinc-600">Showing fallback products</p>
+            <p className="text-base text-zinc-600">Unable to connect to the store</p>
           </div>
         )}
         
-        {!loading && (
+        {!loading && !error && (
           <>
             <div className="product-grid">
               {newProducts.length > 0 ? 
