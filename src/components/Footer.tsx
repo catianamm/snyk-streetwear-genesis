@@ -23,11 +23,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
               Authentic streetwear for the bold and expressive. Define your own style.
             </p>
           </div>
-           {/* Bottom left squares */}
-    <div className={`pointer-events-none inset-0 z-0 overflow-hidden ${className}`}>
-        <div className="absolute bottom-0 left-20 w-20 h-20 border z-10 border-pink-500/20 rotate-45"></div>
-      
-      </div>
+          
           <div>
             <h3 className="text-sm font-bold uppercase mb-4 text-zinc-100">Shop</h3>
             <ul className="space-y-2">
@@ -65,7 +61,11 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             <Link to="/terms" className="text-xs hover:text-purple-400 transition-colors">Terms of Service</Link>
           </div>
         </div>
-        
+         {/* Bottom left squares */}
+    <div className={`pointer-events-none inset-0 z-0 overflow-hidden ${className}`}>
+        <div className="relative bottom-12 left-0 w-20 h-20 border border-pink-500/20 rotate-45"></div>
+      
+      </div>
         </div>
     </footer>
   );

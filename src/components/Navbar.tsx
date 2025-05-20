@@ -88,18 +88,18 @@ const Navbar = () => {
         }}
       ></div>
       
-      <div className="h-full flex flex-col bg-transparent items-center justify-between py-6">
+      <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - with transcending, dislocated and rotated effect - improved for visibility with dark background */}
-        <div className="flex flex-start bg-transparent relative">
-          <Link to="/" className="h-24 w-28 ml-40 relative group bg-transparent transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
+        <div className="flex flex-start relative">
+          <Link to="/" className="h-24 w-28 ml-40 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
-            <div className={`absolute inset-0 bg-transparent rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
+            <div className={`absolute inset-0 rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
             
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
                 src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Glitch" 
-                className="h-full bg-transparent w-auto translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
+                className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
             <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-0 transition-all duration-300">
@@ -114,7 +114,7 @@ const Navbar = () => {
               alt="Snyk Logo" 
               className={`h-full w-auto ml-4 transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
             />
-            <div className="absolute top-0 left-0 h-full w-full noise opacity-0 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 h-full w-full noise opacity-10 pointer-events-none"></div>
           </Link>
         </div>
 

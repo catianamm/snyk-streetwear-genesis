@@ -36,7 +36,7 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <section id="new" className="py-16 bg-white relative overflow-hidden border-t border-zinc-800">
+    <section id="new" className="py-16 bg-white relative overflow-hidden">
       {/* Lighter scanlines effect */}
       <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
       

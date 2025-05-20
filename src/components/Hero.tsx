@@ -5,6 +5,7 @@ import HeroBackgroundEffects from './hero/HeroBackgroundEffects';
 import HeroContentLeft from './hero/HeroContentLeft';
 import HeroImageRight from './hero/HeroImageRight';
 import HeroScrollIndicator from './hero/HeroScrollIndicator';
+import ProductFeatures from './hero/ProductFeatures';
 
 const Hero = () => {
   const { scrollIntensity, glitchActive, heroRef } = useScrollEffects();
@@ -30,6 +31,9 @@ const Hero = () => {
       
       {/* Scroll indicator with enhanced animation on scroll */}
       <HeroScrollIndicator scrollIntensity={scrollIntensity} />
+      
+      {/* Secondary product features section with enhanced scroll effects */}
+      <ProductFeatures scrollIntensity={scrollIntensity} />
     </section>
   );
 };
