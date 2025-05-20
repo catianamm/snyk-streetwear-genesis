@@ -5,11 +5,10 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 
-// Countdown timer calculation
+// Countdown timer calculation with fixed launch date
 const calculateTimeLeft = () => {
-  // Set launch date to one month from now
-  const launchDate = new Date();
-  launchDate.setMonth(launchDate.getMonth() + 1);
+  // Set fixed launch date to June 15th, 2025
+  const launchDate = new Date('2025-06-15T00:00:00');
   
   const difference = launchDate.getTime() - new Date().getTime();
   
@@ -52,6 +51,16 @@ const ComingSoon = () => {
       clearInterval(glitchInterval);
     };
   }, []);
+  
+  // Format date in a readable format
+  const formatLaunchDate = () => {
+    const launchDate = new Date('2025-06-15T00:00:00');
+    return launchDate.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
   
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,8 +121,13 @@ const ComingSoon = () => {
           </h1>
           
           {/* Message */}
-          <p className="text-lg mb-10 text-zinc-300">
+          <p className="text-lg mb-6 text-zinc-300">
             Our new online store is currently under construction. We're working hard to bring you the best in streetwear.
+          </p>
+          
+          {/* Launch Date */}
+          <p className="text-xl mb-6 font-semibold text-pink-500">
+            Launching on {formatLaunchDate()}
           </p>
           
           {/* Countdown Timer */}
@@ -177,3 +191,4 @@ const ComingSoon = () => {
 };
 
 export default ComingSoon;
+
