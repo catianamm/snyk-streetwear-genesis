@@ -64,7 +64,9 @@ const MostWanted = () => {
   const displayProducts = mostWantedProducts.length > 0 ? mostWantedProducts : placeholderProducts;
 
   return (
-    <section id="most-wanted" className="py-16 bg-black text-white border-t border-zinc-800">
+    <section id="most-wanted" className="py-16 bg-white text-black relative overflow-hidden">
+      {/* Lighter scanlines effect */}
+      <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-12">
           <h2 

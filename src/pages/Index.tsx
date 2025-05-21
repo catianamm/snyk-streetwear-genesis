@@ -43,6 +43,10 @@ const Index = () => {
         <section id="home" className="min-h-screen">
           <Hero />
         </section>
+         {/* Most Wanted section */}
+          <section id="most-wanted" className="min-h-screen">
+            <MostWanted />
+          </section>
         <div className="ml-14 md:ml-16">
           <section id="featured" className="min-h-screen">
             <FeaturedProducts />
@@ -120,10 +124,7 @@ const Index = () => {
             </div>
           </section>
           
-          {/* Most Wanted section */}
-          <section id="most-wanted" className="min-h-screen">
-            <MostWanted />
-          </section>
+         
           
           {/* New Arrivals section */}
           <section id="latest" className="min-h-screen">
