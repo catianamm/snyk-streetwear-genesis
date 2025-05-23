@@ -1,4 +1,3 @@
-
 import { API_URL, getAuthHeader, CORS_PROXY } from './config';
 
 // Function to handle API requests with improved caching and reliability
@@ -13,7 +12,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
         'Content-Type': 'application/json',
       },
       ...options,
-      cache: 'no-store', // Prevent browser caching
+      cache: 'no-store' as RequestCache, // Fix: Type cast to RequestCache
     };
     
     // Try direct API access first with improved error handling
@@ -49,7 +48,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
         'Authorization': getAuthHeader(),
         'Content-Type': 'application/json',
       },
-      cache: 'no-store',
+      cache: 'no-store' as RequestCache, // Fix: Type cast to RequestCache
       ...options,
     });
 
