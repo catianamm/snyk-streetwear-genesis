@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
@@ -10,7 +11,8 @@ import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import SquareElements from '@/components/SquareElements';
 import { Button } from '@/components/ui/button';
-import { MoveRight } from 'lucide-react';
+import { MoveRight, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HeroContentLeftProps {
   scrollIntensity: number;
@@ -21,6 +23,7 @@ const Index = () => {
   // Add state variables for glitch effects
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
+  const [hoverShopNow, setHoverShopNow] = useState(false);
   
   // Create random glitch effects at intervals
   useEffect(() => {
@@ -60,16 +63,26 @@ const Index = () => {
              </section>  */}        
               {/* Collections section with full height */}
             
-           <div className="ml-14 md:ml-16 flex flex-row">
-             <h1 className={`text-5xl mt-2 md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none 
-        mega-glitch ${glitchActive ? 'glitching' : ''}`}
-        data-text="SHOP NOW"
-           > <span className=" text-5xl mt-2 md:text-7xl lg:text-8xl font-display uppercase
-     mt-6 leading-none">shop now</span></h1>
-     <MoveRight className= "bg-trasparent w-8 h-28 mx-[-8]"/>
-           
-          </div>           
-         </div>
+            <Link to="/products" className="group">
+              <div 
+                className="flex flex-row items-center gap-2 hover:gap-4 transition-all duration-300"
+                onMouseEnter={() => setHoverShopNow(true)}
+                onMouseLeave={() => setHoverShopNow(false)}
+              >
+                <h1 className={`text-5xl mt-2 md:text-7xl lg:text-8xl font-display uppercase mb-6 leading-none 
+                  mega-glitch group-hover:text-purple-400 transition-colors duration-300 ${glitchActive ? 'glitching' : ''}`}
+                  data-text="SHOP NOW"
+                > 
+                  <span className="text-5xl mt-2 md:text-7xl lg:text-8xl font-display uppercase mt-6 leading-none">
+                    shop now
+                  </span>
+                </h1>
+                <ArrowRight 
+                  className={`w-8 h-8 md:w-12 md:h-12 transform transition-transform duration-300 ${hoverShopNow ? 'translate-x-2' : ''}`}
+                />
+              </div>           
+            </Link>
+          </div>
          </section>
                                   
           {/* New Arrivals section */}
