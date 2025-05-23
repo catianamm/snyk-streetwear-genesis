@@ -1,10 +1,9 @@
-
-import { API_URL, buildAuthenticatedURL, CORS_PROXY } from './config';
+import { buildAuthenticatedURL, CORS_PROXY } from './config';
 
 // Function to handle API requests with URL-based authentication
 export const fetchFromWooCommerce = async (endpoint: string, options: RequestInit = {}) => {
   try {
-    console.log(`[WooCommerce API] Starting fetch for endpoint: ${endpoint}`);
+    console.log(`[WooCommerce API] Starting fetch for: ${endpoint}`);
     
     const authenticatedUrl = buildAuthenticatedURL(endpoint);
     console.log(`[WooCommerce API] Authenticated URL built`);
@@ -52,18 +51,20 @@ export const fetchFromWooCommerce = async (endpoint: string, options: RequestIni
         throw new Error('WooCommerce API endpoint not found. Please check your store URL.');
       }
     } catch (directError) {
-      console.log('[WooCommerce API] Direct connection error:', directError.message);
+      console.log('[WooCommerce API] Direct connection error details:', directError);
       
       // If it's not a network error, re-throw it
-      if (!directError.message.includes('fetch') && !directError.name === 'TypeError') {
+      if (directError instanceof Error && !directError.message.includes('fetch') && directError.name !== 'TypeError') {
         throw directError;
       }
+      
+      console.log('[WooCommerce API] Network error detected, trying proxy...');
     }
     
     // Fallback to proxy without authentication headers
     console.log('[WooCommerce API] Trying CORS proxy fallback...');
     const proxyUrl = `${CORS_PROXY}${encodeURIComponent(authenticatedUrl)}`;
-    console.log('[WooCommerce API] Proxy URL constructed');
+    console.log('[WooCommerce API] Proxy URL:', proxyUrl);
     
     const proxyResponse = await fetch(proxyUrl, {
       headers: {
@@ -103,10 +104,7 @@ export const fetchFromWooCommerce = async (endpoint: string, options: RequestIni
       return proxyData;
     }
   } catch (error) {
-    console.error('[WooCommerce API] Final error:', {
-      name: error.name,
-      message: error.message
-    });
+    console.error('[WooCommerce API] Final error details:', error);
     throw error;
   }
 };
