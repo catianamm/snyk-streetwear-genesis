@@ -95,12 +95,12 @@ const MostWanted = () => {
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-4 left-4 flex flex-col">
-                    <Badge variant="outline" className="bg-black/60 text-white border-none mb-2 inline-flex gap-1 items-center">
+                    <Badge variant="outline" className="bg-black/20 text-white border-none mb-2 inline-flex gap-1 items-center">
                       <Heart size={12} className="text-red-500" /> Hot Item
                     </Badge>
                     
                     <Link to={`/product/${product.id}`}>
-                      <Button variant="outline" className="text-xs bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white hover:text-black">
+                      <Button variant="outline" className="text-xs text-white bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white hover:text-black">
                         VIEW DETAILS
                       </Button>
                     </Link>
@@ -114,7 +114,7 @@ const MostWanted = () => {
                 )}
                 
                 {index === 0 && (
-                  <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/70 backdrop-blur-sm text-yellow-400 px-2 py-1 text-xs">
+                  <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/70 backdrop-blur-sm text-orange-400 px-2 py-1 text-xs">
                     <Star size={12} fill="currentColor" /> #1 Most Wanted
                   </div>
                 )}
@@ -134,7 +134,7 @@ const MostWanted = () => {
         </div>
         
         <div className="flex justify-center mt-12">
-          <Button variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-black uppercase text-sm px-10 relative overflow-hidden group">
+          <Button variant="outline" className="border border-zinc-800 bg-transparent text-black hover:bg-white hover:text-black uppercase text-sm px-10 relative overflow-hidden group">
             <span className="relative z-10 group-hover:text-black transition-colors">VIEW ALL</span>
             <span className="absolute inset-0 bg-white transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
           </Button>
