@@ -1,12 +1,13 @@
+
 import { API_URL, getAuthHeader, CORS_PROXY } from './config';
 
 // Function to handle API requests with improved caching and reliability
-export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
+export const fetchFromWooCommerce = async (endpoint: string, options: RequestInit = {}) => {
   try {
     console.log(`[WooCommerce API] Fetching: ${API_URL}${endpoint}`);
     
     const targetUrl = `${API_URL}${endpoint}`;
-    const requestOptions = {
+    const requestOptions: RequestInit = {
       headers: {
         'Authorization': getAuthHeader(),
         'Content-Type': 'application/json',
