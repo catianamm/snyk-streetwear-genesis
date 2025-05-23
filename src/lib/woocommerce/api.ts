@@ -3,7 +3,7 @@ import { API_URL, getAuthHeader, CORS_PROXY } from './config';
 // Function to handle API requests with improved caching and reliability
 export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
   try {
-    console.log(`Fetching from WooCommerce API: ${API_URL}${endpoint}`);
+    console.log(`[WooCommerce API] Fetching: ${API_URL}${endpoint}`);
     
     const targetUrl = `${API_URL}${endpoint}`;
     const requestOptions = {
@@ -12,51 +12,59 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
         'Content-Type': 'application/json',
       },
       ...options,
-      cache: 'no-store' as RequestCache, // Fix: Type cast to RequestCache
+      cache: 'no-store' as RequestCache,
     };
     
-    // Try direct API access first with improved error handling
+    console.log('[WooCommerce API] Request options:', {
+      url: targetUrl,
+      headers: { ...requestOptions.headers, Authorization: '[HIDDEN]' },
+      method: options.method || 'GET'
+    });
+    
+    // Try direct API access first
     try {
-      console.log('Trying direct API access to:', targetUrl);
+      console.log('[WooCommerce API] Attempting direct connection...');
       const directResponse = await fetch(targetUrl, requestOptions);
+      
+      console.log('[WooCommerce API] Direct response status:', directResponse.status);
+      console.log('[WooCommerce API] Direct response headers:', Object.fromEntries(directResponse.headers.entries()));
       
       if (directResponse.ok) {
         const data = await directResponse.json();
-        console.log('Direct API access successful, response status:', directResponse.status);
+        console.log('[WooCommerce API] Direct connection successful, data length:', Array.isArray(data) ? data.length : 'not array');
         return data;
       }
       
-      console.log('Direct API access failed with status:', directResponse.status);
       const errorText = await directResponse.text();
-      console.log('Error response:', errorText.substring(0, 200) + (errorText.length > 200 ? '...' : ''));
+      console.log('[WooCommerce API] Direct connection failed:', directResponse.status, errorText.substring(0, 300));
       
-      // If the response is 401 Unauthorized, the API keys might be invalid
       if (directResponse.status === 401) {
         throw new Error('Authentication failed. Please check your WooCommerce API credentials.');
       }
     } catch (directError) {
-      console.log('Direct API access error:', directError);
+      console.log('[WooCommerce API] Direct connection error:', directError.message);
     }
     
-    // Fallback to proxy with improved error handling
-    console.log('Falling back to CORS proxy');
+    // Fallback to proxy
+    console.log('[WooCommerce API] Trying CORS proxy fallback...');
     const proxyUrl = `${CORS_PROXY}${encodeURIComponent(targetUrl)}`;
-    console.log('Using proxy URL:', proxyUrl);
+    console.log('[WooCommerce API] Proxy URL:', proxyUrl);
     
     const response = await fetch(proxyUrl, {
       headers: {
         'Authorization': getAuthHeader(),
         'Content-Type': 'application/json',
       },
-      cache: 'no-store' as RequestCache, // Fix: Type cast to RequestCache
+      cache: 'no-store' as RequestCache,
       ...options,
     });
 
+    console.log('[WooCommerce API] Proxy response status:', response.status);
+
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Proxy response not OK:', response.status, errorText.substring(0, 200));
+      console.error('[WooCommerce API] Proxy response failed:', response.status, errorText.substring(0, 300));
       
-      // Handle common HTTP errors
       if (response.status === 404) {
         throw new Error(`Resource not found: ${endpoint}`);
       } else if (response.status === 429) {
@@ -69,10 +77,10 @@ export const fetchFromWooCommerce = async (endpoint: string, options = {}) => {
     }
     
     const data = await response.json();
-    console.log('WooCommerce API response via proxy successful.');
+    console.log('[WooCommerce API] Proxy connection successful, data length:', Array.isArray(data) ? data.length : 'not array');
     return data;
   } catch (error) {
-    console.error('Error fetching from WooCommerce:', error);
+    console.error('[WooCommerce API] Final error:', error);
     throw error;
   }
 };

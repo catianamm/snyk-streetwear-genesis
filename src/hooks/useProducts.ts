@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchProducts } from '@/lib/woocommerce';
 import { ProductType } from '@/components/ProductCard';
 
@@ -7,83 +7,44 @@ export const useProducts = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState<number>(0);
-  const maxRetries = 3;
-  
-  // Use a ref to track if the component is mounted
-  const isMounted = useRef(true);
-  
-  // Track if we've already fetched products successfully to avoid refetching unnecessarily
-  const hasProducts = useRef(false);
 
   useEffect(() => {
-    // Set isMounted to true when the component mounts
-    isMounted.current = true;
-    
-    // Reset on unmount
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    // Skip fetching if we already have products
-    if (hasProducts.current && products.length > 0) {
-      console.log('[useProducts] Using cached products, length:', products.length);
-      return;
-    }
-    
     const getProducts = async () => {
-      // Don't fetch if component is unmounted
-      if (!isMounted.current) return;
-
       try {
-        console.log(`[useProducts] Fetching products, attempt ${retryCount + 1}`);
+        console.log('[useProducts] Starting to fetch products...');
         setLoading(true);
+        setError(null);
         
         // Fetch products from WooCommerce API
         const productData = await fetchProducts();
         
-        // Don't update state if component is unmounted
-        if (!isMounted.current) return;
+        console.log('[useProducts] Raw product data received:', productData);
         
-        console.log('[useProducts] Products fetched:', productData.length);
-        
-        if (productData.length > 0) {
+        if (Array.isArray(productData) && productData.length > 0) {
           setProducts(productData);
-          hasProducts.current = true;
-          setError(null);
+          console.log('[useProducts] Products set successfully:', productData.length);
         } else {
           console.log('[useProducts] No products returned from API');
+          setProducts([]);
           setError('No products available');
         }
-        
-        setLoading(false);
       } catch (err) {
-        console.error('[useProducts] Failed to fetch products:', err);
-        
-        // Don't update state if component is unmounted
-        if (!isMounted.current) return;
-        
-        if (retryCount < maxRetries) {
-          console.log(`[useProducts] Retrying... Attempt ${retryCount + 1} of ${maxRetries}`);
-          setRetryCount(prev => prev + 1);
-        } else {
-          setError('Failed to load products from WooCommerce. Please check your connection and try again.');
-          setProducts([]);
-          setLoading(false);
-        }
+        console.error('[useProducts] Error fetching products:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load products');
+        setProducts([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     getProducts();
-  }, [retryCount, products.length]);
+  }, []); // Remove dependencies to prevent re-fetching loops
 
-  // Force refresh method to clear cache and retry
+  // Force refresh method
   const refresh = () => {
-    hasProducts.current = false;
-    setRetryCount(0);
     setLoading(true);
+    setError(null);
+    setProducts([]);
   };
 
   return { products, loading, error, refresh };
