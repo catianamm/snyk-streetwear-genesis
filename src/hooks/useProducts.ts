@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchProducts } from '@/lib/woocommerce';
 import { ProductType } from '@/components/ProductCard';
 
@@ -7,10 +7,18 @@ export const useProducts = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchingRef = useRef<boolean>(false);
 
   const getProducts = useCallback(async () => {
+    // Prevent multiple simultaneous requests
+    if (fetchingRef.current) {
+      console.log('[useProducts] Fetch already in progress, skipping...');
+      return;
+    }
+
     try {
       console.log('[useProducts] Starting product fetch...');
+      fetchingRef.current = true;
       setLoading(true);
       setError(null);
       
@@ -32,8 +40,8 @@ export const useProducts = () => {
       }
     } catch (err) {
       console.error('[useProducts] Error during product fetch:', {
-        name: err.name,
-        message: err.message
+        name: err instanceof Error ? err.name : 'Unknown',
+        message: err instanceof Error ? err.message : 'Unknown error'
       });
       
       let errorMessage = 'Failed to load products';
@@ -42,7 +50,7 @@ export const useProducts = () => {
           errorMessage = 'Invalid WooCommerce API credentials';
         } else if (err.message.includes('not found')) {
           errorMessage = 'Store not found - check your WooCommerce URL';
-        } else if (err.message.includes('fetch')) {
+        } else if (err.message.includes('fetch') || err.name === 'AbortError') {
           errorMessage = 'Cannot connect to store - check internet connection';
         } else {
           errorMessage = err.message;
@@ -53,6 +61,7 @@ export const useProducts = () => {
       setProducts([]);
     } finally {
       setLoading(false);
+      fetchingRef.current = false;
     }
   }, []);
 

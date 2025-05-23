@@ -24,7 +24,7 @@ const getConsumerSecret = () => {
 export const consumerKey = getConsumerKey();
 export const consumerSecret = getConsumerSecret();
 
-// CORS Proxy to avoid CORS issues in development
+// Updated CORS Proxy that supports authenticated URLs
 export const CORS_PROXY = 'https://api.allorigins.win/get?url=';
 
 // Helper function to create URL with auth parameters

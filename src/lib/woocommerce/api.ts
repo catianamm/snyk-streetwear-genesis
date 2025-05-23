@@ -8,23 +8,18 @@ export const fetchFromWooCommerce = async (endpoint: string, options: RequestIni
     const authenticatedUrl = buildAuthenticatedURL(endpoint);
     console.log(`[WooCommerce API] Authenticated URL built`);
     
-    const requestOptions: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      ...options,
-      cache: 'no-store' as RequestCache,
-    };
-    
-    console.log('[WooCommerce API] Request options:', {
-      method: options.method || 'GET',
-      headers: requestOptions.headers
-    });
-    
-    // Try direct API access first
+    // Try direct API access first (quick attempt)
     try {
       console.log('[WooCommerce API] Attempting direct connection...');
-      const directResponse = await fetch(authenticatedUrl, requestOptions);
+      const directResponse = await fetch(authenticatedUrl, {
+        method: options.method || 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store' as RequestCache,
+        signal: AbortSignal.timeout(5000), // 5 second timeout
+        ...options,
+      });
       
       console.log('[WooCommerce API] Direct response status:', directResponse.status);
       
@@ -37,13 +32,6 @@ export const fetchFromWooCommerce = async (endpoint: string, options: RequestIni
         return data;
       }
       
-      const errorText = await directResponse.text();
-      console.log('[WooCommerce API] Direct connection failed:', {
-        status: directResponse.status,
-        statusText: directResponse.statusText,
-        error: errorText.substring(0, 200)
-      });
-      
       if (directResponse.status === 401) {
         throw new Error('Authentication failed. Please check your WooCommerce API credentials.');
       }
@@ -51,27 +39,17 @@ export const fetchFromWooCommerce = async (endpoint: string, options: RequestIni
         throw new Error('WooCommerce API endpoint not found. Please check your store URL.');
       }
     } catch (directError) {
-      console.log('[WooCommerce API] Direct connection error details:', directError);
-      
-      // If it's not a network error, re-throw it
-      if (directError instanceof Error && !directError.message.includes('fetch') && directError.name !== 'TypeError') {
-        throw directError;
-      }
-      
-      console.log('[WooCommerce API] Network error detected, trying proxy...');
+      console.log('[WooCommerce API] Direct connection failed, trying proxy...');
     }
     
-    // Fallback to proxy without authentication headers
+    // Fallback to proxy (remove auth headers for proxy)
     console.log('[WooCommerce API] Trying CORS proxy fallback...');
     const proxyUrl = `${CORS_PROXY}${encodeURIComponent(authenticatedUrl)}`;
-    console.log('[WooCommerce API] Proxy URL:', proxyUrl);
     
     const proxyResponse = await fetch(proxyUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      method: 'GET',
       cache: 'no-store' as RequestCache,
-      ...options,
+      signal: AbortSignal.timeout(10000), // 10 second timeout for proxy
     });
 
     console.log('[WooCommerce API] Proxy response status:', proxyResponse.status);
