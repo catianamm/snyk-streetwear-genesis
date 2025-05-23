@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -89,7 +88,7 @@ const Navbar = () => {
       ></div>
       
       <div className="h-full flex flex-col items-center justify-between py-6">
-        {/* Logo - with transcending, dislocated and rotated effect - improved for visibility with dark background */}
+        {/* Logo - fix HTTP to HTTPS */}
         <div className="flex flex-start relative">
           <Link to="/" className="h-24 w-28 ml-40 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
@@ -97,20 +96,20 @@ const Navbar = () => {
             
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
-                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Glitch" 
                 className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
             <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-0 transition-all duration-300">
               <img 
-                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Hover" 
                 className="h-full w-auto translate-x-[4px] translate-y-[2px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
             <img 
-              src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+              src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
               alt="Snyk Logo" 
               className={`h-full w-auto ml-4 transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
             />

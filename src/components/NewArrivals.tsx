@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ProductCard from './ProductCard';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -11,10 +10,12 @@ const NewArrivals = () => {
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
   
-  // Filter to get only new products
-  const newProducts = products.filter(product => product.isNew === true);
-  
-  console.log('Filtered new products:', newProducts);
+  // Memoize filtered products to prevent excessive re-calculations
+  const newProducts = useMemo(() => {
+    const filtered = products.filter(product => product.isNew === true);
+    console.log('Filtered new products:', filtered.length);
+    return filtered;
+  }, [products]);
 
   useEffect(() => {
     // Random glitch effects for the section title
@@ -85,7 +86,7 @@ const NewArrivals = () => {
                   </div>
                 )) : 
                 <div className="col-span-full text-center py-12 text-black">
-                  <p>No new arrivals found. Add products with the 'new' tag in your WooCommerce store.</p>
+                  <p>No new arrivals found. Products are marked as new for 7 days after creation.</p>
                 </div>
               }
             </div>
