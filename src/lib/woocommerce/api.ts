@@ -1,3 +1,4 @@
+
 import { buildAuthenticatedURL, CORS_PROXY } from './config';
 
 // Function to handle API requests with URL-based authentication
@@ -110,12 +111,14 @@ export const processPayment = async (orderId: number, paymentData: any) => {
     console.log(`Processing payment for order ${orderId}:`, paymentData);
     
     // In a real implementation, you would call the WooCommerce payment processing endpoint
-    // For now, we'll just simulate a successful payment
-    return {
+    // For now, we'll simulate a successful payment
+    const simulatedResponse = await new Promise(resolve => setTimeout(() => resolve({
       success: true,
       order_id: orderId,
       redirect_url: `/order-confirmation/${orderId}`,
-    };
+    }), 1000));
+    
+    return simulatedResponse;
   } catch (error) {
     console.error('Error processing payment:', error);
     throw error;

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tabs";
 import { fetchProductById } from '@/lib/woocommerce';
 import FeaturedProducts from '@/components/FeaturedProducts';
+import { useCart } from '@/hooks/useCart';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+  const { addToCart } = useCart();
 
   // Fetch product data when component mounts
   useEffect(() => {
@@ -76,28 +78,65 @@ const ProductDetail = () => {
 
   // Add to cart handler
   const handleAddToCart = () => {
-    // In a real implementation, we would add the item to the cart
-    // For now, show a toast notification
-    toast({
-      title: "Added to cart",
-      description: `${quantity} ${product.name} added to your cart`,
-    });
+    if (!product) return;
+    
+    // Check if size and color are selected when required
+    const availableSizes = product.attributes?.find((attr: any) => attr.name === "Size")?.options || [];
+    const availableColors = product.attributes?.find((attr: any) => attr.name === "Color")?.options || [];
+    
+    if (availableSizes.length > 0 && !selectedSize) {
+      toast({
+        title: "Size required",
+        description: "Please select a size before adding to cart",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (availableColors.length > 0 && !selectedColor) {
+      toast({
+        title: "Color required",
+        description: "Please select a color before adding to cart",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    addToCart(product, quantity, selectedSize, selectedColor);
   };
 
   // Initialize checkout with WooCommerce
   const handleCheckout = async () => {
     try {
-      // Redirect to checkout page
-      navigate('/checkout', { 
-        state: { 
-          product: {
-            ...product,
-            quantity,
-            selectedSize,
-            selectedColor
-          }
-        }
-      });
+      if (!product) return;
+      
+      // Check if size and color are selected when required
+      const availableSizes = product.attributes?.find((attr: any) => attr.name === "Size")?.options || [];
+      const availableColors = product.attributes?.find((attr: any) => attr.name === "Color")?.options || [];
+      
+      if (availableSizes.length > 0 && !selectedSize) {
+        toast({
+          title: "Size required",
+          description: "Please select a size before checkout",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      if (availableColors.length > 0 && !selectedColor) {
+        toast({
+          title: "Color required",
+          description: "Please select a color before checkout",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Add to cart before checkout
+      addToCart(product, quantity, selectedSize, selectedColor);
+      
+      // Navigate to cart
+      navigate('/cart');
     } catch (error) {
       console.error('Error during checkout:', error);
       toast({
