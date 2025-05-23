@@ -84,7 +84,7 @@ const Navbar = () => {
         className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
         style={{ 
           opacity: 1,
-          height: `${100 * scrollProgress}%` 
+          height: `${145 * scrollProgress}%` 
         }}
       ></div>
       
@@ -122,40 +122,37 @@ const Navbar = () => {
         <NavigationMenu orientation="vertical" className="flex flex-col space-y-10">
           <NavigationMenuList className="flex flex-col space-y-10">
             
-            <NavigationMenuItem>
-              <Link 
-                to="/products" 
-                className={`nav-link relative overflow-hidden group flex flex-col items-center ${activeSection === 'shop' ? 'text-pink-400' : ''}`}
-              >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Shop</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-orange-500 ${activeSection === 'shop' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
-              </Link>
-            </NavigationMenuItem>
+            
 
             <NavigationMenuItem>
               <Link 
-                to="/collections"
+                to="/#collections"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('collections')?.scrollIntoView({behavior: 'smooth'});
+                }}
                 className={`nav-link relative group flex flex-col items-center ${activeSection === 'collections' ? 'text-orange-400' : ''}`}
               >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-orange-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Collections</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-yellow-500 ${activeSection === 'collections' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-orange-500 ${activeSection === 'collections' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
             
-            <NavigationMenuItem>
+  <NavigationMenuItem>
               <Link 
-                to="/#featured"
+                to="/#most-wanted"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('featured')?.scrollIntoView({behavior: 'smooth'});
+                  document.getElementById('most-wanted')?.scrollIntoView({behavior: 'smooth'});
                 }}
-                className={`nav-link relative group flex flex-col items-center ${activeSection === 'featured' ? 'text-purple-400' : ''}`}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'most-wanted' ? 'text-purple-400' : ''}`}
               >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">Featured</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 ${activeSection === 'featured' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-pink-400 transform-rotate-90 origin-center whitespace-nowrap py-14">Most wanted</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-pink-500 to-pink-500 ${activeSection === 'most-wanted' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
-                        
+
+                                    
             <NavigationMenuItem>
               <Link 
                 to="/#new"
@@ -165,8 +162,17 @@ const Navbar = () => {
                 }}
                 className={`nav-link relative group flex flex-col items-center ${activeSection === 'new' ? 'text-blue-400' : ''}`}
               >
-                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform-rotate-90 origin-center whitespace-nowrap py-6">New</span>
-                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-400 to-cyan-500 ${activeSection === 'new' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">New Arrivals</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-400 to-purple-500 ${activeSection === 'new' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link 
+                to="/products" 
+                className={`nav-link relative overflow-hidden group flex flex-col items-center ${activeSection === 'shop' ? 'text-pink-400' : ''}`}
+              >
+                <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-green-400 transform-rotate-90 origin-center whitespace-nowrap py-2">Shop</span>
+                <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-green-500 to-green-500 ${activeSection === 'shop' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -224,6 +230,8 @@ const Navbar = () => {
                   >
                     <span className="group-hover:text-green-400">NEW</span>
                   </Link>
+
+
                 </div>
               </div>
             </SheetContent>
