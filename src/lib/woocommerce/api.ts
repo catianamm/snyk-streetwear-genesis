@@ -105,22 +105,33 @@ export const createOrder = async (orderData: any) => {
   }
 };
 
+// Define the payment response type for TypeScript
+export interface PaymentResponse {
+  success: boolean;
+  order_id: number;
+  redirect_url?: string;
+  error?: string;
+}
+
 // Function to process payment for an order
-export const processPayment = async (orderId: number, paymentData: any) => {
+export const processPayment = async (orderId: number, paymentData: any): Promise<PaymentResponse> => {
   try {
     console.log(`Processing payment for order ${orderId}:`, paymentData);
     
     // In a real implementation, you would call the WooCommerce payment processing endpoint
     // For now, we'll simulate a successful payment
-    const simulatedResponse = await new Promise(resolve => setTimeout(() => resolve({
+    return await new Promise<PaymentResponse>(resolve => setTimeout(() => resolve({
       success: true,
       order_id: orderId,
       redirect_url: `/order-confirmation/${orderId}`,
     }), 1000));
     
-    return simulatedResponse;
   } catch (error) {
     console.error('Error processing payment:', error);
-    throw error;
+    return {
+      success: false,
+      order_id: orderId,
+      error: error instanceof Error ? error.message : 'Unknown payment error'
+    };
   }
 };

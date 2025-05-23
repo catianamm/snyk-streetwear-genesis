@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -10,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
-import { createOrder, processPayment } from '@/lib/woocommerce/api';
+import { createOrder, processPayment, PaymentResponse } from '@/lib/woocommerce/api';
 import { useCart } from '@/hooks/useCart';
 import {
   Select,
@@ -160,7 +161,7 @@ const Checkout = () => {
           payment_method: paymentMethod
         };
         
-        const paymentResult = await processPayment(order.id, paymentData);
+        const paymentResult: PaymentResponse = await processPayment(order.id, paymentData);
         
         if (paymentResult.success) {
           toast({
@@ -178,6 +179,8 @@ const Checkout = () => {
               total: total.toFixed(2)
             }
           });
+        } else {
+          throw new Error(paymentResult.error || "Payment processing failed");
         }
       } catch (apiError) {
         console.log('API error, using fallback order flow', apiError);
