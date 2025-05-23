@@ -11,26 +11,47 @@ export const useProducts = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        console.log('[useProducts] Starting to fetch products...');
+        console.log('[useProducts] Starting product fetch...');
         setLoading(true);
         setError(null);
         
         // Fetch products from WooCommerce API
         const productData = await fetchProducts();
         
-        console.log('[useProducts] Raw product data received:', productData);
+        console.log('[useProducts] Product fetch completed:', {
+          received: Array.isArray(productData),
+          count: Array.isArray(productData) ? productData.length : 0
+        });
         
         if (Array.isArray(productData) && productData.length > 0) {
           setProducts(productData);
-          console.log('[useProducts] Products set successfully:', productData.length);
+          console.log('[useProducts] Products set successfully, count:', productData.length);
         } else {
-          console.log('[useProducts] No products returned from API');
+          console.log('[useProducts] No products returned from API or invalid format');
           setProducts([]);
-          setError('No products available');
+          setError('No products available in your store');
         }
       } catch (err) {
-        console.error('[useProducts] Error fetching products:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load products');
+        console.error('[useProducts] Error during product fetch:', {
+          name: err.name,
+          message: err.message,
+          stack: err.stack
+        });
+        
+        let errorMessage = 'Failed to load products';
+        if (err instanceof Error) {
+          if (err.message.includes('Authentication failed')) {
+            errorMessage = 'Invalid WooCommerce API credentials';
+          } else if (err.message.includes('not found')) {
+            errorMessage = 'Store not found - check your WooCommerce URL';
+          } else if (err.message.includes('fetch')) {
+            errorMessage = 'Cannot connect to store - check internet connection';
+          } else {
+            errorMessage = err.message;
+          }
+        }
+        
+        setError(errorMessage);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -38,13 +59,15 @@ export const useProducts = () => {
     };
 
     getProducts();
-  }, []); // Remove dependencies to prevent re-fetching loops
+  }, []);
 
   // Force refresh method
-  const refresh = () => {
+  const refresh = async () => {
+    console.log('[useProducts] Manual refresh triggered');
     setLoading(true);
     setError(null);
     setProducts([]);
+    // The useEffect will handle the actual fetching
   };
 
   return { products, loading, error, refresh };
