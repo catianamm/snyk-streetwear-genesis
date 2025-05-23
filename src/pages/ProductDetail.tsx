@@ -1,44 +1,57 @@
 
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { Loader2, Heart } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { ProductType } from '@/components/ProductCard';
+import { fetchProductById } from '@/lib/woocommerce';
 import FeaturedProducts from '@/components/FeaturedProducts';
-
-// Sample product data
-const product = {
-  id: 2,
-  name: "Urban Cargo Pants",
-  price: 79.99,
-  description: "Our Urban Cargo Pants combine street style with practical design. Made from durable cotton twill with a relaxed fit, multiple pockets, and adjustable ankle cuffs. Perfect for those who value both style and functionality in their everyday wear.",
-  details: "100% Cotton\nRelaxed fit\nMultiple cargo pockets\nAdjustable ankle cuffs\nHeavy-duty YKK zippers\nMachine washable",
-  sizes: ["S", "M", "L", "XL"],
-  colors: ["Black", "Olive", "Khaki"],
-  images: [
-    "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1000",
-    "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=1000",
-    "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1000",
-    "https://images.unsplash.com/photo-1584865288642-42078afe6942?q=80&w=1000",
-  ],
-  inStock: true,
-  category: "pants",
-  isNew: true,
-};
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+
+  // Fetch product data when component mounts
+  useEffect(() => {
+    const getProduct = async () => {
+      if (!id) return;
+      
+      try {
+        setLoading(true);
+        console.log(`Fetching product with ID: ${id}`);
+        const productData = await fetchProductById(Number(id));
+        console.log('Product data received:', productData);
+        
+        if (!productData) {
+          throw new Error('Product not found');
+        }
+        
+        setProduct(productData);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('Failed to load product details');
+        setLoading(false);
+      }
+    };
+    
+    getProduct();
+  }, [id]);
 
   // Size selection
   const handleSizeSelect = (size: string) => {
@@ -61,6 +74,80 @@ const ProductDetail = () => {
     }
   };
 
+  // Add to cart handler
+  const handleAddToCart = () => {
+    // In a real implementation, we would add the item to the cart
+    // For now, show a toast notification
+    toast({
+      title: "Added to cart",
+      description: `${quantity} ${product.name} added to your cart`,
+    });
+  };
+
+  // Initialize checkout with WooCommerce
+  const handleCheckout = async () => {
+    try {
+      // Redirect to checkout page
+      navigate('/checkout', { 
+        state: { 
+          product: {
+            ...product,
+            quantity,
+            selectedSize,
+            selectedColor
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast({
+        title: "Checkout Error",
+        description: "There was a problem processing your checkout.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
+            <Loader2 className="h-10 w-10 animate-spin text-snyk-purple mb-4" />
+            <p>Loading product details...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+            <p className="mb-6">{error || "Unable to load product details"}</p>
+            <Button onClick={() => navigate('/products')}>
+              Return to Products
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Extract product attributes
+  const availableSizes = product.attributes?.find(attr => attr.name === "Size")?.options || ["S", "M", "L", "XL"];
+  const availableColors = product.attributes?.find(attr => attr.name === "Color")?.options || ["Black", "White"];
+  const productImages = product.images && product.images.length > 0 
+    ? product.images 
+    : [{ src: product.image }];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -71,13 +158,13 @@ const ProductDetail = () => {
             <div>
               <div className="aspect-square overflow-hidden rounded-lg mb-4">
                 <img
-                  src={product.images[activeImage]}
+                  src={productImages[activeImage]?.src || '/placeholder.svg'}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="grid grid-cols-4 gap-2">
-                {product.images.map((image, index) => (
+                {productImages.map((image, index) => (
                   <div
                     key={index}
                     className={`aspect-square overflow-hidden rounded cursor-pointer ${
@@ -86,7 +173,7 @@ const ProductDetail = () => {
                     onClick={() => setActiveImage(index)}
                   >
                     <img
-                      src={image}
+                      src={image.src || '/placeholder.svg'}
                       alt={`${product.name} view ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -103,54 +190,60 @@ const ProductDetail = () => {
                 </span>
               )}
               <h1 className="text-2xl md:text-4xl font-display mb-2">{product.name}</h1>
-              <p className="text-2xl font-bold mb-6">${product.price.toFixed(2)}</p>
-              <p className="text-zinc-700 mb-6">
-                {product.description}
-              </p>
+              <p className="text-2xl font-bold mb-6">${Number(product.price).toFixed(2)}</p>
+              
+              <div className="prose prose-sm text-zinc-700 mb-6">
+                <div dangerouslySetInnerHTML={{ __html: product.description || "" }} />
+              </div>
 
               {/* Color Selection */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium mb-3">Color: {selectedColor || "Select a color"}</h3>
-                <div className="flex space-x-2">
-                  {product.colors.map(color => {
-                    // Map color names to tailwind classes
-                    const colorClass = 
-                      color === "Black" ? "bg-zinc-900" : 
-                      color === "Olive" ? "bg-olive-600" : 
-                      color === "Khaki" ? "bg-amber-300" : "bg-gray-500";
-                    
-                    return (
-                      <button
-                        key={color}
-                        className={`h-8 w-8 rounded-full ${colorClass} ${
-                          selectedColor === color ? 'ring-2 ring-offset-2 ring-snyk-purple' : ''
-                        }`}
-                        onClick={() => handleColorSelect(color)}
-                        aria-label={`Select ${color} color`}
-                      />
-                    );
-                  })}
+              {availableColors.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium mb-3">Color: {selectedColor || "Select a color"}</h3>
+                  <div className="flex space-x-2">
+                    {availableColors.map(color => {
+                      // Map color names to tailwind classes
+                      const colorClass = 
+                        color.toLowerCase() === "black" ? "bg-zinc-900" : 
+                        color.toLowerCase() === "white" ? "bg-white border border-gray-300" : 
+                        color.toLowerCase() === "olive" ? "bg-olive-600" : 
+                        color.toLowerCase() === "khaki" ? "bg-amber-300" : "bg-gray-500";
+                      
+                      return (
+                        <button
+                          key={color}
+                          className={`h-8 w-8 rounded-full ${colorClass} ${
+                            selectedColor === color ? 'ring-2 ring-offset-2 ring-snyk-purple' : ''
+                          }`}
+                          onClick={() => handleColorSelect(color)}
+                          aria-label={`Select ${color} color`}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Size Selection */}
-              <div className="mb-6">
-                <h3 className="text-sm font-medium mb-3">Size: {selectedSize || "Select a size"}</h3>
-                <div className="grid grid-cols-4 gap-2">
-                  {product.sizes.map(size => (
-                    <button
-                      key={size}
-                      className={`border border-zinc-300 py-2 rounded hover:border-snyk-purple ${
-                        selectedSize === size ? 'bg-snyk-purple text-white border-snyk-purple' : ''
-                      }`}
-                      onClick={() => handleSizeSelect(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
+              {availableSizes.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium mb-3">Size: {selectedSize || "Select a size"}</h3>
+                  <div className="grid grid-cols-4 gap-2">
+                    {availableSizes.map(size => (
+                      <button
+                        key={size}
+                        className={`border border-zinc-300 py-2 rounded hover:border-snyk-purple ${
+                          selectedSize === size ? 'bg-snyk-purple text-white border-snyk-purple' : ''
+                        }`}
+                        onClick={() => handleSizeSelect(size)}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-sm text-zinc-500 mt-2">Size guide</p>
                 </div>
-                <p className="text-sm text-zinc-500 mt-2">Size guide</p>
-              </div>
+              )}
 
               {/* Quantity */}
               <div className="mb-8">
@@ -177,16 +270,27 @@ const ProductDetail = () => {
               {/* Add to Cart */}
               <Button
                 className="w-full bg-snyk-purple hover:bg-purple-700 text-white mb-4 py-6 text-base"
-                disabled={!selectedSize || !selectedColor}
+                disabled={(!availableSizes.length || !selectedSize) || (!availableColors.length || !selectedColor)}
+                onClick={handleAddToCart}
               >
-                {product.inStock ? "Add to Cart" : "Out of Stock"}
+                {product.stock_status !== "outofstock" ? "Add to Cart" : "Out of Stock"}
+              </Button>
+              
+              {/* Buy Now Button */}
+              <Button
+                variant="outline"
+                className="w-full mb-6 py-6 text-base bg-black hover:bg-zinc-800 text-white border-black"
+                disabled={(!availableSizes.length || !selectedSize) || (!availableColors.length || !selectedColor)}
+                onClick={handleCheckout}
+              >
+                Buy Now
               </Button>
               
               <Button
                 variant="outline"
                 className="w-full mb-6 py-6 text-base"
               >
-                Add to Wishlist
+                <Heart className="mr-2 h-4 w-4" /> Add to Wishlist
               </Button>
 
               {/* Product Info Tabs */}
@@ -198,7 +302,11 @@ const ProductDetail = () => {
                 </TabsList>
                 <TabsContent value="details" className="mt-4">
                   <div className="whitespace-pre-line text-zinc-700">
-                    {product.details}
+                    {product.short_description ? (
+                      <div dangerouslySetInnerHTML={{ __html: product.short_description }} />
+                    ) : (
+                      <p>Product details not available.</p>
+                    )}
                   </div>
                 </TabsContent>
                 <TabsContent value="sizing" className="mt-4">
@@ -210,30 +318,30 @@ const ProductDetail = () => {
                     <thead>
                       <tr className="border-b">
                         <th className="py-2 text-left">Size</th>
-                        <th className="py-2 text-left">Waist (inches)</th>
+                        <th className="py-2 text-left">Chest (inches)</th>
                         <th className="py-2 text-left">Length (inches)</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border-b">
                         <td className="py-2">S</td>
-                        <td className="py-2">28-30</td>
-                        <td className="py-2">40</td>
+                        <td className="py-2">36-38</td>
+                        <td className="py-2">28</td>
                       </tr>
                       <tr className="border-b">
                         <td className="py-2">M</td>
-                        <td className="py-2">30-32</td>
-                        <td className="py-2">41</td>
+                        <td className="py-2">39-41</td>
+                        <td className="py-2">29</td>
                       </tr>
                       <tr className="border-b">
                         <td className="py-2">L</td>
-                        <td className="py-2">32-34</td>
-                        <td className="py-2">42</td>
+                        <td className="py-2">42-44</td>
+                        <td className="py-2">30</td>
                       </tr>
                       <tr className="border-b">
                         <td className="py-2">XL</td>
-                        <td className="py-2">34-36</td>
-                        <td className="py-2">43</td>
+                        <td className="py-2">45-47</td>
+                        <td className="py-2">31</td>
                       </tr>
                     </tbody>
                   </table>
