@@ -52,40 +52,12 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Adding email to newsletter:', email);
-    console.log('Using API key (first 10 chars):', brevoApiKey.substring(0, 10) + '...');
+    console.log('API key exists:', !!brevoApiKey);
+    console.log('API key length:', brevoApiKey.length);
 
-    // First, let's try to get the lists to verify the API key works
-    const listsResponse = await fetch('https://api.brevo.com/v3/contacts/lists', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'api-key': brevoApiKey,
-      },
-    });
-
-    if (!listsResponse.ok) {
-      const listsError = await listsResponse.json();
-      console.error('Brevo API key verification failed:', listsError);
-      return new Response(
-        JSON.stringify({ 
-          error: 'API key verification failed',
-          details: listsError.message || 'Invalid API key'
-        }),
-        { 
-          status: 400, 
-          headers: { 'Content-Type': 'application/json', ...corsHeaders } 
-        }
-      );
-    }
-
-    const lists = await listsResponse.json();
-    console.log('Available lists:', lists);
-
-    // Get the first available list ID, or use 1 as default
-    const listId = lists.lists && lists.lists.length > 0 ? lists.lists[0].id : 1;
-    console.log('Using list ID:', listId);
-
-    // Add contact to Brevo
+    // Try to add contact directly first - if the key works, this should succeed
+    console.log('Attempting to add contact to Brevo...');
+    
     const brevoResponse = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: {
@@ -95,12 +67,12 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         email: email,
-        listIds: [listId],
         updateEnabled: true,
       }),
     });
 
     const brevoData = await brevoResponse.json();
+    console.log('Brevo API response status:', brevoResponse.status);
     console.log('Brevo API response:', brevoData);
 
     if (brevoResponse.ok) {
@@ -128,10 +100,26 @@ const handler = async (req: Request): Promise<Response> => {
       );
     } else {
       console.error('Brevo API error:', brevoData);
+      
+      // If unauthorized, provide specific guidance
+      if (brevoResponse.status === 401) {
+        return new Response(
+          JSON.stringify({ 
+            error: 'Invalid API key',
+            details: 'Please check your Brevo API key in the Supabase secrets. Make sure it\'s a valid API key with contacts permissions.'
+          }),
+          { 
+            status: 400, 
+            headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+          }
+        );
+      }
+      
       return new Response(
         JSON.stringify({ 
           error: 'Failed to subscribe to newsletter',
-          details: brevoData.message || 'Unknown error'
+          details: brevoData.message || 'Unknown error',
+          statusCode: brevoResponse.status
         }),
         { 
           status: 400, 
