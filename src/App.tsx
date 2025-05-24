@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from "./components/ui/toaster";
+import { Toaster as SonnerToaster } from "sonner";
 import { CartProvider } from './contexts/CartContext';
 
 // Import pages
@@ -36,6 +37,7 @@ function App() {
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
         <Toaster />
+        <SonnerToaster position="top-right" />
       </Router>
     </CartProvider>
   );

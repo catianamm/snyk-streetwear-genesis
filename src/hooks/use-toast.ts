@@ -14,8 +14,6 @@ export interface Toast extends ToastProps {
 
 // This array will store our active toasts
 const TOAST_LIMIT = 20;
-const TOAST_REMOVE_DELAY = 1000;
-
 let toasts: Toast[] = [];
 
 export const useToast = () => {
@@ -30,6 +28,13 @@ export const useToast = () => {
     };
     
     toasts = [newToast, ...toasts].slice(0, TOAST_LIMIT);
+    
+    // Use sonner for the actual toast display
+    if (variant === "destructive") {
+      sonnerToast.error(title, { description, duration });
+    } else {
+      sonnerToast.success(title, { description, duration });
+    }
     
     return id;
   };
@@ -52,13 +57,15 @@ export const toast = ({
   variant = "default", 
   duration = 3000 
 }: ToastProps) => {
-  const options = {
-    duration,
-    className: variant === "destructive" ? "destructive" : "",
-  };
-
-  return sonnerToast(title, {
-    description,
-    ...options,
-  });
+  if (variant === "destructive") {
+    return sonnerToast.error(title, {
+      description,
+      duration,
+    });
+  } else {
+    return sonnerToast.success(title, {
+      description,
+      duration,
+    });
+  }
 };
