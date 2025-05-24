@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -83,6 +82,7 @@ const ComingSoon = () => {
     }
     
     setIsSubmitting(true);
+    console.log('Starting newsletter subscription for:', email);
     
     try {
       // Brevo API integration
@@ -94,7 +94,7 @@ const ComingSoon = () => {
         },
         body: JSON.stringify({
           email: email,
-          listIds: [1], // Replace with your Brevo list ID
+          listIds: [2], // Updated list ID - you may need to check your Brevo account for the correct ID
           attributes: {
             FIRSTNAME: '',
             LASTNAME: '',
@@ -104,28 +104,36 @@ const ComingSoon = () => {
         }),
       });
 
-      if (response.ok) {
-        console.log(`Brevo newsletter subscription successful: ${email}`);
+      console.log('Brevo API response status:', response.status);
+      const responseData = await response.json();
+      console.log('Brevo API response data:', responseData);
+
+      if (response.ok || response.status === 201) {
+        console.log(`Newsletter subscription successful: ${email}`);
         toast({
-          title: "Thank you!",
-          description: "We'll notify you when we launch.",
+          title: "🎉 Thank you for subscribing!",
+          description: "You'll be the first to know when we launch. Check your email for confirmation.",
+        });
+        setEmail('');
+      } else if (response.status === 400 && responseData.code === 'duplicate_parameter') {
+        // Handle case where email is already subscribed
+        console.log('Email already subscribed:', email);
+        toast({
+          title: "Already subscribed!",
+          description: "This email is already on our list. Thanks for your interest!",
         });
         setEmail('');
       } else {
-        throw new Error('Brevo API error');
+        throw new Error(`Brevo API error: ${response.status} - ${responseData.message || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Newsletter submission error:', error);
       
-      // Fallback to local storage or alternative method
-      console.log(`Newsletter fallback submission: ${email} to mkt@snyk.store`);
-      
       toast({
-        title: "Thank you!",
-        description: "We'll notify you when we launch.",
+        variant: "destructive",
+        title: "Subscription failed",
+        description: "There was an error subscribing you to our newsletter. Please try again later.",
       });
-      
-      setEmail('');
     } finally {
       setIsSubmitting(false);
     }
@@ -199,11 +207,12 @@ const ComingSoon = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isSubmitting}
+                required
               />
               <Button 
                 type="submit" 
-                className="bg-white text-black hover:bg-pink-500 hover:text-white"
-                disabled={isSubmitting}
+                className="bg-white text-black hover:bg-pink-500 hover:text-white transition-colors"
+                disabled={isSubmitting || !email}
               >
                 {isSubmitting ? 'Subscribing...' : 'Subscribe'}
               </Button>
