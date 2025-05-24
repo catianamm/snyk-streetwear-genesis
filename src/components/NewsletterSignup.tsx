@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabase';
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
@@ -24,51 +25,32 @@ const NewsletterSignup = () => {
     console.log('Starting newsletter subscription for:', email);
     
     try {
-      // Brevo API integration with proper headers and payload
-      const response = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': 'A9vGsEbWVxkPdfQ1',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          listIds: [2],
-          attributes: {
-            FIRSTNAME: '',
-            LASTNAME: '',
-            SOURCE: 'Coming Soon Page'
-          },
-          updateEnabled: true
-        }),
+      // Call Supabase edge function for secure API handling
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email }
       });
 
-      console.log('Brevo API response status:', response.status);
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Newsletter subscription successful:', data);
       
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log('Newsletter subscription successful:', responseData);
-        
+      if (data.success) {
         toast({
           title: "🎉 Successfully subscribed!",
           description: "Thank you! You'll be the first to know when we launch.",
         });
         setEmail('');
+      } else if (data.alreadySubscribed) {
+        toast({
+          title: "Already subscribed!",
+          description: "This email is already on our list. Thanks for your interest!",
+        });
+        setEmail('');
       } else {
-        const errorData = await response.json();
-        console.log('Brevo API error response:', errorData);
-        
-        if (response.status === 400 && errorData.code === 'duplicate_parameter') {
-          console.log('Email already subscribed:', email);
-          toast({
-            title: "Already subscribed!",
-            description: "This email is already on our list. Thanks for your interest!",
-          });
-          setEmail('');
-        } else {
-          throw new Error(`API error: ${response.status} - ${errorData.message || 'Unknown error'}`);
-        }
+        throw new Error(data.error || 'Unknown error occurred');
       }
     } catch (error) {
       console.error('Newsletter subscription error:', error);

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabase';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
@@ -24,23 +25,35 @@ const Newsletter = () => {
     setIsLoading(true);
     
     try {
-      // In a real-world scenario, you would send this to your backend API
-      // For now, we'll simulate a successful submission with a slight delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Log the submission for debugging
-      console.log(`Newsletter submission: ${email} to mkt@snyk.store`);
-      
-      // Success message
-      toast({
-        title: "Subscription confirmed!",
-        description: "Your email has been added to our newsletter."
+      // Call Supabase edge function for secure API handling
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email }
       });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Newsletter subscription successful:', data);
       
-      // Clear the form
-      setEmail('');
+      if (data.success) {
+        toast({
+          title: "Subscription confirmed!",
+          description: "Your email has been added to our newsletter."
+        });
+        setEmail('');
+      } else if (data.alreadySubscribed) {
+        toast({
+          title: "Already subscribed!",
+          description: "This email is already on our list. Thanks for your interest!"
+        });
+        setEmail('');
+      } else {
+        throw new Error(data.error || 'Unknown error occurred');
+      }
     } catch (error) {
-      console.error('Newsletter submission error:', error);
+      console.error('Newsletter subscription error:', error);
       toast({
         variant: "destructive",
         title: "Subscription failed",
