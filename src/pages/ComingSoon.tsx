@@ -1,143 +1,21 @@
+
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { toast } from '@/hooks/use-toast';
-import { Instagram } from 'lucide-react';
-
-// Countdown timer calculation with fixed launch date
-const calculateTimeLeft = () => {
-  // Set fixed launch date to June 15th, 2025
-  const launchDate = new Date('2025-06-15T00:00:00');
-  
-  const difference = launchDate.getTime() - new Date().getTime();
-  
-  if (difference <= 0) {
-    return {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0
-    };
-  }
-  
-  return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-    seconds: Math.floor((difference % (1000 * 60)) / 1000)
-  };
-};
-
-// TikTok Icon Component (since it's not in lucide-react)
-const TikTokIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.849-.849-1.292-1.982-1.292-3.297h-3.26v14.453c0 2.007-1.635 3.642-3.642 3.642s-3.642-1.635-3.642-3.642 1.635-3.642 3.642-3.642c.394 0 .773.063 1.127.178V8.56a7.045 7.045 0 0 0-1.127-.09c-3.86 0-6.988 3.128-6.988 6.988s3.128 6.988 6.988 6.988 6.988-3.128 6.988-6.988V9.321a9.69 9.69 0 0 0 4.786 1.245v-3.26c-.927 0-1.827-.266-2.6-.744z"/>
-  </svg>
-);
+import CountdownTimer from '@/components/CountdownTimer';
+import NewsletterSignup from '@/components/NewsletterSignup';
+import SocialMediaLinks from '@/components/SocialMediaLinks';
 
 const ComingSoon = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const [email, setEmail] = useState('');
   const [glitchActive, setGlitchActive] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Update countdown every second
+  // Occasional glitch effect
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    
-    // Occasional glitch effect
     const glitchInterval = setInterval(() => {
       setGlitchActive(true);
       setTimeout(() => setGlitchActive(false), 200);
     }, 5000);
     
-    return () => {
-      clearInterval(timer);
-      clearInterval(glitchInterval);
-    };
+    return () => clearInterval(glitchInterval);
   }, []);
-  
-  // Format date in a readable format
-  const formatLaunchDate = () => {
-    const launchDate = new Date('2025-06-15T00:00:00');
-    return launchDate.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  };
-  
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !email.includes('@')) {
-      toast({
-        variant: "destructive",
-        title: "Invalid email",
-        description: "Please enter a valid email address."
-      });
-      return;
-    }
-    
-    setIsSubmitting(true);
-    console.log('Starting newsletter subscription for:', email);
-    
-    try {
-      // Brevo API integration
-      const response = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': 'A9vGsEbWVxkPdfQ1',
-        },
-        body: JSON.stringify({
-          email: email,
-          listIds: [2], // Updated list ID - you may need to check your Brevo account for the correct ID
-          attributes: {
-            FIRSTNAME: '',
-            LASTNAME: '',
-            SOURCE: 'Coming Soon Page'
-          },
-          updateEnabled: true
-        }),
-      });
-
-      console.log('Brevo API response status:', response.status);
-      const responseData = await response.json();
-      console.log('Brevo API response data:', responseData);
-
-      if (response.ok || response.status === 201) {
-        console.log(`Newsletter subscription successful: ${email}`);
-        toast({
-          title: "🎉 Thank you for subscribing!",
-          description: "You'll be the first to know when we launch. Check your email for confirmation.",
-        });
-        setEmail('');
-      } else if (response.status === 400 && responseData.code === 'duplicate_parameter') {
-        // Handle case where email is already subscribed
-        console.log('Email already subscribed:', email);
-        toast({
-          title: "Already subscribed!",
-          description: "This email is already on our list. Thanks for your interest!",
-        });
-        setEmail('');
-      } else {
-        throw new Error(`Brevo API error: ${response.status} - ${responseData.message || 'Unknown error'}`);
-      }
-    } catch (error) {
-      console.error('Newsletter submission error:', error);
-      
-      toast({
-        variant: "destructive",
-        title: "Subscription failed",
-        description: "There was an error subscribing you to our newsletter. Please try again later.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
@@ -181,63 +59,14 @@ const ComingSoon = () => {
             Our new online store is currently under construction. We're working hard to bring you the best in streetwear.
           </p>
           
-          {/* Launch Date */}
-          <p className="text-xl mb-6 font-semibold text-pink-500">
-            Launching on {formatLaunchDate()}
-          </p>
+          {/* Countdown Timer Component */}
+          <CountdownTimer />
           
-          {/* Countdown Timer */}
-          <div className="grid grid-cols-4 gap-3 mb-10">
-            {Object.entries(timeLeft).map(([label, value]) => (
-              <div key={label} className="bg-zinc-900 border border-zinc-800 p-3">
-                <div className="text-2xl font-bold">{value}</div>
-                <div className="text-xs uppercase text-zinc-500">{label}</div>
-              </div>
-            ))}
-          </div>
+          {/* Newsletter Signup Component */}
+          <NewsletterSignup />
           
-          {/* Email Subscribe */}
-          <form onSubmit={handleSubscribe} className="mb-10">
-            <h3 className="text-sm uppercase mb-4">Get notified when we launch</h3>
-            <div className="flex gap-2">
-              <Input 
-                type="email" 
-                placeholder="Your email address"
-                className="bg-zinc-900 border-zinc-800 focus:border-pink-500"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isSubmitting}
-                required
-              />
-              <Button 
-                type="submit" 
-                className="bg-white text-black hover:bg-pink-500 hover:text-white transition-colors"
-                disabled={isSubmitting || !email}
-              >
-                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-              </Button>
-            </div>
-          </form>
-          
-          {/* Social Media Links */}
-          <div className="flex justify-center space-x-6">
-            <a 
-              href="https://instagram.com/sny.store" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-white transition-colors"
-            >
-              <Instagram size={20} />
-              <span className="sr-only">Instagram</span>
-            </a>
-            <a 
-              href="#" 
-              className="text-zinc-400 hover:text-white transition-colors"
-            >
-              <TikTokIcon size={20} />
-              <span className="sr-only">TikTok</span>
-            </a>
-          </div>
+          {/* Social Media Links Component */}
+          <SocialMediaLinks />
         </div>
       </main>
       
