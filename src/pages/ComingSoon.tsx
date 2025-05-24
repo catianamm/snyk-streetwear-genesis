@@ -90,7 +90,7 @@ const ComingSoon = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'api-key': process.env.REACT_APP_BREVO_API_KEY || '',
+          'api-key': 'A9vGsEbWVxkPdfQ1',
         },
         body: JSON.stringify({
           email: email,
