@@ -52,6 +52,38 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Adding email to newsletter:', email);
+    console.log('Using API key (first 10 chars):', brevoApiKey.substring(0, 10) + '...');
+
+    // First, let's try to get the lists to verify the API key works
+    const listsResponse = await fetch('https://api.brevo.com/v3/contacts/lists', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'api-key': brevoApiKey,
+      },
+    });
+
+    if (!listsResponse.ok) {
+      const listsError = await listsResponse.json();
+      console.error('Brevo API key verification failed:', listsError);
+      return new Response(
+        JSON.stringify({ 
+          error: 'API key verification failed',
+          details: listsError.message || 'Invalid API key'
+        }),
+        { 
+          status: 400, 
+          headers: { 'Content-Type': 'application/json', ...corsHeaders } 
+        }
+      );
+    }
+
+    const lists = await listsResponse.json();
+    console.log('Available lists:', lists);
+
+    // Get the first available list ID, or use 1 as default
+    const listId = lists.lists && lists.lists.length > 0 ? lists.lists[0].id : 1;
+    console.log('Using list ID:', listId);
 
     // Add contact to Brevo
     const brevoResponse = await fetch('https://api.brevo.com/v3/contacts', {
@@ -63,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         email: email,
-        listIds: [1], // Default list ID - you may need to adjust this
+        listIds: [listId],
         updateEnabled: true,
       }),
     });
