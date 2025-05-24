@@ -13,7 +13,7 @@ const SocialMediaLinks = () => {
   return (
     <div className="flex justify-center space-x-6">
       <a 
-        href="https://instagram.com/sny.store" 
+        href="https://instagram.com/snyk.store" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-zinc-400 hover:text-white transition-colors"
