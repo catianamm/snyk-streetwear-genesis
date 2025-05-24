@@ -6,11 +6,11 @@ export const API_URL = 'https://cms.snyk.store/wp-json/wc/v3';
 
 // WooCommerce API credentials - using fallback values if env vars not available
 const getConsumerKey = () => {
-  return 'ck_55c495ad83d72567cdcda9937e1d9e3f5007f591';
+  return 'ck_22f2623ba901bb19baf60f12b18a715c04e2853b';
 };
 
 const getConsumerSecret = () => {
-  return 'cs_22d4d9f95d58986873e1c09054cd89b0b346cac6';
+  return 'cs_b578fc046023c9535b7eb4777ee970068978d730';
 };
 
 export const consumerKey = getConsumerKey();
