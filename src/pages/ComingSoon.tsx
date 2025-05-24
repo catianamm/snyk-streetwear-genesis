@@ -120,13 +120,13 @@ const ComingSoon = () => {
           <div className="mb-8 flex justify-center relative">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchActive ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
-                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Glitch" 
                 className="h-24 w-auto translate-x-[6px] translate-y-[4px] scale-110"
               />
             </div>
             <img 
-              src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+              src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
               alt="Snyk Logo" 
               className={`h-24 w-auto transition-transform duration-500 ${glitchActive ? 'skew-x-3 scale-105' : ''}`}
             />
