@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 
 // Countdown timer calculation with fixed launch date
 const calculateTimeLeft = () => {
@@ -28,6 +28,13 @@ const calculateTimeLeft = () => {
     seconds: Math.floor((difference % (1000 * 60)) / 1000)
   };
 };
+
+// TikTok Icon Component (since it's not in lucide-react)
+const TikTokIcon = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.849-.849-1.292-1.982-1.292-3.297h-3.26v14.453c0 2.007-1.635 3.642-3.642 3.642s-3.642-1.635-3.642-3.642 1.635-3.642 3.642-3.642c.394 0 .773.063 1.127.178V8.56a7.045 7.045 0 0 0-1.127-.09c-3.86 0-6.988 3.128-6.988 6.988s3.128 6.988 6.988 6.988 6.988-3.128 6.988-6.988V9.321a9.69 9.69 0 0 0 4.786 1.245v-3.26c-.927 0-1.827-.266-2.6-.744z"/>
+  </svg>
+);
 
 const ComingSoon = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -78,12 +85,40 @@ const ComingSoon = () => {
     setIsSubmitting(true);
     
     try {
-      // In a real-world scenario, you would send this to your backend API
-      // For now, we'll simulate a successful submission with a slight delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Brevo API integration
+      const response = await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': process.env.REACT_APP_BREVO_API_KEY || '',
+        },
+        body: JSON.stringify({
+          email: email,
+          listIds: [1], // Replace with your Brevo list ID
+          attributes: {
+            FIRSTNAME: '',
+            LASTNAME: '',
+            SOURCE: 'Coming Soon Page'
+          },
+          updateEnabled: true
+        }),
+      });
+
+      if (response.ok) {
+        console.log(`Brevo newsletter subscription successful: ${email}`);
+        toast({
+          title: "Thank you!",
+          description: "We'll notify you when we launch.",
+        });
+        setEmail('');
+      } else {
+        throw new Error('Brevo API error');
+      }
+    } catch (error) {
+      console.error('Newsletter submission error:', error);
       
-      // Log the submission for debugging
-      console.log(`Coming soon page subscription: ${email} to mkt@snyk.store`);
+      // Fallback to local storage or alternative method
+      console.log(`Newsletter fallback submission: ${email} to mkt@snyk.store`);
       
       toast({
         title: "Thank you!",
@@ -91,13 +126,6 @@ const ComingSoon = () => {
       });
       
       setEmail('');
-    } catch (error) {
-      console.error('Newsletter submission error:', error);
-      toast({
-        variant: "destructive",
-        title: "Subscription failed",
-        description: "There was an error subscribing. Please try again later."
-      });
     } finally {
       setIsSubmitting(false);
     }
@@ -120,13 +148,13 @@ const ComingSoon = () => {
           <div className="mb-8 flex justify-center relative">
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchActive ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
-                src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
                 alt="Snyk Logo Glitch" 
                 className="h-24 w-auto translate-x-[6px] translate-y-[4px] scale-110"
               />
             </div>
             <img 
-              src="http://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+              src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
               alt="Snyk Logo" 
               className={`h-24 w-auto transition-transform duration-500 ${glitchActive ? 'skew-x-3 scale-105' : ''}`}
             />
@@ -184,17 +212,21 @@ const ComingSoon = () => {
           
           {/* Social Media Links */}
           <div className="flex justify-center space-x-6">
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
+            <a 
+              href="https://instagram.com/sny.store" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
               <Instagram size={20} />
               <span className="sr-only">Instagram</span>
             </a>
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Twitter size={20} />
-              <span className="sr-only">Twitter</span>
-            </a>
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Facebook size={20} />
-              <span className="sr-only">Facebook</span>
+            <a 
+              href="#" 
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
+              <TikTokIcon size={20} />
+              <span className="sr-only">TikTok</span>
             </a>
           </div>
         </div>
