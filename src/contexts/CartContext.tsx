@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react'; // Removed React
 import { ProductType } from '@/components/ProductCard';
 import { toast } from '@/components/ui/use-toast';
 
@@ -12,7 +12,7 @@ export interface CartItemType extends ProductType {
 interface CartContextType {
   cartItems: CartItemType[];
   addToCart: (product: ProductType, quantity: number, selectedSize?: string, selectedColor?: string) => void;
-  removeItem: (item: CartItemType) => void;
+  removeFromCart: (itemId: number | string) => void; // Corrected: Use itemId and match usage in components
   updateQuantity: (item: CartItemType, quantity: number) => void;
   clearCart: () => void;
   cartTotal: number;
@@ -22,7 +22,7 @@ interface CartContextType {
 export const CartContext = createContext<CartContextType>({
   cartItems: [],
   addToCart: () => {},
-  removeItem: () => {},
+  removeFromCart: () => {}, // Corrected in default context value
   updateQuantity: () => {},
   clearCart: () => {},
   cartTotal: 0,
@@ -94,26 +94,47 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
   
-  const removeItem = (item: CartItemType) => {
-    setCartItems(prevItems => prevItems.filter(
-      i => !(i.id === item.id && i.selectedSize === item.selectedSize && i.selectedColor === item.selectedColor)
-    ));
+  const removeFromCart = (itemId: number | string) => {
+    let removedItemName = "Item"; // Default name for toast
+    setCartItems(prevItems => {
+      const itemToRemove = prevItems.find(item => item.id === itemId);
+      if (itemToRemove) {
+        removedItemName = itemToRemove.name;
+      }
+      return prevItems.filter(item => item.id !== itemId);
+    });
     
     toast({
       title: "Item removed",
-      description: `${item.name} was removed from your cart`,
+      description: `${removedItemName} was removed from your cart`,
     });
   };
   
-  const updateQuantity = (item: CartItemType, quantity: number) => {
-    if (quantity < 1) return;
+  const updateQuantity = (itemToUpdate: CartItemType, newQuantity: number) => {
+    // Note: This updateQuantity currently requires the full item, not just ID.
+    // Consider if you want to update by ID + options or just ID.
+    if (newQuantity < 1) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Quantity",
+        description: "Quantity cannot be less than 1.",
+      });
+      return;
+    }
     
-    setCartItems(prevItems => prevItems.map(i => {
-      if (i.id === item.id && i.selectedSize === item.selectedSize && i.selectedColor === item.selectedColor) {
-        return { ...i, quantity };
-      }
-      return i;
-    }));
+    setCartItems(prevItems =>
+      prevItems.map(cartItem =>
+        (cartItem.id === itemToUpdate.id &&
+         cartItem.selectedSize === itemToUpdate.selectedSize &&
+         cartItem.selectedColor === itemToUpdate.selectedColor)
+          ? { ...cartItem, quantity: newQuantity }
+          : cartItem
+      )
+    );
+    toast({
+      title: "Quantity Updated",
+      description: `${itemToUpdate.name}'s quantity updated to ${newQuantity}.`,
+    });
   };
   
   const clearCart = () => {
@@ -128,8 +149,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   return (
     <CartContext.Provider value={{
       cartItems,
-      addToCart,
-      removeItem,
+      addToCart, // Keep addToCart
+      removeFromCart, // Provide the renamed function
       updateQuantity,
       clearCart,
       cartTotal,

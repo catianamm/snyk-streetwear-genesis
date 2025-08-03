@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react'; // Removed React
+import { Link } from 'react-router-dom'; // Removed useNavigate
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
+  SheetTrigger, // Import SheetClose
 } from '@/components/ui/sheet';
-import { Search, ShoppingCart, Menu, X, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Menu, X } from 'lucide-react'; // Import Trash2 icon
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
 
+import { useCart } from '@/hooks/useCart'; // Import useCart hook
+
 const Navbar = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [glitchText, setGlitchText] = useState(false);
   const [glitchLogo, setGlitchLogo] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
-  
+
+  useCart(); // Use the useCart hook
   // Enhanced scroll effect with progress tracking and section detection
   useEffect(() => {
     const handleScroll = () => {
@@ -77,41 +78,42 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="fixed left-0 top-0 h-full max-w-16 md:w-24 z-40 flex flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20">
+    <header className="fixed left-0 top-0 h-full max-w-16 md:w-24 z-40 flex-col transition-all duration-500 bg-black text-white border-r border-zinc-800 shadow-lg shadow-purple-900/20 lg:flex hidden"> {/* Added lg:flex hidden */}
       {/* Dynamic progress indicator */}
       <div 
         className="absolute right-0 top-0 w-[2px] h-full bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 transition-all duration-300"
         style={{ 
           opacity: 1,
-          height: `${145 * scrollProgress}%` 
+          height: `${120 * scrollProgress}%` 
         }}
       ></div>
       
       <div className="h-full flex flex-col items-center justify-between py-6">
         {/* Logo - fix HTTP to HTTPS */}
         <div className="flex flex-start relative">
-          <Link to="/" className="h-24 w-28 ml-40 relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
+          {/* Adjusted logo container for better positioning within the sidebar */}
+          <Link to="/" className="h-24 w-full flex justify-center items-center relative group transform -rotate-3 hover:-rotate-6 transition-transform duration-500">
             {/* Enhanced logo backdrop for better visibility against light backgrounds */}
             <div className={`absolute inset-0 rounded-lg  ${scrolled ? 'opacity-0' : 'opacity-0'} transition-opacity duration-500`}></div>
-            
+
             <div className={`absolute h-full w-full overflow-visible opacity-0 ${glitchLogo ? 'opacity-100' : ''} transition-all duration-100`}>
               <img 
-                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/06/logob.png" 
                 alt="Snyk Logo Glitch" 
-                className="h-full w-auto translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
+                className="h-full w-auto object-contain translate-x-[6px] translate-y-[4px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
             <div className="absolute h-full w-full overflow-visible opacity-0 group-hover:opacity-0 transition-all duration-300">
               <img 
-                src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+                src="https://cms.snyk.store/wp-content/uploads/2025/06/logob.png" 
                 alt="Snyk Logo Hover" 
-                className="h-full w-auto translate-x-[4px] translate-y-[2px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
+                className="h-full w-auto object-contain translate-x-[4px] translate-y-[2px] scale-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.7)]"
               />
             </div>
             <img 
-              src="https://cms.snyk.store/wp-content/uploads/2025/05/g59-1.png" 
+              src="https://cms.snyk.store/wp-content/uploads/2025/06/logob.png" 
               alt="Snyk Logo" 
-              className={`h-full w-auto ml-4 transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
+              className={`h-full w-auto object-contain transition-transform duration-500 ${glitchLogo ? 'skew-x-3 scale-105' : ''} ${scrolled ? 'drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]' : 'drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]'} relative z-10`}
             />
             <div className="absolute top-0 left-0 h-full w-full noise opacity-0 pointer-events-none"></div>
           </Link>
@@ -120,8 +122,6 @@ const Navbar = () => {
         {/* Vertical Navigation Links with vertical text */}
         <NavigationMenu orientation="vertical" className="flex flex-col space-y-10">
           <NavigationMenuList className="flex flex-col space-y-10">
-            
-            
 
             <NavigationMenuItem>
               <Link 
@@ -136,7 +136,7 @@ const Navbar = () => {
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-orange-500 to-orange-500 ${activeSection === 'collections' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
               </Link>
             </NavigationMenuItem>
-            
+
   <NavigationMenuItem>
               <Link 
                 to="/#most-wanted"
@@ -151,15 +151,14 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
 
-                                    
             <NavigationMenuItem>
               <Link 
-                to="/#new"
+                to="/#latest"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('new')?.scrollIntoView({behavior: 'smooth'});
+                  document.getElementById('latest')?.scrollIntoView({behavior: 'smooth'});
                 }}
-                className={`nav-link relative group flex flex-col items-center ${activeSection === 'new' ? 'text-blue-400' : ''}`}
+                className={`nav-link relative group flex flex-col items-center ${activeSection === 'latest' ? 'text-blue-400' : ''}`}
               >
                 <span className="vertical-text text-sm uppercase tracking-wide relative z-10 transition-all duration-300 group-hover:text-purple-400 transform-rotate-90 origin-center whitespace-nowrap py-6">New Arrivals</span>
                 <span className={`absolute left-0 bottom-0 w-0 h-[1px] bg-gradient-to-r from-purple-400 to-purple-500 ${activeSection === 'new' ? 'w-full' : ''} group-hover:w-full transition-all duration-300`}></span>
@@ -181,9 +180,12 @@ const Navbar = () => {
         <div className="lg:hidden block">
           <Sheet>
             <SheetTrigger asChild>
+              {/* Wrap button content in a single span for SheetTrigger asChild */}
               <Button variant="ghost" size="icon" className="text-white relative overflow-hidden group">
-                <Menu size={24} className="group-hover:animate-button-glitch" />
-                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="flex items-center justify-center h-full w-full relative">
+                  <Menu size={24} className="group-hover:animate-button-glitch" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                </span>    </span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-full bg-black text-white p-0">
@@ -191,7 +193,7 @@ const Navbar = () => {
                 <div className="absolute inset-0 noise opacity-5"></div>
                 <div className="absolute inset-0 scanlines"></div>
                 
-                <div className="flex justify-end mb-8 relative z-10">
+                <div className="flex justify-end mb-8 relative z-10"> {/* Added relative z-10 */}
                   <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
                       <X size={24} className="hover:animate-button-glitch" />
@@ -199,7 +201,7 @@ const Navbar = () => {
                   </SheetTrigger>
                 </div>
                 <div className="space-y-6 relative z-10">
-                 
+
                   <Link to="/products" className="text-3xl font-display uppercase relative overflow-hidden group">
                     <span className={`inline-block ${glitchText ? 'translate-x-[3px]' : ''} transition-all group-hover:text-pink-400`} data-text="SHOP">SHOP</span>
                   </Link>
@@ -220,10 +222,10 @@ const Navbar = () => {
                     <span className="group-hover:text-purple-400">FEATURED</span>
                   </Link>
                   <Link 
-                    to="/#new" 
+                    to="/#latest" 
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById('new')?.scrollIntoView({behavior: 'smooth'});
+                      document.getElementById('latest')?.scrollIntoView({behavior: 'smooth'});
                     }}
                     className="text-3xl font-display uppercase group"
                   >

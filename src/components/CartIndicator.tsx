@@ -1,5 +1,5 @@
 
-import React from 'react';
+ // Removed React
 import { Link } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { ShoppingBag } from 'lucide-react';

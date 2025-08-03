@@ -8,11 +8,11 @@ interface HeroImageRightProps {
 
 const HeroImageRight: React.FC<HeroImageRightProps> = ({ scrollIntensity, glitchActive }) => {
   return (
-    <div className="w-full md:w-1/2 relative overflow-hidden">
+    <div className="w-full h-full md:w-1/2 relative overflow-hidden">
       {/* Main image with glitch effect */}
       <div className="relative h-full overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920" 
+          src="https://cms.snyk.store/wp-content/uploads/2025/06/hero.png" 
           alt="Fashion Model" 
           className={`w-full h-full object-cover parallax-img ${scrollIntensity > 0.7 ? 'grayscale-[70%]' : 'grayscale'} ${glitchActive ? 'glitch-img' : ''}`}
           data-speed="0.05"
@@ -63,13 +63,7 @@ const HeroImageRight: React.FC<HeroImageRightProps> = ({ scrollIntensity, glitch
           boxShadow: `0 10px 25px rgba(139, 92, 246, ${0.2 + scrollIntensity * 0.4})`
         }}
       >
-        <img 
-          src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=800" 
-          alt="Fashion Detail" 
-          className="w-full h-full object-cover parallax-img grayscale"
-          data-speed="0.1"
-          style={{ filter: `grayscale(${100 - scrollIntensity * 60}%)` }}
-        />
+        
         <div 
           className="absolute inset-0 bg-gradient-to-t from-zinc-500/30 to-transparent"
           style={{ background: `linear-gradient(to top, rgba(139, 92, 246, ${0.3 + scrollIntensity * 0.3}) 0%, transparent 100%)` }}

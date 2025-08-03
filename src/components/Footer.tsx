@@ -1,72 +1,74 @@
 
-import React from 'react';
+ // Removed React
 import { Link } from 'react-router-dom';
+import NewsletterSignup from './NewsletterSignup'; // Assuming NewsletterSignup.tsx is in the same directory
+import { Instagram } from 'lucide-react'; // Import Instagram icon
 
 interface FooterProps {
   className?: string;
 }
 
+// TikTok Icon Component (SVG)
+const TikTokIcon = ({ size = 16, className = "" }: { size?: number, className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.849-.849-1.292-1.982-1.292-3.297h-3.26v14.453c0 2.007-1.635 3.642-3.642 3.642s-3.642-1.635-3.642-3.642 1.635-3.642 3.642-3.642c.394 0 .773.063 1.127.178V8.56a7.045 7.045 0 0 0-1.127-.09c-3.86 0-6.988 3.128-6.988 6.988s3.128 6.988 6.988 6.988 6.988-3.128 6.988-6.988V9.321a9.69 9.69 0 0 0 4.786 1.245v-3.26c-.927 0-1.827-.266-2.6-.744z"/>
+  </svg>
+);
+
 const Footer: React.FC<FooterProps> = ({ className = "" }) => {
-  return (
-    <footer className={`bg-black text-zinc-300 border-t border-zinc-800 ${className}`}>
-      <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <Link to="/" className="block mb-4">
-              <img 
-                src="/lovable-uploads/6cfa3ddb-234b-4de4-acf5-1fc606e41b97.png" 
-                alt="Snyk Logo" 
-                className="h-12 w-auto invert"
-              />
-            </Link>
-            <p className="text-sm mt-4 text-zinc-400">
-              Authentic streetwear for the bold and expressive. Define your own style.
-            </p>
-          </div>
-          
-          <div>
-            <h3 className="text-sm font-bold uppercase mb-4 text-zinc-100">Shop</h3>
-            <ul className="space-y-2">
-              <li><Link to="/products" className="text-xs hover:text-purple-400 transition-colors">All Products</Link></li>
-              <li><Link to="/collections/new-arrivals" className="text-xs hover:text-purple-400 transition-colors">New Arrivals</Link></li>
-              <li><Link to="/collections/best-sellers" className="text-xs hover:text-purple-400 transition-colors">Best Sellers</Link></li>
-              <li><Link to="/collections/sale" className="text-xs hover:text-purple-400 transition-colors">Sale</Link></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-sm font-bold uppercase mb-4 text-zinc-100">Information</h3>
-            <ul className="space-y-2">
-              <li><Link to="/about" className="text-xs hover:text-purple-400 transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-xs hover:text-purple-400 transition-colors">Contact Us</Link></li>
-              <li><Link to="/shipping" className="text-xs hover:text-purple-400 transition-colors">Shipping & Returns</Link></li>
-              <li><Link to="/faq" className="text-xs hover:text-purple-400 transition-colors">FAQ</Link></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-sm font-bold uppercase mb-4 text-zinc-100">Social</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="text-xs hover:text-purple-400 transition-colors">Instagram</a>
-              <a href="#" className="text-xs hover:text-purple-400 transition-colors">Twitter</a>
-              <a href="#" className="text-xs hover:text-purple-400 transition-colors">Facebook</a>
-            </div>
-          </div>
-        </div>
+  return ( // Removed ml-20 md:ml-24 from this div
+    <footer className={`bg-black py-0 text-zinc-400 border-t border-zinc-800 ${className}`}>
+      <div className="c px-4 py-0  mt-0">
         
-        <div className="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between">
-          <p className="text-xs text-zinc-500">&copy; {new Date().getFullYear()} SNYK. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/privacy" className="text-xs hover:text-purple-400 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="text-xs hover:text-purple-400 transition-colors">Terms of Service</Link>
+       
+        {/* Copyright and Legal Links */}
+        <div className="flex flex-col my-0 md:flex-row justify-between items-center text-center md:text-left">
+           
+         <div className="flex space-x-4 md:mt-0 items-center"> {/* Reduced spacing */}
+              <p className="text-xs font-thin text-[0.65rem] text-zinc-500">&copy; {new Date().getFullYear()} </p>
+               <img 
+                src="https://cms.snyk.store/wp-content/uploads/2025/06/logob.png" 
+                alt="Snyk Logo Glitch" 
+                className="h-10 w-auto object-contain  "
+              />
+            <Link to="/privacy" className="text-xs font-thin text-[0.65rem] hover:text-purple-400 transition-colors">FAQ</Link>
+            <Link to="/privacy" className="text-xs font-thin text-[0.65rem] hover:text-purple-400 transition-colors">Privacy</Link>
+            <Link to="/terms" className="text-xs font-thin text-[0.65rem] hover:text-purple-400 transition-colors">Terms</Link>
+         <div className="flex space-x-3">
+            <a 
+              href="https://instagram.com/snyk.store" // Replace with your actual Instagram link
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-purple-400 transition-colors"
+            >
+              <Instagram size={16} /> {/* Adjusted size for footer */}
+              <span className="sr-only">Instagram</span>
+            </a>
+            <a 
+              href="#" // Replace with your actual TikTok link
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-purple-400 transition-colors"
+            >
+              <TikTokIcon size={16} /> {/* Use TikTokIcon */}
+              <span className="sr-only">TikTok</span>
+            </a>
           </div>
+          </div>
+         
+         <div className="flex items-center space-x-4 my-0"> {/* Container for newsletter and social icons */}
+          <div className="hidden md:block"> {/* Hide newsletter on small screens if too crowded, or adjust layout */}
+            <NewsletterSignup 
+              showTitle={false} 
+              buttonText="Subscribe" 
+            />
+          </div>
+         
         </div>
-         {/* Bottom left squares */}
-    <div className={`pointer-events-none inset-0 z-0 overflow-hidden ${className}`}>
-        <div className="relative bottom-12 left-0 w-20 h-20 border border-pink-500/20 rotate-45"></div>
-      
+        </div>
+
+       
       </div>
-        </div>
     </footer>
   );
 };

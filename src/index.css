@@ -13,7 +13,7 @@
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 262.1 83.3% 57.8%;
+    --primary: 262.1 83.3% 57.8%; /* Roxo mais claro para tema claro */
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -26,39 +26,50 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 262.1 83.3% 57.8%;
-    --radius: 0.5rem;
+    --radius: 0rem; /* Raio de borda zerado conforme seu tailwind.config */
     
-    /* Sidebar colors */
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
+    /* Sidebar colors (tema claro) */
+    --sidebar-background: 220 14.3% 95.9%; /* Exemplo: um cinza claro */
+    --sidebar-foreground: 224 71.4% 4.1%;
     --sidebar-primary: 262.1 83.3% 57.8%;
     --sidebar-primary-foreground: 210 20% 98%;
     --sidebar-accent: 220 14.3% 95.9%;
     --sidebar-accent-foreground: 220.9 39.3% 11%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 263.4 70% 50.4%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 262.1 83.3% 57.8%;
   }
 
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 224 71.4% 4.1%; /* Um azul bem escuro, quase preto */
+    --foreground: 210 20% 98%;    /* Branco/cinza muito claro */
     --card: 224 71.4% 4.1%;
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 263.4 70% 50.4%;   /* Roxo vibrante para tema escuro */
     --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
+    --secondary: 215 27.9% 16.9%; /* Cinza escuro azulado */
     --secondary-foreground: 210 20% 98%;
     --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    --muted-foreground: 217.9 10.6% 64.9%; /* Cinza médio para texto muted */
     --accent: 215 27.9% 16.9%;
     --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 30.6%; /* Vermelho escuro */
     --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
+    --border: 215 27.9% 16.9%;    /* Mesma cor do muted/secondary para bordas sutis */
     --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
+    --ring: 263.4 70% 50.4%;      /* Roxo do primary para o anel de foco */
+    --radius: 0rem; /* Raio de borda zerado conforme seu tailwind.config */
+
+    /* Sidebar colors (tema escuro) - você já tinha no config, mas replicando a lógica de cor */
+    --sidebar-background: 0 0% 0%; /* Preto para sidebar no tema escuro */
+    --sidebar-foreground: 0 0% 100%; /* Branco */
+    --sidebar-primary: 263.4 70% 50.4%; /* Roxo primário */
+    --sidebar-primary-foreground: 210 20% 98%;
+    --sidebar-accent: 215 27.9% 16.9%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 215 20% 25%; /* Borda um pouco mais clara que o fundo da sidebar */
+    --sidebar-ring: 263.4 70% 50.4%;
   }
 }
 
@@ -68,6 +79,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: theme('fontFamily.body'); /* Aplicando a fonte 'body' (Inter) como padrão */
   }
 }
 
@@ -101,66 +113,56 @@
   /* Mega glitch text effect */
   .mega-glitch {
     position: relative;
+    /* O data-text é pego pelo React component, não precisa estar aqui */
   }
   
   .mega-glitch::before,
   .mega-glitch::after {
-    content: attr(data-text);
+    content: attr(data-text); /* Isso pega o texto do atributo data-text do HTML */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
+    opacity: 0; /* Começa invisível */
   }
   
   .mega-glitch.glitching::before {
     opacity: 1;
     animation: glitch-effect 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    color: #00c8ff;
+    color: #00c8ff; /* Cor do glitch superior - pode ser var(--accent) ou outra cor do tema */
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    transform: translate(-4px, 0);
+    transform: translate(-4px, 0); /* Pequeno deslocamento */
   }
   
   .mega-glitch.glitching::after {
     opacity: 1;
     animation: glitch-effect 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
-    color: #ff00c8;
+    color: #ff00c8; /* Cor do glitch inferior - pode ser var(--primary) ou outra cor do tema */
     clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-    transform: translate(4px, 0);
+    transform: translate(4px, 0); /* Pequeno deslocamento */
   }
   
   @keyframes glitch-effect {
-    0% {
-      transform: translate(0);
-    }
-    20% {
-      transform: translate(-3px, 3px);
-    }
-    40% {
-      transform: translate(-3px, -3px);
-    }
-    60% {
-      transform: translate(3px, 3px);
-    }
-    80% {
-      transform: translate(3px, -3px);
-    }
-    100% {
-      transform: translate(0);
-    }
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
   }
   
-  /* Noise and scanlines effect */
+  /* Noise overlay effect - esta é a sua classe .noise original */
   .noise {
-    position: absolute;
+    position: absolute; /* Se usado como overlay, 'fixed' pode ser melhor para cobrir a tela toda */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.05;
+    opacity: 0.05; /* Opacidade original da sua classe .noise */
     pointer-events: none;
+    /* z-index: [valor]; se precisar controlar o empilhamento como overlay */
   }
   
   .scanlines {
@@ -182,43 +184,23 @@
   .error-text {
     position: relative;
     animation: error-glitch 1s infinite;
-    color: #ff3131;
+    color: hsl(var(--destructive)); /* Usando cor do tema */
   }
   
   @keyframes error-glitch {
-    0% {
-      text-shadow: 0.05em 0 0 #ff00c8, -0.025em -0.05em 0 #00c8ff;
-    }
-    14% {
-      text-shadow: 0.05em 0 0 #ff00c8, -0.025em -0.05em 0 #00c8ff;
-    }
-    15% {
-      text-shadow: -0.025em -0.025em 0 #ff00c8, 0.025em 0.025em 0 #00c8ff;
-    }
-    49% {
-      text-shadow: -0.025em -0.025em 0 #ff00c8, 0.025em 0.025em 0 #00c8ff;
-    }
-    50% {
-      text-shadow: 0.025em 0.05em 0 #ff00c8, 0.05em 0 0 #00c8ff;
-    }
-    99% {
-      text-shadow: 0.025em 0.05em 0 #ff00c8, 0.05em 0 0 #00c8ff;
-    }
-    100% {
-      text-shadow: -0.025em 0 0 #ff00c8, -0.025em -0.025em 0 #00c8ff;
-    }
+    0% { text-shadow: 0.05em 0 0 hsl(var(--primary)), -0.025em -0.05em 0 #00c8ff; } /* Exemplo com cor primária e azul */
+    14% { text-shadow: 0.05em 0 0 hsl(var(--primary)), -0.025em -0.05em 0 #00c8ff; }
+    15% { text-shadow: -0.025em -0.025em 0 hsl(var(--primary)), 0.025em 0.025em 0 #00c8ff; }
+    49% { text-shadow: -0.025em -0.025em 0 hsl(var(--primary)), 0.025em 0.025em 0 #00c8ff; }
+    50% { text-shadow: 0.025em 0.05em 0 hsl(var(--primary)), 0.05em 0 0 #00c8ff; }
+    99% { text-shadow: 0.025em 0.05em 0 hsl(var(--primary)), 0.05em 0 0 #00c8ff; }
+    100% { text-shadow: -0.025em 0 0 hsl(var(--primary)), -0.025em -0.025em 0 #00c8ff; }
   }
   
   /* Product card animations */
   @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
   .product-card-wrapper {
@@ -228,24 +210,12 @@
   
   /* Button glitch animation */
   @keyframes button-glitch {
-    0% {
-      transform: translate(0);
-    }
-    20% {
-      transform: translate(-2px, 2px);
-    }
-    40% {
-      transform: translate(-2px, -2px);
-    }
-    60% {
-      transform: translate(2px, 2px);
-    }
-    80% {
-      transform: translate(2px, -2px);
-    }
-    100% {
-      transform: translate(0);
-    }
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
   }
   
   .animate-button-glitch {
@@ -254,26 +224,178 @@
   
   /* Square elements animations */
   @keyframes float {
-    0% {
-      transform: translateY(0) rotate(0);
-    }
-    50% {
-      transform: translateY(-10px) rotate(5deg);
-    }
-    100% {
-      transform: translateY(0) rotate(0);
-    }
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(0); }
   }
   
-  .animate-float {
-    animation: float 8s ease-in-out infinite;
-  }
-  
-  .animate-float-delayed {
-    animation: float 8s ease-in-out 2s infinite;
-  }
-  
-  .animate-float-slow {
-    animation: float 12s ease-in-out infinite;
-  }
+  .animate-float { animation: float 8s ease-in-out infinite; }
+  .animate-float-delayed { animation: float 8s ease-in-out 2s infinite; }
+  .animate-float-slow { animation: float 12s ease-in-out infinite; }
+}
+
+/* ADICIONADO: Estilo para o container principal com ruído de fundo via pseudo-elemento ::before */
+.main-container-with-noise {
+  position: relative; /* Necessário para o posicionamento absoluto do ::before */
+  z-index: 0; /* Cria um novo contexto de empilhamento */
+}
+
+.main-container-with-noise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Usando o mesmo SVG de ruído da sua classe .noise existente */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.025; /* Opacidade bem sutil para a textura de fundo */
+  pointer-events: none; /* Para não interferir com interações */
+  z-index: -1; /* Para ficar atrás do conteúdo do .main-container-with-noise */
+}
+
+
+/* Ensure this is in your global CSS file and that file is imported in main.tsx or App.tsx */
+
+.glitching {
+  position: relative;
+  /* color: inherit; /* Ensures the base text color is used */
+}
+
+/* .glitching::before,
+.glitching::after {
+  content: attr(data-text); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: inherit;  
+} */
+
+/* Example Glitch - you can customize this */
+.glitching::before {
+  left: 2px;
+  text-shadow: -1px 0 #FF00FF; /* Magenta for visibility, change as needed */
+  animation: glitch-anim-1 0.8s infinite linear alternate-reverse;
+}
+
+.glitching::after {
+  left: -2px;
+  text-shadow: -1px 0 #00FFFF; /* Cyan for visibility, change as needed */
+  animation: glitch-anim-2 0.8s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(10% 0 80% 0); }
+  20% { clip-path: inset(50% 0 10% 0); }
+  40% { clip-path: inset(90% 0 5% 0); }
+  60% { clip-path: inset(25% 0 60% 0); }
+  80% { clip-path: inset(0% 0 95% 0); }
+  100% { clip-path: inset(60% 0 30% 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(85% 0 5% 0); }
+  20% { clip-path: inset(20% 0 70% 0); }
+  40% { clip-path: inset(40% 0 45% 0); }
+  60% { clip-path: inset(70% 0 10% 0); }
+  80% { clip-path: inset(30% 0 60% 0); }
+  100% { clip-path: inset(5% 0 80% 0); }
+}/* Glitch Effect Styles */
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(25% 0 59% 0); }
+  5% { clip-path: inset(4% 0 10% 0); }
+  10% { clip-path: inset(87% 0 1% 0); }
+  15% { clip-path: inset(49% 0 49% 0); }
+  20% { clip-path: inset(13% 0 1% 0); }
+  25% { clip-path: inset(26% 0 31% 0); }
+  30% { clip-path: inset(60% 0 3% 0); }
+  35% { clip-path: inset(8% 0 40% 0); }
+  40% { clip-path: inset(84% 0 13% 0); }
+  45% { clip-path: inset(100% 0 0% 0); } /* Full clip */
+  50% { clip-path: inset(19% 0 75% 0); }
+  55% { clip-path: inset(51% 0 1% 0); }
+  60% { clip-path: inset(2% 0 89% 0); }
+  65% { clip-path: inset(80% 0 1% 0); }
+  70% { clip-path: inset(10% 0 76% 0); }
+  75% { clip-path: inset(45% 0 19% 0); }
+  80% { clip-path: inset(36% 0 19% 0); }
+  85% { clip-path: inset(58% 0 36% 0); }
+  90% { clip-path: inset(10% 0 1% 0); }
+  95% { clip-path: inset(69% 0 10% 0); }
+  100% { clip-path: inset(2% 0 50% 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(77% 0 2% 0); }
+  5% { clip-path: inset(19% 0 75% 0); }
+  10% { clip-path: inset(40% 0 5% 0); }
+  15% { clip-path: inset(84% 0 13% 0); }
+  20% { clip-path: inset(100% 0 0% 0); } /* Full clip */
+  25% { clip-path: inset(58% 0 36% 0); }
+  30% { clip-path: inset(19% 0 10% 0); }
+  35% { clip-path: inset(0% 0 0% 0); } /* No clip */
+  40% { clip-path: inset(26% 0 31% 0); }
+  45% { clip-path: inset(8% 0 40% 0); }
+  50% { clip-path: inset(49% 0 49% 0); }
+  55% { clip-path: inset(87% 0 1% 0); }
+  60% { clip-path: inset(13% 0 1% 0); }
+  65% { clip-path: inset(4% 0 10% 0); }
+  70% { clip-path: inset(60% 0 3% 0); }
+  75% { clip-path: inset(25% 0 59% 0); }
+  80% { clip-path: inset(51% 0 1% 0); }
+  85% { clip-path: inset(2% 0 89% 0); }
+  90% { clip-path: inset(80% 0 1% 0); }
+  95% { clip-path: inset(36% 0 19% 0); }
+  100% { clip-path: inset(10% 0 76% 0); }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skewX(0deg); }
+  5% { transform: skewX(2deg); }
+  10% { transform: skewX(-3deg); }
+  15% { transform: skewX(1deg); }
+  20% { transform: skewX(-2deg); }
+  25% { transform: skewX(3deg); }
+  30% { transform: skewX(-1deg); }
+  35% { transform: skewX(0deg); }
+  /* Hold steady for a bit */
+  80% { transform: skewX(0deg); }
+  85% { transform: skewX(-2deg); }
+  90% { transform: skewX(1deg); }
+  95% { transform: skewX(-1deg); }
+  100% { transform: skewX(0deg); }
+}
+
+.glitching {
+  position: relative;
+  /* Ensure the text color is inherited or set if needed */
+  /* color: inherit;  or specific color */
+  animation: glitch-skew 1.5s infinite linear alternate-reverse; /* Slower, more subtle skew */
+}
+
+.glitching::before,
+.glitching::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit; /* Or your header background color if text is on transparent bg */
+  overflow: hidden;
+}
+
+.glitching::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff00c1; /* Neon pink/magenta */
+  animation: glitch-anim-1 1.5s infinite linear alternate-reverse;
+}
+
+.glitching::after {
+  left: -2px;
+  text-shadow: -1px 0 #00fff9; /* Neon cyan/blue */
+  animation: glitch-anim-2 1.5s infinite linear alternate-reverse;
 }

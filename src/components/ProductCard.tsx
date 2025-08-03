@@ -1,5 +1,5 @@
 
-import React from 'react';
+import { useState } from 'react'; // Removed React
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Tag } from 'lucide-react';
@@ -9,9 +9,12 @@ export type ProductType = {
   name: string;
   price: number;
   image: string;
+  allImages?: Array<{ src: string; alt?: string }>; // Added to store all images
   category: string;
   isNew?: boolean;
   isFeatured?: boolean;
+  date_created_gmt?: string; // Add the date property here
+  tags?: Array<{ id: number; name: string; slug: string; }>; // Added for tag-based filtering
 };
 
 interface ProductCardProps {
@@ -19,6 +22,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [isHovered, setIsHovered] = useState(false);
   // Simple error handling for image loading
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;
@@ -27,11 +31,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="group">
+    <div 
+      className="group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="w-full overflow-hidden relative">
         <Link to={`/product/${product.id}`}>
           <img
-            src={product.image}
+            src={
+              isHovered && product.allImages && product.allImages.length > 1 
+                ? product.allImages[1].src 
+                : product.image
+            }
             alt={product.name}
             className="h-full w-full object-cover object-center transition-all duration-500 hover:brightness-110 hover:saturate-150 group-hover:contrast-125"
             onError={handleImageError}

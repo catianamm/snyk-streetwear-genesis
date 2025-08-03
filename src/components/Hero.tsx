@@ -1,5 +1,5 @@
 
-import React from 'react';
+ // Removed React
 import { useScrollEffects } from './hero/useScrollEffects';
 import HeroBackgroundEffects from './hero/HeroBackgroundEffects';
 import HeroContentLeft from './hero/HeroContentLeft';
@@ -15,7 +15,7 @@ const Hero = () => {
       <HeroBackgroundEffects scrollIntensity={scrollIntensity} />
       
       {/* Main hero area with split design */}
-      <div className="w-full min-h-[90vh] flex flex-col md:flex-row">
+      <div className="w-full h-screen  flex flex-col md:flex-row">
         {/* Left side: Bold typography and call to action */}
         <HeroContentLeft 
           scrollIntensity={scrollIntensity} 

@@ -1,8 +1,17 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // Removed React
+import { Link } from 'react-router-dom'; // Import Link
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
+import {
+  BreadcrumbSeparator, // <-- Add this import
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 const About = () => {
   const [glitchActive, setGlitchActive] = useState(false);
@@ -22,11 +31,27 @@ const About = () => {
       <Navbar />
       <TopBar />
       
-      <main className="flex-grow pt-12 ml-20 md:ml-24">
+      <main className="flex-grow pt-32 ml-20 md:ml-24"> {/* Adjusted padding-top */}
         <div className="relative py-16 overflow-hidden">
           <div className="scanlines absolute inset-0 opacity-30 pointer-events-none"></div>
           <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>
           
+          {/* Breadcrumbs */}
+          <div className="container-custom relative z-10 mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>About Us</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
           <div className="container-custom relative z-10">
             <h1 
               className={`text-3xl md:text-4xl font-display uppercase mb-8 mega-glitch ${glitchActive ? 'glitching' : ''}`}

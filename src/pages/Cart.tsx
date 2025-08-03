@@ -1,17 +1,23 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // Removed React
 import { useNavigate, Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import TopBar from '@/components/TopBar';
-import Footer from '@/components/Footer';
+import Footer from '@/components/Footer'; // Keep Footer import
 import { Button } from '@/components/ui/button';
 import { MinusIcon, PlusIcon, Trash2Icon, ShoppingBag } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { useCart } from '@/hooks/useCart';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator, // <-- Add this import
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 const Cart = () => {
   const [glitchActive, setGlitchActive] = useState(false);
-  const { cartItems, updateQuantity, removeItem, clearCart, cartTotal } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart(); // Changed removeItem to removeFromCart
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -39,14 +45,29 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
-      <Navbar />
-      <TopBar />
-      
-      <main className="flex-grow pt-12 ml-20 md:ml-24">
+      {/* Navbar and TopBar are now rendered by App.tsx */}
+      <main className="flex-grow pt-32 ml-20 md:ml-24"> {/* Adjusted padding-top */}
         <div className="relative py-16 overflow-hidden">
           <div className="scanlines absolute inset-0 opacity-30 pointer-events-none"></div>
           <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>
           
+          {/* Breadcrumbs */}
+          <div className="container-custom relative z-10 mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Cart</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+
           <div className="container-custom relative z-10">
             <h1 
               className={`text-3xl md:text-4xl font-display uppercase mb-8 mega-glitch ${glitchActive ? 'glitching' : ''}`}
@@ -108,7 +129,7 @@ const Cart = () => {
                         <div className="ml-8 text-right">
                           <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
                           <button 
-                            onClick={() => removeItem(item)}
+                            onClick={() => removeFromCart(item.id)} // Changed removeItem to removeFromCart and pass item.id
                             className="text-zinc-500 hover:text-white mt-1 text-sm flex items-center"
                           >
                             <Trash2Icon size={16} className="mr-1" />
@@ -158,7 +179,7 @@ const Cart = () => {
         </div>
       </main>
       
-      <Footer className="ml-20 md:ml-24" />
+      <Footer /> {/* Remove ml- padding here, it's handled in App.tsx for homepage */}
     </div>
   );
 };

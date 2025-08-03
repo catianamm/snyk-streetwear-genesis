@@ -1,5 +1,5 @@
 
-import React from 'react';
+ // Removed React
 import { Instagram } from 'lucide-react';
 
 // TikTok Icon Component (since it's not in lucide-react)
