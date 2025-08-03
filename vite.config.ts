@@ -1,34 +1,31 @@
+import path from "path"
+import react from "@vitejs/plugin-react-swc"
+import { defineConfig } from "vite"
+// import fs from 'fs'; // Not needed if using path.resolve with __dirname
 
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
-
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-  },
+export default defineConfig({
   plugins: [
-    react(),
-    mode === 'development' &&
-    componentTagger(),
-  ].filter(Boolean),
+    {
+      name: 'debug-log-useauth-content',
+      enforce: 'pre', // Run this plugin before others like react-swc
+      transform(code, id) {
+        // Define the absolute path to the useAuth.ts file
+        const useAuthPath = path.resolve(__dirname, 'src/hooks/useAuth.ts');
+
+        if (id === useAuthPath) {
+          console.log(`\n--- DEBUG: Content of ${useAuthPath} as seen by Vite transform hook (before SWC/esbuild) ---`);
+          console.log(code); // This will print the raw code string
+          console.log(`--- END DEBUG: ${useAuthPath} ---\n`);
+        }
+        return null; // Pass through to other plugins
+      }
+    },
+    react()
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    rollupOptions: {
-      onwarn(warning, warn) {
-        // Ignore warnings about external dependencies
-        if (warning.code === 'MISSING_EXPORT' && warning.message.includes('gptengineer')) {
-          return;
-        }
-        warn(warning);
-      },
-    },
-  }
-}));
+})
+

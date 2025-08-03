@@ -1,107 +1,93 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react'; // Removed React
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
-import { supabase } from '@/lib/supabase';
+// import { supabase } from '@/lib/supabase'; // Removed Supabase import
+// import { supabase } from '@/lib/supabase'; // Supabase import removed
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Define loading state
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { // Encapsulate logic in a handler
     e.preventDefault();
-    
-    // Basic validation
+    setLoading(true);
+
+    // const { error } = await supabase
     if (!email || !email.includes('@')) {
       toast({
         variant: "destructive",
         title: "Invalid email",
         description: "Please enter a valid email address."
       });
+      setLoading(false);
       return;
     }
-    
-    setIsLoading(true);
-    
+
+    // Define o endpoint do seu proxy WordPress para a inscrição na newsletter
+    const proxyEndpoint = 'https://cms.snyk.store/wp-json/meu-proxy-snyk/v1/subscribe-newsletter';
+
     try {
-      // Call Supabase edge function for secure API handling
-      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
-        body: { email }
+      const response = await fetch(proxyEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (error) {
-        console.error('Supabase function error:', error);
-        throw error;
-      }
+      const responseData = await response.json();
 
-      console.log('Newsletter subscription successful:', data);
-      
-      if (data.success) {
+      if (response.ok && responseData.success) {
         toast({
-          title: "Subscription confirmed!",
-          description: "Your email has been added to our newsletter."
+          title: "🎉 Subscribed!",
+          description: responseData.message || "You're now on our newsletter list.",
         });
         setEmail('');
-      } else if (data.alreadySubscribed) {
+      } else if (response.ok && responseData.alreadySubscribed) {
         toast({
           title: "Already subscribed!",
-          description: "This email is already on our list. Thanks for your interest!"
+          description: responseData.message || "This email is already on our list. Thanks for your interest!",
         });
         setEmail('');
       } else {
-        throw new Error(data.error || 'Unknown error occurred');
+        throw new Error(responseData.message || 'Failed to subscribe. Please try again.');
       }
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
       toast({
+        title: "Subscription Failed",
+        description: error instanceof Error ? error.message : "Could not subscribe. Please try again.",
         variant: "destructive",
-        title: "Subscription failed",
-        description: "There was an error subscribing. Please try again later."
       });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-black to-zinc-900 relative overflow-hidden border-t border-zinc-800">
-      {/* Abstract elements */}
-      <div className="absolute -right-20 top-10 w-40 h-20 border border-zinc-700 opacity-20 rotate-45"></div>
-      <div className="absolute -left-10 bottom-10 w-24 h-24 border border-zinc-700 opacity-10 -rotate-12"></div>
-      
-      {/* Subtle scanlines */}
-      <div className="absolute inset-0 scanlines opacity-5"></div>
-      
-      <div className="container-custom relative z-10">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-xl md:text-2xl font-display uppercase mb-6 text-center text-zinc-100">Newsletter</h2>
-          <p className="text-center mb-8 text-sm text-zinc-400">
-            Sign up to receive updates on new arrivals and special offers
-          </p>
-          
-          <form onSubmit={handleSubmit} className="flex gap-0 border border-zinc-700 bg-zinc-900 backdrop-blur-sm">
-            <Input 
-              type="email" 
-              placeholder="Email address"
-              className="flex-1 border-0 focus:ring-0 text-sm bg-transparent text-zinc-300"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
-              required
-            />
-            <Button 
-              type="submit" 
-              className="bg-zinc-800 hover:bg-zinc-700 text-white uppercase text-xs px-6 relative overflow-hidden group"
-              disabled={isLoading}
-            >
-              <span className="relative z-10">{isLoading ? 'Subscribing...' : 'Subscribe'}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-800/0 via-purple-800 to-purple-800/0 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            </Button>
-          </form>
-        </div>
+    <form onSubmit={handleSubmit} className="mb-10 text-center ">
+      <h3 className="text-lg font-semibold mb-4 text-white">Stay Updated</h3>
+      <p className="text-zinc-400 mb-6">Subscribe to our newsletter for the latest drops and exclusive deals.</p>
+      <div className="flex max-w-md mx-auto gap-2">
+        <Input
+          type="email"
+          placeholder="Your email address"
+          className="bg-zinc-800 border-zinc-700 text-white focus:border-pink-500"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+          required
+        />
+        <Button
+          type="submit"
+          className="bg-pink-500 hover:bg-pink-600 text-white transition-colors"
+          disabled={loading || !email}
+        >
+          {loading ? 'Subscribing...' : 'Subscribe'}
+        </Button>
       </div>
-    </section>
+    </form>
   );
 };
 

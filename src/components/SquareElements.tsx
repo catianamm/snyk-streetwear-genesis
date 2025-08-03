@@ -1,5 +1,5 @@
 
-import React from 'react';
+ // Removed React
 
 interface SquareElementsProps {
   className?: string;

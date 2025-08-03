@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'; // Removed React
+import { useParams, useNavigate, Link } from 'react-router-dom'; // Import Link
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,12 +10,32 @@ import {
   Tabs,
   TabsContent,
   TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { fetchProductById } from '@/lib/woocommerce';
+  TabsTrigger, // Import TabsTrigger
+} from "@/components/ui/tabs"; // Assuming ProductType is also needed from models or products
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator, // <-- Add this import
+} from "@/components/ui/breadcrumb";
+import { fetchProductById } from '@/lib/woocommerce/products'; // Corrected import pat
 import FeaturedProducts from '@/components/FeaturedProducts';
 import { useCart } from '@/hooks/useCart';
 
+// Define a type for product attributes based on WooCommerce API response
+interface ProductAttribute {
+  name: string;
+  options: string[]; // Assuming options are strings
+  // Add other properties if needed, e.g., position, visible, variation
+}
+
+// Define a type for product images
+interface ProductImage {
+  src: string;
+  // Add other properties if they exist, e.g., alt, id
+}
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,26 +52,35 @@ const ProductDetail = () => {
   useEffect(() => {
     const getProduct = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
+        setError(null); // Clear previous errors
         console.log(`Fetching product with ID: ${id}`);
         const productData = await fetchProductById(Number(id));
         console.log('Product data received:', productData);
-        
+
         if (!productData) {
-          throw new Error('Product not found');
+          // This could mean a 404 or the API returned an empty successful response.
+          // Ideally, fetchProductById should clarify this by throwing a specific error.
+          throw new Error('Product not found or API returned no data.');
         }
-        
+
         setProduct(productData);
-        setLoading(false);
       } catch (err) {
         console.error('Error fetching product:', err);
-        setError('Failed to load product details');
-        setLoading(false);
+        // It's good practice for fetchProductById to throw an error
+        // with a meaningful message or for err to be an instance of Error.
+        if (err instanceof Error) {
+          setError(err.message || 'Failed to load product details. Please try again.');
+        } else {
+          setError('An unknown error occurred while fetching product details.');
+        }
+      } finally {
+        setLoading(false); // Ensure loading is always set to false
       }
     };
-    
+
     getProduct();
   }, [id]);
 
@@ -81,8 +110,8 @@ const ProductDetail = () => {
     if (!product) return;
     
     // Check if size and color are selected when required
-    const availableSizes = product.attributes?.find((attr: any) => attr.name === "Size")?.options || [];
-    const availableColors = product.attributes?.find((attr: any) => attr.name === "Color")?.options || [];
+    const availableSizes = product.attributes?.find((attr: ProductAttribute) => attr.name === "Size")?.options || [];
+    const availableColors = product.attributes?.find((attr: ProductAttribute) => attr.name === "Color")?.options || [];
     
     if (availableSizes.length > 0 && !selectedSize) {
       toast({
@@ -111,8 +140,8 @@ const ProductDetail = () => {
       if (!product) return;
       
       // Check if size and color are selected when required
-      const availableSizes = product.attributes?.find((attr: any) => attr.name === "Size")?.options || [];
-      const availableColors = product.attributes?.find((attr: any) => attr.name === "Color")?.options || [];
+      const availableSizes = product.attributes?.find((attr: ProductAttribute) => attr.name === "Size")?.options || [];
+      const availableColors = product.attributes?.find((attr: ProductAttribute) => attr.name === "Color")?.options || [];
       
       if (availableSizes.length > 0 && !selectedSize) {
         toast({
@@ -181,8 +210,8 @@ const ProductDetail = () => {
   }
 
   // Extract product attributes
-  const availableSizes = product.attributes?.find(attr => attr.name === "Size")?.options || ["S", "M", "L", "XL"];
-  const availableColors = product.attributes?.find(attr => attr.name === "Color")?.options || ["Black", "White"];
+  const availableSizes = product.attributes?.find((attr: ProductAttribute) => attr.name === "Size")?.options || ["S", "M", "L", "XL"];
+  const availableColors = product.attributes?.find((attr: ProductAttribute) => attr.name === "Color")?.options || ["Black", "White"];
   const productImages = product.images && product.images.length > 0 
     ? product.images 
     : [{ src: product.image }];
@@ -192,6 +221,29 @@ const ProductDetail = () => {
       <Navbar />
       <main className="flex-grow">
         <div className="container-custom py-8">
+          {/* Breadcrumbs */}
+          <div className="mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/products">Products</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{product.name}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Product Images */}
             <div>
@@ -203,7 +255,7 @@ const ProductDetail = () => {
                 />
               </div>
               <div className="grid grid-cols-4 gap-2">
-                {productImages.map((image, index) => (
+                {productImages.map((image: ProductImage, index: number) => (
                   <div
                     key={index}
                     className={`aspect-square overflow-hidden rounded cursor-pointer ${
@@ -240,7 +292,7 @@ const ProductDetail = () => {
                 <div className="mb-6">
                   <h3 className="text-sm font-medium mb-3">Color: {selectedColor || "Select a color"}</h3>
                   <div className="flex space-x-2">
-                    {availableColors.map(color => {
+                    {availableColors.map((color: string) => {
                       // Map color names to tailwind classes
                       const colorClass = 
                         color.toLowerCase() === "black" ? "bg-zinc-900" : 
@@ -268,7 +320,7 @@ const ProductDetail = () => {
                 <div className="mb-6">
                   <h3 className="text-sm font-medium mb-3">Size: {selectedSize || "Select a size"}</h3>
                   <div className="grid grid-cols-4 gap-2">
-                    {availableSizes.map(size => (
+                    {availableSizes.map((size: string) => (
                       <button
                         key={size}
                         className={`border border-zinc-300 py-2 rounded hover:border-snyk-purple ${

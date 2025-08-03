@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react'; // Removed React
 import ProductCard from './ProductCard';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -12,10 +12,20 @@ const NewArrivals = () => {
   
   // Memoize filtered products to prevent excessive re-calculations
   const newProducts = useMemo(() => {
-    const filtered = products.filter(product => product.isNew === true);
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+    const filtered = products.filter(product => {
+      // Assuming product.date_created_gmt exists and is an ISO string
+      if (!product.date_created_gmt) {
+        return false; // Or handle as per your needs if date is missing
+      }
+      const productDate = new Date(product.date_created_gmt);
+      return productDate >= threeMonthsAgo;
+    });
     console.log('Filtered new products:', filtered.length);
     return filtered;
-  }, [products]);
+  }, [products]); // products is the dependency
 
   useEffect(() => {
     // Random glitch effects for the section title
@@ -37,12 +47,12 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <section id="new" className="py-16 bg-white relative overflow-hidden border-t border-zinc-800">
+    <section  className="pb-16  relative overflow-hidden ">
       {/* Lighter scanlines effect */}
-      <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
+      <div className=" absolute inset-0 pointer-events-none opacity-30"></div>
       
       {/* Random noise pattern */}
-      <div className="noise absolute inset-0 opacity-10 pointer-events-none"></div>
+      <div className=" absolute inset-0 opacity-10 pointer-events-none"></div>
       
       <div className="container-custom relative z-10 min-h-screen">
         <h2 
@@ -86,7 +96,7 @@ const NewArrivals = () => {
                   </div>
                 )) : 
                 <div className="col-span-full text-center py-12 text-black">
-                  <p>No new arrivals found. Products are marked as new for 7 days after creation.</p>
+                  <p>No products added in the last 3 months. Check back soon!</p>
                 </div>
               }
             </div>

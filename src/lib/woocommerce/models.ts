@@ -18,6 +18,13 @@ export const transformProduct = (wcProduct: any): ProductType => {
     ? new Date(wcProduct.date_created).getTime() > Date.now() - (7 * 24 * 60 * 60 * 1000) 
     : false;
 
+  const allImages = wcProduct.images && wcProduct.images.length > 0
+    ? wcProduct.images.map((img: any) => ({
+        src: img.src.replace('http://', 'https://'), // Fix mixed content
+        alt: img.alt || wcProduct.name // Use product name as fallback alt text
+      }))
+    : [{ src: 'https://via.placeholder.com/300', alt: wcProduct.name }];
+
   return {
     id: wcProduct.id,
     name: wcProduct.name,
@@ -25,6 +32,7 @@ export const transformProduct = (wcProduct: any): ProductType => {
     image: wcProduct.images && wcProduct.images.length > 0 
       ? wcProduct.images[0].src.replace('http://', 'https://') // Fix mixed content
       : 'https://via.placeholder.com/300',
+    allImages: allImages,
     category: category,
     isNew: isNew,
     isFeatured: Boolean(wcProduct.featured),

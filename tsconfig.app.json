@@ -15,11 +15,11 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": false,
+"strict": true,
+"noUnusedLocals": true, // Or false if you prefer ESLint to handle this
+"noUnusedParameters": true, // Or false if you prefer ESLint to handle this
+"noImplicitAny": true,
+"noFallthroughCasesInSwitch": true,
 
     "baseUrl": ".",
     "paths": {

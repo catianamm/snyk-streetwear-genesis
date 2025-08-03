@@ -142,7 +142,7 @@ const ProductFeatures: React.FC<ProductFeaturesProps> = ({ scrollIntensity }) =>
               className="text-lg md:text-xl font-display uppercase mb-2 group-hover:text-white transition-colors"
               style={{ color: scrollIntensity > 0.5 ? '#8B5CF6' : 'white' }}
             >
-              ESSENTIALS
+              SNYK CORE
             </h2>
             <Button asChild variant="outline" 
               className="border-white text-white hover:bg-white hover:border-white hover:text-black uppercase text-sm px-8 relative overflow-hidden group"

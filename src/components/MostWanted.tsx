@@ -13,8 +13,11 @@ const MostWanted = () => {
   const [glitchActive, setGlitchActive] = useState(false);
   const [textGlitch, setTextGlitch] = useState(false);
   
-  // Choose a few products to feature as "most wanted"
-  const mostWantedProducts = products.slice(0, 3);
+  // Filter to get only products with the category "Most Wanted" and take the first 3
+  const mostWantedProducts = products
+    .filter(product => product.category.toLowerCase() === "most wanted")
+    .slice(0, 3);
+  console.log('Filtered most wanted products:', mostWantedProducts);
   
   // Create random glitch effects at intervals
   useEffect(() => {
@@ -35,9 +38,9 @@ const MostWanted = () => {
   }, []);
 
   return (
-    <section id="most-wanted" className="py-16 bg-white text-black relative overflow-hidden">
+    <section id="most-wanted" className="pb-16 mt-0 bg-white text-black relative overflow-hidden">
       {/* Lighter scanlines effect */}
-      <div className="scanlines absolute inset-0 pointer-events-none opacity-30"></div>
+      <div className=" absolute inset-0 pointer-events-none opacity-30"></div>
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-12">
           <h2 
@@ -121,7 +124,7 @@ const MostWanted = () => {
                 </Card>
               )) : (
                 <div className="col-span-full text-center py-12">
-                  <p>No products available at the moment. Check back soon!</p>
+                  <p>No "Most Wanted" products found. Check back soon or ensure products are categorized correctly!</p>
                 </div>
               )}
             </div>

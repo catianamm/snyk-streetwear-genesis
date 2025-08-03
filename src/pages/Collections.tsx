@@ -1,11 +1,19 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'; // Removed React
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import TopBar from '@/components/TopBar';
 import Footer from '@/components/Footer';
 import { fetchFromWooCommerce } from '@/lib/woocommerce';
 import { Loader2 } from 'lucide-react';
+import {
+  BreadcrumbSeparator, // <-- Add this import
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 interface Collection {
   id: number;
@@ -74,11 +82,27 @@ const Collections = () => {
       <Navbar />
       <TopBar />
       
-      <main className="flex-grow pt-12 pb-20 ml-20 md:ml-24">
+      <main className="flex-grow pt-32 pb-20 ml-20 md:ml-24"> {/* Adjusted padding-top */}
         <div className="container-custom py-12 relative">
           <div className="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
           <div className="absolute inset-0 noise opacity-10 pointer-events-none"></div>
           
+          {/* Breadcrumbs */}
+          <div className="container-custom relative z-10 mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Collections</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
           {/* Page header */}
           <div className="mb-12">
             <h1 
